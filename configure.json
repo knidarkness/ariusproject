@@ -31,6 +31,6 @@
 	"elastic_index": "arius",
 	"elastic_type": "doc",
 	"elastic_tmp_file_name":"tmp.json",
-	"elastic_dir":"docs",
-	"elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx"]
+	"elastic_docs_dir":"docs",
+	"elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx", "url"]
 }

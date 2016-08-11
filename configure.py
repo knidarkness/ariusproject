@@ -10,7 +10,10 @@ class ConstExtractor():
 
     def getValue(self, key):
         if key in self.const_dict:
-            return self.const_dict[key].encode("utf-8")
+            if type(self.const_dict[key]) == list:
+                return [el.encode("utf-8") for el in self.const_dict[key]]
+            else:
+                return self.const_dict[key].encode("utf-8")
         else:
             print("THERE IS NO SUCH CONSTANTA")
             raise ValueError

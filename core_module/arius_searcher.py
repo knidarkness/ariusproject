@@ -8,10 +8,9 @@ from configure import ConstExtractor
 class ESearchClient:
     """Simple class to search some data in the ElasticSearch database"""
 
-    def __init__(self):    
+    def __init__(self):
         self._settings = ConstExtractor()
         self.es = Elasticsearch(self._settings.getValue("elastic_host"))
-
 
     def search(self, query):
         """Searches for all documents that are relevant to the query. 
@@ -24,8 +23,7 @@ class ESearchClient:
         return result
 
 if __name__ == '__main__':
-    query = 'machine learning'
-    # Uncomment this line to check searching on webpages and presentations. It works perfectly.
+    query = 'softserve'
     #query = "ARIUS"
     #query = "html"
     #query = 'Linux'
