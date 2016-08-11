@@ -3,9 +3,6 @@
 
 <head>
     <title></title>
-    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
-    <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
     <style type="text/css">
     body {
         background-color: {{background}};
@@ -15,7 +12,15 @@
     ::-webkit-scrollbar {
         display: none;
     }
-    
+
+    @font-face {
+      font-family: 'Varela Round';
+      src: url("{{url_for('static', filename='fonts/VarelaRound-Regular.ttf')}}") format('truetype');
+    }
+    @font-face {
+      font-family: 'Raleway';
+      src: url("{{url_for('static', filename='fonts/Raleway-Thin.ttf')}}") format('truetype');
+    }
     .container {
         width: 50%;
         height: 70%;
@@ -51,7 +56,7 @@
         color: #fff;
         margin: 25px auto;
         position: relative;
-        width: 120px;
+        width: 22%;
     }
     </style>
 </head>

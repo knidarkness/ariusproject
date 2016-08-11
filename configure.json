@@ -25,5 +25,12 @@
 	"core_server_output_port": "5000",
 	"core_server_output_url": "/core/output",
 
-	"elastic_files_path": "/home/sdubovyk/Projects/arius/elastic_search_client"
+	"elastic_files_path": "/home/sdubovyk/Projects/arius/elastic_search_client",
+
+	"elastic_host" :"http://localhost:9200",
+	"elastic_index": "arius",
+	"elastic_type": "doc",
+	"elastic_tmp_file_name":"tmp.json",
+	"elastic_dir":"docs",
+	"elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx"]
 }

@@ -1,15 +1,17 @@
 from flask import Flask, jsonify, make_response, request, abort, render_template
+import sys
+sys.path.append("../")
 from configure import ConstExtractor
 
 app = Flask(__name__)
 
 
-settings = ConstExtractor("/../configure.json")
+settings = ConstExtractor()
 noise_available = {"status": "False"}
 input_text = {"speech_text": "no updates"}
 command = {
     "type": "none",
-    "command": "none"
+    "command": "none1"
 }
 
 
