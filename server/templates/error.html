@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
+    <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
+    <style type="text/css">
+    body {
+        background-color: {{background}};
+        overflow: hidden;
+    }
+    
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .container {
+        width: 50%;
+        height: 70%;
+        overflow: auto;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    
+    .message {
+        position: relative;
+        margin: 30px auto 0;
+        color: #fff;
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Varela Round', sans-serif;
+    }
+    
+    .logo {
+        margin: 50px auto 0;
+        color: #fff;
+        font-size: 100px;
+        text-align: center;
+        font-family: 'Raleway', sans-serif;
+    }
+    
+    .sad_icon {
+        display: block;
+        margin: 0 auto;
+        color: #fff;
+        margin: 25px auto;
+        position: relative;
+        width: 120px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">ARIUS</div><img class="sad_icon" src="{{url_for('static', filename='img/sad.svg')}}" />
+        <div class='message'>Sorry, we couldn't find any results for this search.</div>
+    </div>
+</body>
+
+</html>
