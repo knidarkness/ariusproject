@@ -2,12 +2,19 @@ from client import RESTClient
 import argparse
 import json
 import time
+from configure import ConstExtractor
+
+Extractor = ConstExtractor("../configure.json")
+
+host=Extractor.getValue('flask_server_address')
+port=Extractor.getValue('flask_server_port')
+input_url = Extractor.getValue('flask_server_input_client')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--filename', default='none',  help="Send first phrases from file")
 args = parser.parse_args()
 
-input_client = RESTClient('127.0.0.1', 5000, '/input')
+input_client = RESTClient(host, port, input_client)
 
 if args.filename != 'none':
     with open(args.filename) as speech_file:

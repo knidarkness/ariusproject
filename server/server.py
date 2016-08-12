@@ -1,7 +1,11 @@
 from flask import Flask, jsonify, make_response, request, abort, render_template
 import sys
 sys.path.append("../")
+
 from configure import ConstExtractor
+
+Extractor = ConstExtractor("../configure.json")
+
 
 app = Flask(__name__)
 
@@ -25,7 +29,7 @@ def not_recognized(err):
     return make_response(jsonify({'error': 'Not recognized command'}), 400)
 
 
-@app.route('/input/noise', methods=['POST'])
+@app.route(Extractor.getValue('flask_server_input_noise'), methods=['POST'])
 def noise_input():
     global noise_available
     noise_available["status"] = "True"
@@ -36,7 +40,7 @@ def noise_input():
         return jsonify(request.json), 201
 
 
-@app.route('/output/noise', methods=['GET'])
+@app.route(Extractor.getValue('flask_server_output_noise'), methods=['GET'])
 def noise_output():
     global noise_available
     tmp_noise = noise_available
@@ -44,7 +48,7 @@ def noise_output():
     return jsonify(noise_available)
 
 
-@app.route('/input', methods=['POST'])
+@app.route(Extractor.getValue('flask_server_input_client'), methods=['POST'])
 def speech_text_input():
     global input_text
     if not request.json or 'speech_text' not in request.json:
@@ -55,7 +59,7 @@ def speech_text_input():
         return jsonify(input_text), 201
 
 
-@app.route('/core/input', methods=['GET'])
+@app.route(Extractor.getValue('flask_server_core_input_connection'), methods=['GET'])
 def get_speech_text():
     global input_text
     tmp_text = input_text
@@ -63,7 +67,7 @@ def get_speech_text():
     return jsonify(tmp_text)
 
 
-@app.route('/core/output', methods=['POST'])
+@app.route(Extractor.getValue('flask_server_core_output_connection'), methods=['POST'])
 def command_input():
     global command
     print request.json
@@ -78,7 +82,7 @@ def command_input():
         return jsonify(command), 201
 
 
-@app.route('/output', methods=['GET'])
+@app.route(Extractor.getValue('flask_server_output_client'), methods=['GET'])
 def get_command():
     global command
     tmp_command = command
@@ -90,19 +94,19 @@ def get_command():
     return jsonify(tmp_command)
 
 
-@app.route('/screens/idle/')
+@app.route(Extractor.getValue('flask_server_idle_address'))
 def idle():
     return render_template("idle.html", background=settings.getValue("arius_screen_idle_background"))
 
 
-@app.route('/screens/error/')
+@app.route(Extractor.getValue('flask_server_error_address'))
 def error():
     return render_template("error.html", background=settings.getValue("arius_screen_error_background"))
 
 
-@app.route('/screens/search/')
+@app.route(Extractor.getValue('flask_server_search_address'))
 def search():
     return render_template("search.html", background=settings.getValue("arius_screen_search_background"))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=Extractor.getValue('flask_server_address'), port=Extractor.getValue('flask_server_port'))
