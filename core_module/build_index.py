@@ -34,7 +34,7 @@ def indexFile(fname):
 
 
 def indexDir(dir):
-    """Adds all files in directory to index. You can specify 
+    """Adds all files in directory to index. You can specify
     what formats will be added to index. To do this change INDEX_FILE_TYPES in config file."""
     print 'Indexing dir ' + dir
 

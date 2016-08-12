@@ -6,6 +6,7 @@
 	"flask_server_core_input_connection": "/core/input",
 	"flask_server_core_output_connection": "/core/output",
 	"flask_server_output_client": "/output",
+	"flask_server_output_noise": "/output/noise",
 
 	"flask_server_idle_address": "/screens/idle",
 	"flask_server_error_address": "/screens/error",
@@ -24,6 +25,10 @@
 	"core_server_output_address": "127.0.0.1",
 	"core_server_output_port": "5000",
 	"core_server_output_url": "/core/output",
+
+	"output_server_host": "127.0.0.1",
+	"output_server_port": "5000",
+	"output_server_url": "/output",
 
 	"elastic_files_path": "/home/sdubovyk/Projects/arius/elastic_search_client",
 

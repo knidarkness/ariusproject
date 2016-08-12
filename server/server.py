@@ -29,7 +29,7 @@ def not_recognized(err):
 def noise_input():
     global noise_available
     noise_available["status"] = "True"
-    if not request.json or not "speech_text" in request.json:
+    if not request.json or "speech_text" not in request.json:
         abort(400)
     else:
         print "Here is Noise"
@@ -47,7 +47,7 @@ def noise_output():
 @app.route('/input', methods=['POST'])
 def speech_text_input():
     global input_text
-    if not request.json or not 'speech_text' in request.json:
+    if not request.json or 'speech_text' not in request.json:
         abort(400)
     else:
         input_text = {"speech_text": request.json['speech_text']}
@@ -67,7 +67,7 @@ def get_speech_text():
 def command_input():
     global command
     print request.json
-    if not request.json or not 'type' in request.json or not 'command' in request.json:
+    if not request.json or not 'type' in request.json or 'command' not in request.json:
         abort(400)
     else:
         command = {
