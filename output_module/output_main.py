@@ -1,6 +1,7 @@
 import time
 import pyautogui
 import sys
+import os
 import subprocess
 import threading
 import thread
@@ -152,8 +153,10 @@ class OutputInterface:
         return output[0], output[1]
 
     def _loadPDF(self, filename):
-        url = 'file://' + self._pdf_viewer_path + '?file=' + self._pdfs_path + filename
-        self._main_browser.load(QUrl(url))
+        source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=" + filename
+        url = self._pdf_viewer_path + '?file=' + self._pdfs_path + filename
+        print source
+        self._main_browser.load(QUrl(source))
 
     def _loadExternalPage(self, url):
         print 'loading {}'.format(url)
