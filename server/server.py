@@ -4,7 +4,7 @@ sys.path.append("../")
 
 from configure import ConstExtractor
 
-Extractor = ConstExtractor("../configure.json")
+Extractor = ConstExtractor("/configure.json")
 
 
 app = Flask(__name__)
@@ -109,4 +109,4 @@ def search():
     return render_template("search.html", background=settings.getValue("arius_screen_search_background"))
 
 if __name__ == '__main__':
-    app.run(debug=True, host=Extractor.getValue('flask_server_address'), port=Extractor.getValue('flask_server_port'))
+    app.run(debug=True, host=Extractor.getValue('flask_server_address'), port=int(Extractor.getValue('flask_server_port')))

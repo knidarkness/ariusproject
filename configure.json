@@ -7,6 +7,7 @@
 	"flask_server_core_output_connection": "/core/output",
 	"flask_server_output_client": "/output",
 	"flask_server_output_noise": "/output/noise",
+	"flask_server_input_noise": "/input/noise",
 
 	"flask_server_idle_address": "/screens/idle",
 	"flask_server_error_address": "/screens/error",
@@ -29,8 +30,8 @@
 	"output_server_host": "127.0.0.1",
 	"output_server_port": "5000",
 	"output_server_url": "/output",
-
-	"elastic_files_path": "/home/sdubovyk/Projects/arius/elastic_search_client",
+	"output_pdf_data_files": "../data/web/data/",
+	"output_data_pdf_viewer": "../data/web/viewer.html",
 
 	"elastic_host" :"http://localhost:9200",
 	"elastic_index": "arius",
