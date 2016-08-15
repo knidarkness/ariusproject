@@ -1,5 +1,5 @@
 import time
-import pyautogui
+#import pyautogui
 import sys
 import os
 import subprocess
@@ -14,7 +14,7 @@ from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
 sys.path.append("../")
 from configure import ConstExtractor
-
+from tts_module import tts_mary
 
 class OutputUpdater(threading.Thread):
     def __init__(self, lock):
@@ -185,7 +185,10 @@ class OutputInterface:
     def _main_browser_zoom_out(self):
         self._zoom_factor -= .1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
-
+	
+    def _text_to_speech(text):
+        tts_mary(text)
+		
 
 if __name__ == "__main__":
     ui = OutputInterface(.15, .1)
