@@ -6,7 +6,6 @@ import subprocess
 import threading
 import thread
 import functools
-from client import RESTClient
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QUrl, QEventLoop, QTimer
 from PyQt5.QtWidgets import QApplication, QGridLayout, QWidget
@@ -15,6 +14,9 @@ from PyQt5.QtWebKit import QWebSettings
 sys.path.append("../")
 from configure import ConstExtractor
 from tts_module import tts_mary
+
+from client import RESTClient
+
 
 class OutputUpdater(threading.Thread):
     def __init__(self, lock):
@@ -91,8 +93,11 @@ class OutputInterface:
         self._bottom_browser.setMinimumHeight(self._bottom_browser_height)
 
         self._top_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
-        self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+        # self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
         self._bottom_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+
+        self._top_browser_load_url(self._settings.getValue('output_browser_top_page'))
+        self._bottom_browser_load_url(self._settings.getValue('output_browser_bottom_page'))
 
         self._main_browser.settings().setAttribute(QWebSettings.PluginsEnabled, True)
 
@@ -116,15 +121,13 @@ class OutputInterface:
         self._main_window = QWidget()
         self._main_window.setLayout(self._layout)
         self._main_window.showFullScreen()
-
         self._main_window.show()
-        self._main_browser.load(QUrl("file:///home/sdubovyk/Projects/ariusproject_production/tries/pdf.js-master/web/viewer.html"))
         sys.exit(self._app.exec_())
         print 'finished'
 
     def _handle_command(self):
         command = self._updater.get_state()
-        if command[0] != 'none':
+        if command[0] != 'none' and command[0] != None:
             self._updater.reset()
             if command[0] == 'OPEN_PDF':
                 self._loadPDF(command[1])
@@ -191,9 +194,6 @@ class OutputInterface:
 		
 
 if __name__ == "__main__":
-    ui = OutputInterface(.15, .1)
+    conf = ConstExtractor('/configure.json')
+    ui = OutputInterface(float(conf.getValue('output_top_browser_size')), float(conf.getValue('output_bottom_browser_size')))
     ui.run()
-    time.sleep(.1)
-    print 'finished'
-    #while True:
-    #    print updater._current_command_type

@@ -32,6 +32,10 @@
 	"output_server_url": "/output",
 	"output_pdf_data_files": "../data/web/data/",
 	"output_data_pdf_viewer": "../data/web/viewer.html",
+	"output_top_browser_size": ".15",
+	"output_bottom_browser_size": ".1",
+	"output_browser_top_page": "http://google.com",
+	"output_browser_bottom_page": "http://geektimes.ru",
 
 	"elastic_host" :"http://localhost:9200",
 	"elastic_index": "arius",
