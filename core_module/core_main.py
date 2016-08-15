@@ -1,11 +1,11 @@
+import sys
+import threading
+import time
+sys.path.append("../")
 from client import RESTClient
 from statemachine import statemachine
-import sys
-sys.path.append("../")
 from configure import ConstExtractor
-import threading
 from sense_extraction import SenseExtractor
-import time
 from arius_searcher import ESearchClient
 
 
