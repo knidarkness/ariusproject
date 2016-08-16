@@ -66,8 +66,8 @@ class OutputUpdater(threading.Thread):
 class OutputInterface:
     def __init__(self, top_size, bottom_size):
         self._app = QtWidgets.QApplication(sys.argv)
-
-        self._settings = ConstExtractor('/configure.json')
+        self._app.setStyle("Fusion")
+        self._settings = ConstExtractor()
         self._pdf_viewer_path = self._settings.getValue("output_data_pdf_viewer")
         self._pdfs_path = self._settings.getValue("output_pdf_data_files")
 
@@ -104,18 +104,16 @@ class OutputInterface:
         self._layout.addWidget(self._top_browser, 1, 0)
         self._layout.addWidget(self._main_browser, 2, 0)
         self._layout.addWidget(self._bottom_browser, 3, 0)
-        
+
         self._lock = threading.RLock()
         self._updater = OutputUpdater(self._lock)
 
         self._updater.start()
-        
+
         self.timeoutTimer = QTimer()
         tCallback = functools.partial(self._handle_command)
         self.timeoutTimer.timeout.connect(tCallback)
         self.timeoutTimer.start(1000)
-        
-        
 
     def run(self):
         self._main_window = QWidget()
@@ -140,7 +138,7 @@ class OutputInterface:
             elif command[0] == 'ZOOM_OUT':
                 self._main_browser_zoom_out()
             elif command[0] == 'SCROLL_DOWN':
-                self._main_browser_scroll_down
+                self._main_browser_scroll_down()
             elif command[0] == 'SCROLL_UP':
                 self._main_browser_scroll_up()
             else:
@@ -157,7 +155,6 @@ class OutputInterface:
 
     def _loadPDF(self, filename):
         source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=" + filename
-        url = self._pdf_viewer_path + '?file=' + self._pdfs_path + filename
         print source
         self._main_browser.load(QUrl(source))
 
@@ -176,10 +173,11 @@ class OutputInterface:
         self._bottom_browser.load(QUrl(url))
 
     def _main_browser_scroll_down(self):
-        self._main_browser.page().mainFrame().scroll(0, 200)
+        print('scroll down')
+        self._main_browser.page().mainFrame().evaluateJavaScript("PDFViewerApplication.pdfViewer.container.scrollTop+=200;")
 
     def _main_browser_scroll_up(self):
-        self._main_browser.page().mainFrame().scroll(0, -200)
+        self._main_browser.page().mainFrame().evaluateJavaScript("PDFViewerApplication.pdfViewer.container.scrollTop-=200;")
 
     def _main_browser_zoom_in(self):
         self._zoom_factor += .1
@@ -188,12 +186,12 @@ class OutputInterface:
     def _main_browser_zoom_out(self):
         self._zoom_factor -= .1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
-	
+
     def _text_to_speech(text):
         tts_mary(text)
-		
+
 
 if __name__ == "__main__":
-    conf = ConstExtractor('/configure.json')
+    conf = ConstExtractor()
     ui = OutputInterface(float(conf.getValue('output_top_browser_size')), float(conf.getValue('output_bottom_browser_size')))
     ui.run()
