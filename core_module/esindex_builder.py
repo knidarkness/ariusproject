@@ -40,7 +40,9 @@ class ESIndexBuilder:
             data = open(path, "rb").read()
 
         data = data.encode("base64")
-        self._es.index(index=self._index, doc_type=self._type, id=base, body={'file': data, 'title': path})
+        # get relative path from pdf viewer directory
+        rel_path = path.rsplit('/', 2)[-2] + "/" + path.rsplit('/', 2)[-1]
+        self._es.index(index=self._index, doc_type=self._type, id=base, body={'file': data, 'title': rel_path})
 
     def index_dir(self, dir):
         """Adds all files in directory to index. You can specify what formats

@@ -1,5 +1,5 @@
 import time
-#import pyautogui
+# import pyautogui
 import sys
 import os
 import subprocess
@@ -115,6 +115,8 @@ class OutputInterface:
         self.timeoutTimer.timeout.connect(tCallback)
         self.timeoutTimer.start(1000)
 
+        self._cur_filetype = None
+
     def run(self):
         self._main_window = QWidget()
         self._main_window.setLayout(self._layout)
@@ -177,16 +179,19 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadPDF(self, filename):
-        source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=" + filename
+        source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=data/" + filename
         print source
+        self._cur_filetype = "pdf"
         self._main_browser.load(QUrl(source))
 
     def _loadExternalPage(self, url):
         print 'loading {}'.format(url)
+        self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
     def _loadLocalPage(self, filename):
         url = 'file://' + self._files_path + filename
+        self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
     def _top_browser_load_url(self, url):
@@ -196,11 +201,20 @@ class OutputInterface:
         self._bottom_browser.load(QUrl(url))
 
     def _main_browser_scroll_down(self):
-        print('scroll down')
-        self._main_browser.page().mainFrame().evaluateJavaScript("PDFViewerApplication.pdfViewer.container.scrollTop+=200;")
+        scroll_js = """var smooth_scroll_by=function(a,b,c){if(target=Math.round(b)+a.scrollTop,c=Math.round(c),c<0)return Promise.reject("bad duration");if(0===c)return a.scrollTop=target,Promise.resolve();var d=Date.now(),e=d+c,f=a.scrollTop,g=target-f,h=function(a,b,c){if(c<=a)return 0;if(c>=b)return 1;var d=(c-a)/(b-a);return d*d*(3-2*d)};return new Promise(function(b,c){var i=a.scrollTop,j=function(){if(a.scrollTop!=i)return void c("interrupted");var k=Date.now(),l=h(d,e,k),m=Math.round(f+g*l);return a.scrollTop=m,k>=e?void b():a.scrollTop===i&&a.scrollTop!==m?void b():(i=a.scrollTop,void setTimeout(j,0))};setTimeout(j,0)})};"""
+        self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
+        if self._cur_filetype == "pdf":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
+        else:
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, 300, 1000);")
 
     def _main_browser_scroll_up(self):
-        self._main_browser.page().mainFrame().evaluateJavaScript("PDFViewerApplication.pdfViewer.container.scrollTop-=200;")
+        scroll_js = """var smooth_scroll_by=function(a,b,c){if(target=Math.round(b)+a.scrollTop,c=Math.round(c),c<0)return Promise.reject("bad duration");if(0===c)return a.scrollTop=target,Promise.resolve();var d=Date.now(),e=d+c,f=a.scrollTop,g=target-f,h=function(a,b,c){if(c<=a)return 0;if(c>=b)return 1;var d=(c-a)/(b-a);return d*d*(3-2*d)};return new Promise(function(b,c){var i=a.scrollTop,j=function(){if(a.scrollTop!=i)return void c("interrupted");var k=Date.now(),l=h(d,e,k),m=Math.round(f+g*l);return a.scrollTop=m,k>=e?void b():a.scrollTop===i&&a.scrollTop!==m?void b():(i=a.scrollTop,void setTimeout(j,0))};setTimeout(j,0)})};"""
+        self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
+        if self._cur_filetype == "pdf":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")
+        else:
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, -300, 1000);")
 
     def _main_browser_zoom_in(self):
         self._zoom_factor += .1
