@@ -169,6 +169,7 @@ html[dir='rtl'] .innerCenter {
 }
 
 #sidebarContainer {
+  display:none;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -247,7 +248,7 @@ html[dir='rtl'] #sidebarContent {
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
   position: absolute;
-  top: 32px;
+  top: 0px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -261,6 +262,7 @@ html[dir='rtl'] #viewerContainer {
 }
 
 .toolbar {
+  display: none;
   position: relative;
   left: 0;
   right: 0;
@@ -371,6 +373,8 @@ html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
 }
 
 .findbar, .secondaryToolbar {
+  
+  display: none;
   top: 32px;
   position: absolute;
   z-index: 10000;
