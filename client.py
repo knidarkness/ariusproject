@@ -49,6 +49,7 @@ class RESTClient:
     [('date', 'Thu, 04 Aug 2016 21:24:21 GMT'), ('content-length', '35'),
     ('content-type', 'application/json'), ('server', 'Werkzeug/0.10.4 Python/2.7.12')])
     """
+
     def __init__(self, host, port, url):
         self._connection = httplib.HTTPConnection(host, port)
         self._headers = {'Content-type': 'application/json'}

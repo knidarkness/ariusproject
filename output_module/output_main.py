@@ -38,7 +38,7 @@ class OutputUpdater(threading.Thread):
 
     def run(self):
         while self.running:
-            print 'connecting'
+            # print 'connecting'
             data = self._server_connection.GET_request(True, 0)
             if data['type'] != 'none':
                 print data
@@ -126,6 +126,7 @@ class OutputInterface:
     def _handle_command(self):
         command = self._updater.get_state()
         if command[0] != 'none' and command[0] != None:
+            print 'Handling command {}'.format(command)
             self._updater.reset()
             if command[0] == 'OPEN_PDF':
                 self._loadPDF(command[1])
@@ -133,6 +134,13 @@ class OutputInterface:
                 self._loadExternalPage(command[1])
             elif command[0] == 'OPEN_LOCAL_PAGE':
                 self._loadLocalPage(command[1])
+            elif command[0] == 'OPEN_SCREEN':
+                if command[1] == 'IDLE':
+                    self._load_idle()
+                elif command[1] == 'ERROR':
+                    self._load_error()
+                elif command[1] == 'SEARCH':
+                    self._load_search()
             elif command[0] == 'ZOOM_IN':
                 self._main_browser_zoom_in()
             elif command[0] == 'ZOOM_OUT':
@@ -152,6 +160,21 @@ class OutputInterface:
         self._screen_height = output[1]
         self._screen_width = output[0]
         return output[0], output[1]
+
+    def _load_error(self):
+        url = 'http://' + self._settings.getValue('flask_server_address') + ':' + self._settings.getValue('flask_server_port') + self._settings.getValue('flask_server_error_address')
+        print url
+        self._main_browser.load(QUrl(url))
+
+    def _load_idle(self):
+        url = 'http://' + self._settings.getValue('flask_server_address') + ':' + self._settings.getValue('flask_server_port') + self._settings.getValue('flask_server_idle_address')
+        print url
+        self._main_browser.load(QUrl(url))
+
+    def _load_search(self):
+        url = 'http://' + self._settings.getValue('flask_server_address') + ':' + self._settings.getValue('flask_server_port') + self._settings.getValue('flask_server_search_address')
+        print url
+        self._main_browser.load(QUrl(url))
 
     def _loadPDF(self, filename):
         source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=" + filename
