@@ -99,8 +99,9 @@ class OutputInterface:
         self._top_browser_load_url(self._settings.getValue('output_browser_top_page'))
         self._bottom_browser_load_url(self._settings.getValue('output_browser_bottom_page'))
 
+        self._main_browser.settings().setAttribute(QWebSettings.DeveloperExtrasEnabled, True)  # enable console
         self._main_browser.settings().setAttribute(QWebSettings.PluginsEnabled, True)
-
+        QWebSettings.setObjectCacheCapacities(0, 0, 0)
         self._layout.addWidget(self._top_browser, 1, 0)
         self._layout.addWidget(self._main_browser, 2, 0)
         self._layout.addWidget(self._bottom_browser, 3, 0)
@@ -136,6 +137,8 @@ class OutputInterface:
                 self._loadExternalPage(command[1])
             elif command[0] == 'OPEN_LOCAL_PAGE':
                 self._loadLocalPage(command[1])
+            elif command[0] == 'OPEN_VIDEO':
+                self._loadVideo(command[1])
             elif command[0] == 'OPEN_SCREEN':
                 if command[1] == 'IDLE':
                     self._load_idle()
@@ -151,6 +154,10 @@ class OutputInterface:
                 self._main_browser_scroll_down()
             elif command[0] == 'SCROLL_UP':
                 self._main_browser_scroll_up()
+            elif command[0] == 'PLAY':
+                self._video_play()
+            elif command[0] == 'PAUSE':
+                self._video_pause()
             else:
                 print 'command not recognized'
         else:
@@ -184,13 +191,26 @@ class OutputInterface:
         self._cur_filetype = "pdf"
         self._main_browser.load(QUrl(source))
 
+    def _loadVideo(self, filename):
+        player_path = "videoplayer.html"
+        url = os.path.dirname(os.path.abspath(__file__)) + "/../data/web/data/" + player_path
+        print url
+        # TODO: remove this very strange and stupid code
+        html = open(url, "rb").read()
+        # open videoplayer.html, replace src to new src and rewrite this file
+        open(url, "r+").write(html[:html.find("src=") + 5] + filename + html[html.find("\"", html.find("src=") + 5):])
+        url = "file:///" + url
+
+        self._cur_filetype = "video"
+        self._main_browser.load(QUrl(url))
+
     def _loadExternalPage(self, url):
         print 'loading {}'.format(url)
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
     def _loadLocalPage(self, filename):
-        url = 'file://' + self._files_path + filename
+        url = 'file://' + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/data/" + filename
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
@@ -205,7 +225,7 @@ class OutputInterface:
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
-        else:
+        elif self._cur_filetype == "webpage":
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, 300, 1000);")
 
     def _main_browser_scroll_up(self):
@@ -213,7 +233,7 @@ class OutputInterface:
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")
-        else:
+        elif self._cur_filetype == "webpage":
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, -300, 1000);")
 
     def _main_browser_zoom_in(self):
@@ -224,8 +244,16 @@ class OutputInterface:
         self._zoom_factor -= .1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
-    def _text_to_speech(text):
+    def _text_to_speech(self, text):
         tts_mary(text)
+
+    def _video_play(self):
+        script_js = """video=document.getElementById("videoplayer"); video.play()"""
+        self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
+
+    def _video_pause(self):
+        script_js = """video=document.getElementById("videoplayer"); video.pause()"""
+        self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
 
 if __name__ == "__main__":
