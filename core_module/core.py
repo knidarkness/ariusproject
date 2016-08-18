@@ -1,8 +1,8 @@
 import threading
 import sys
 import time
-import functools
 import thread
+import os
 from statemachine import statemachine
 sys.path.append("../")
 from client import RESTClient
@@ -159,9 +159,21 @@ class Core(threading.Thread):
         print 'opening search screen'
         time.sleep(7)
         print data
+        file_ext = os.path.splitext(data[0][0])[1]
+        print file_ext
         if data:
-            data = {'type': 'OPEN_PDF', 'command': data[0][0]}
-            self._statemachine.handle_message('found')
+            if file_ext == '.pdf':
+                data = {'type': 'OPEN_PDF', 'command': data[0][0]}
+                self._statemachine.handle_message('found')
+            elif file_ext == '.html':
+                data = {'type': 'OPEN_LOCAL_PAGE    ', 'command': data[0][0]}
+                self._statemachine.handle_message('found')
+            elif file_ext == '.url':
+                data = open(self._settings.getValue('output_server_home') + data[0][0])
+                link = data.readlines()[0]
+                print link
+                data = {'type': 'OPEN_URL', 'command': link}
+                self._statemachine.handle_message('found')
 
         else:
             data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}

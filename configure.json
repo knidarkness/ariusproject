@@ -30,6 +30,7 @@
 	"output_server_host": "127.0.0.1",
 	"output_server_port": "5000",
 	"output_server_url": "/output",
+	"output_server_home": "../data/web/",
 	"output_pdf_data_files": "../data/web/data/",
 	"output_data_pdf_viewer": "../data/web/viewer.html",
 	"output_top_browser_size": ".15",

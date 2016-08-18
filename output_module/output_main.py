@@ -179,7 +179,7 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadPDF(self, filename):
-        source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=data/" + filename
+        source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=" + filename
         print source
         self._cur_filetype = "pdf"
         self._main_browser.load(QUrl(source))
