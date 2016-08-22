@@ -1,0 +1,6 @@
+flask
+python-RAKE
+elasticsearch
+pygame
+httplib2
+
