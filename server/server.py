@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, make_response, request, abort, render_template
 import sys
-sys.path.append("../")
+sys.path.append("/home/arius/ariusproject/")
 from configure import ConstExtractor
 
 settings = ConstExtractor()

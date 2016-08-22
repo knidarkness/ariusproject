@@ -44,4 +44,12 @@
 	"elastic_tmp_file_name":"tmp.json",
 	"elastic_docs_dir":"../data/web/data",
 	"elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx", "url"]
+
+	"marytts_host" : "localhost",
+	"marytts_port" : "59125",
+	
+	"default_voice" : "marytts_voice1",
+	"marytts_voice1" : {"INPUT_TYPE":"TEXT", "LOCALE":"en_GB", "VOICE":"dfki-poppy", "OUTPUT_TYPE":"AUDIO", "AUDIO":"WAVE", "effect_Robot_selected": "on",  "effect_Robot_parameters": "amount:100.0;"},
+	"marytts_voice2" : "empty",
+	"marytts_voice3" : "empty"
 }

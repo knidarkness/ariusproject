@@ -118,6 +118,8 @@ class OutputInterface:
 
         self._cur_filetype = None
 
+        self.speaker = None
+
     def run(self):
         self._main_window = QWidget()
         self._main_window.setLayout(self._layout)
@@ -158,6 +160,10 @@ class OutputInterface:
                 self._video_play()
             elif command[0] == 'PAUSE':
                 self._video_pause()
+            elif command[0] == "SPEAK":
+                self._speak_text(command[1])
+            elif command[0] == "STOP_SPEAK":
+                self._speak_stop()
             else:
                 print 'command not recognized'
         else:
@@ -244,9 +250,16 @@ class OutputInterface:
         self._zoom_factor -= .1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
-    def _text_to_speech(self, text):
-        tts_mary(text)
-
+    def _speak_text(self, input_text):
+        voice=self._settings.getValue("default_voice")
+        if self.speaker == None:
+            self.speaker = Speaker(self._settings.getValue(voice), self._settings.getValue("marytts_host"), self._settings.getValue("marytts_port"))
+        else:
+			self.speaker.stop()
+        self.speaker.speak(input_text)
+    
+    def _speak_stop(self):
+        self.speaker.stop()
     def _video_play(self):
         script_js = """video=document.getElementById("videoplayer"); video.play()"""
         self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
