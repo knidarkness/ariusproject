@@ -221,7 +221,7 @@ class OutputInterface:
         self._bottom_browser.load(QUrl(url))
 
     def _main_browser_scroll_down(self):
-        scroll_js = """var smooth_scroll_by=function(a,b,c){if(target=Math.round(b)+a.scrollTop,c=Math.round(c),c<0)return Promise.reject("bad duration");if(0===c)return a.scrollTop=target,Promise.resolve();var d=Date.now(),e=d+c,f=a.scrollTop,g=target-f,h=function(a,b,c){if(c<=a)return 0;if(c>=b)return 1;var d=(c-a)/(b-a);return d*d*(3-2*d)};return new Promise(function(b,c){var i=a.scrollTop,j=function(){if(a.scrollTop!=i)return void c("interrupted");var k=Date.now(),l=h(d,e,k),m=Math.round(f+g*l);return a.scrollTop=m,k>=e?void b():a.scrollTop===i&&a.scrollTop!==m?void b():(i=a.scrollTop,void setTimeout(j,0))};setTimeout(j,0)})};"""
+        scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
@@ -229,7 +229,7 @@ class OutputInterface:
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, 300, 1000);")
 
     def _main_browser_scroll_up(self):
-        scroll_js = """var smooth_scroll_by=function(a,b,c){if(target=Math.round(b)+a.scrollTop,c=Math.round(c),c<0)return Promise.reject("bad duration");if(0===c)return a.scrollTop=target,Promise.resolve();var d=Date.now(),e=d+c,f=a.scrollTop,g=target-f,h=function(a,b,c){if(c<=a)return 0;if(c>=b)return 1;var d=(c-a)/(b-a);return d*d*(3-2*d)};return new Promise(function(b,c){var i=a.scrollTop,j=function(){if(a.scrollTop!=i)return void c("interrupted");var k=Date.now(),l=h(d,e,k),m=Math.round(f+g*l);return a.scrollTop=m,k>=e?void b():a.scrollTop===i&&a.scrollTop!==m?void b():(i=a.scrollTop,void setTimeout(j,0))};setTimeout(j,0)})};"""
+        scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
             self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")

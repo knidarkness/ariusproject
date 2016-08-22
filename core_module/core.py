@@ -58,7 +58,6 @@ class Core(threading.Thread):
             "SCROLL_DOWN": ['page down', 'scroll down'],
             "SCROLL_UP": ['page up', 'scroll up'],
             "CANCEL": ['cancel', 'bye', 'thanks'],
-            "SEARCH": ['search', 'find'],
             "WAIT": ['wait']
         }
 
@@ -66,6 +65,8 @@ class Core(threading.Thread):
 
     def run(self):
         self._updater.start()
+        data = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
+        self._send_command(data)
         while True:
             if self._updater.input_speech:
                 print 'state in the beginning is {}'.format(self._statemachine.get_state())
@@ -74,63 +75,47 @@ class Core(threading.Thread):
                 self._updater.input_speech = None
                 self._updater.new_input = False
                 self._lock.release()
-                if self._statemachine.get_state() != 'idle':
-                    query = ' '.join(self._sense_extractor.get_context(user_input))
-                else:
-                    if not self._recognize_start_phrase(user_input):
-                        continue
-                    for start in self._start_phrases:
-                        if start in user_input:
-                            user_input = user_input.replace(start, '')
-                    query = ' '.join(self._sense_extractor.get_context(user_input))
 
-                print 'proceeding'
-
-                if self._statemachine.get_state() == 'idle':
-                    if query:
-                        self._statemachine.handle_message('request')
-                        self._do_work(self._find_data, query)
-
-                elif self._statemachine.get_state() == 'searching':
-                    pass
-
-                elif self._statemachine.get_state() == 'search_failed':
-
-                    if query:
-                        self._do_work(self._find_data, query)
-                        self._statemachine.handle_message('request')
-
-                    elif self._recognize_command(user_input) == 'CANCEL':
-                        self._statemachine.handle_message('cancel')
-                        request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-                        self._send_command(request)
-
-                elif self._statemachine.get_state() == 'displaying_data':
-
-                    if query:
-                        self._do_work(self._find_data, query)
-                        self._statemachine.handle_message('request')
-
-                    elif self._recognize_command(user_input) == 'CANCEL':
-                        request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-                        self._send_command(request)
-                        self._start_phrases.handle_message('cancel')
-
-                    elif self._recognize_command(user_input) == 'ZOOM_IN':
+                if self._recognize_command(user_input) == 'CANCEL':
+                    self._statemachine.handle_message('cancel')
+                    request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
+                    self._send_command(request)
+                    continue
+                if self._statemachine.get_state() == 'displaying_data':
+                    if self._recognize_command(user_input) == 'ZOOM_IN':
                         request = {'type': 'ZOOM_IN', 'command': ''}
                         self._send_command(request)
-
+                        continue
                     elif self._recognize_command(user_input) == 'ZOOM_OUT':
                         request = {'type': 'ZOOM_OUT', 'command': ''}
                         self._send_command(request)
-
+                        continue
                     elif self._recognize_command(user_input) == 'SCROLL_DOWN':
                         request = {'type': 'SCROLL_DOWN', 'command': ''}
                         self._send_command(request)
-
+                        continue
                     elif self._recognize_command(user_input) == 'SCROLL_UP':
                         request = {'type': 'SCROLL_UP', 'command': ''}
                         self._send_command(request)
+                        continue
+
+                if (self._statemachine.get_state() == 'idle' and self._recognize_start_phrase(user_input)) \
+                        or self._statemachine.get_state() != 'idle':
+                    for start in self._start_phrases:
+                        if start in user_input:
+                            user_input = user_input.replace(start, '')
+                    print [i for j in self._commands.values() for i in j]
+                    for word in user_input.split():
+                        if word in [i for j in self._commands.values() for i in j]:
+                            user_input = user_input.replace(word, '')
+
+                    query = ' '.join(self._sense_extractor.get_context(user_input))
+                    print 'proceeding'
+                    if query:
+                        self._statemachine.handle_message('request')
+                        self._do_work(self._find_data, query)
+                    else:
+                        print 'search query is empty'
                 print 'state in the end is {}'.format(self._statemachine.get_state())
 
             else:
@@ -147,7 +132,6 @@ class Core(threading.Thread):
     def _recognize_start_phrase(self, data):
         for start in self._start_phrases:
             if start in data:
-                data = data.replace(start, '')
                 return True
         return False
 
@@ -159,14 +143,14 @@ class Core(threading.Thread):
         print 'opening search screen'
         time.sleep(7)
         print data
-        file_ext = os.path.splitext(data[0][0])[1]
-        print file_ext
         if data:
+            file_ext = os.path.splitext(data[0][0])[1]
+            print file_ext
             if file_ext == '.pdf':
                 data = {'type': 'OPEN_PDF', 'command': data[0][0]}
                 self._statemachine.handle_message('found')
             elif file_ext == '.html':
-                data = {'type': 'OPEN_LOCAL_PAGE    ', 'command': data[0][0]}
+                data = {'type': 'OPEN_LOCAL_PAGE', 'command': data[0][0]}
                 self._statemachine.handle_message('found')
             elif file_ext == '.url':
                 data = open(self._settings.getValue('output_server_home') + data[0][0])
@@ -180,12 +164,6 @@ class Core(threading.Thread):
             self._statemachine.handle_message('not_found')
         result.append(data)
         return None
-
-    def _take_time(self, arg, result):
-        print 'entered long function'
-        time.sleep(10)
-        print 'finished long function'
-        result.append(12)
 
     def _do_work(self, function, argument):
         result = []
@@ -203,7 +181,7 @@ class Core(threading.Thread):
             return None
 
     def _send_command(self, command):
-        print 'send command'
+        print 'send command', command
         self._result_sender.send_data_in_POST(command)
 core = Core()
 core.start()
