@@ -89,7 +89,7 @@ def get_command():
             "type": "none",
             "command": "none"
         }
-    return jsonify(tmp_command)
+    return jsonify(command)
 
 
 @app.route(settings.getValue('flask_server_idle_address'))
