@@ -84,7 +84,7 @@ class Core(threading.Thread):
                 if self._statemachine.get_state() == 'displaying_data':
                     if self._recognize_command(user_input) == 'ZOOM_IN':
                         request = {'type': 'ZOOM_IN', 'command': ''}
-                        self._send_command({'SPEAK': 'Enlarging'})
+                        self._send_command({'type' : 'SPEAK', 'command' : 'Enlarging'})
                         self._send_command(request)
                         continue
                     elif self._recognize_command(user_input) == 'ZOOM_OUT':
@@ -108,7 +108,6 @@ class Core(threading.Thread):
                     for start in self._start_phrases:
                         if start in user_input:
                             user_input = user_input.replace(start, '')
-                    print [i for j in self._commands.values() for i in j]
                     for word in user_input.split():
                         if word in [i for j in self._commands.values() for i in j]:
                             user_input = user_input.replace(word, '')
@@ -129,10 +128,11 @@ class Core(threading.Thread):
             time.sleep(.1)
 
     def _recognize_command(self, data):
-        for command in self._commands.keys():
-            if data in self._commands[command]:
-                print "recognized command is {}, {}".format(command, type(command))
-                return str(command)
+        for command_key in self._commands.keys():
+			for command in self._commands[command_key]:
+				if command in data:
+					print "recognized command is {}, {}".format(command_key, type(command_key))
+					return str(command_key)
 
     def _recognize_start_phrase(self, data):
         for start in self._start_phrases:

@@ -61,3 +61,57 @@
 [2016-08-23 10:30:33,233][INFO ][node                     ] [Americop] stopped
 [2016-08-23 10:30:33,233][INFO ][node                     ] [Americop] closing ...
 [2016-08-23 10:30:33,249][INFO ][node                     ] [Americop] closed
+[2016-08-23 10:43:52,653][INFO ][node                     ] [Strobe] version[2.3.5], pid[20906], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-23 10:43:52,663][INFO ][node                     ] [Strobe] initializing ...
+[2016-08-23 10:43:55,145][INFO ][plugins                  ] [Strobe] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-23 10:43:55,246][INFO ][env                      ] [Strobe] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
+[2016-08-23 10:43:55,266][INFO ][env                      ] [Strobe] heap size [1015.6mb], compressed ordinary object pointers [true]
+[2016-08-23 10:44:01,296][INFO ][node                     ] [Strobe] initialized
+[2016-08-23 10:44:01,296][INFO ][node                     ] [Strobe] starting ...
+[2016-08-23 10:44:01,511][INFO ][transport                ] [Strobe] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-23 10:44:01,526][INFO ][discovery                ] [Strobe] elasticsearch/4FZ7xRMwR3G7ncVwYmwdPg
+[2016-08-23 10:44:04,637][INFO ][cluster.service          ] [Strobe] new_master {Strobe}{4FZ7xRMwR3G7ncVwYmwdPg}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-23 10:44:04,687][INFO ][http                     ] [Strobe] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-23 10:44:04,687][INFO ][node                     ] [Strobe] started
+[2016-08-23 10:44:04,777][INFO ][gateway                  ] [Strobe] recovered [1] indices into cluster_state
+[2016-08-23 10:44:05,416][INFO ][cluster.routing.allocation] [Strobe] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][0]] ...]).
+[2016-08-23 10:47:36,642][INFO ][node                     ] [Strobe] stopping ...
+[2016-08-23 10:47:36,784][INFO ][node                     ] [Strobe] stopped
+[2016-08-23 10:47:36,784][INFO ][node                     ] [Strobe] closing ...
+[2016-08-23 10:47:36,799][INFO ][node                     ] [Strobe] closed
+[2016-08-23 10:48:28,415][INFO ][node                     ] [Tana Nile] version[2.3.5], pid[21180], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-23 10:48:28,432][INFO ][node                     ] [Tana Nile] initializing ...
+[2016-08-23 10:48:31,997][INFO ][plugins                  ] [Tana Nile] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-23 10:48:32,146][INFO ][env                      ] [Tana Nile] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
+[2016-08-23 10:48:32,146][INFO ][env                      ] [Tana Nile] heap size [1015.6mb], compressed ordinary object pointers [true]
+[2016-08-23 10:48:40,824][INFO ][node                     ] [Tana Nile] initialized
+[2016-08-23 10:48:40,825][INFO ][node                     ] [Tana Nile] starting ...
+[2016-08-23 10:48:41,161][INFO ][transport                ] [Tana Nile] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-23 10:48:41,169][INFO ][discovery                ] [Tana Nile] elasticsearch/dOY1VJF-TEWMrRvViGd_6g
+[2016-08-23 10:48:44,351][INFO ][cluster.service          ] [Tana Nile] new_master {Tana Nile}{dOY1VJF-TEWMrRvViGd_6g}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-23 10:48:44,432][INFO ][http                     ] [Tana Nile] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-23 10:48:44,432][INFO ][node                     ] [Tana Nile] started
+[2016-08-23 10:48:44,659][INFO ][gateway                  ] [Tana Nile] recovered [1] indices into cluster_state
+[2016-08-23 10:48:45,632][INFO ][cluster.routing.allocation] [Tana Nile] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][4]] ...]).
+[2016-08-23 10:52:10,809][INFO ][node                     ] [Tana Nile] stopping ...
+[2016-08-23 10:52:11,031][INFO ][node                     ] [Tana Nile] stopped
+[2016-08-23 10:52:11,031][INFO ][node                     ] [Tana Nile] closing ...
+[2016-08-23 10:52:11,042][INFO ][node                     ] [Tana Nile] closed
+[2016-08-23 10:53:43,147][INFO ][node                     ] [Doctor Faustus] version[2.3.5], pid[21475], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-23 10:53:43,148][INFO ][node                     ] [Doctor Faustus] initializing ...
+[2016-08-23 10:53:46,747][INFO ][plugins                  ] [Doctor Faustus] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-23 10:53:46,876][INFO ][env                      ] [Doctor Faustus] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
+[2016-08-23 10:53:46,882][INFO ][env                      ] [Doctor Faustus] heap size [1015.6mb], compressed ordinary object pointers [true]
+[2016-08-23 10:53:54,628][INFO ][node                     ] [Doctor Faustus] initialized
+[2016-08-23 10:53:54,628][INFO ][node                     ] [Doctor Faustus] starting ...
+[2016-08-23 10:53:54,947][INFO ][transport                ] [Doctor Faustus] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-23 10:53:54,958][INFO ][discovery                ] [Doctor Faustus] elasticsearch/PYV3UbBIRsWSiRmYGhCGvA
+[2016-08-23 10:53:58,172][INFO ][cluster.service          ] [Doctor Faustus] new_master {Doctor Faustus}{PYV3UbBIRsWSiRmYGhCGvA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-23 10:53:58,338][INFO ][http                     ] [Doctor Faustus] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-23 10:53:58,346][INFO ][node                     ] [Doctor Faustus] started
+[2016-08-23 10:53:58,599][INFO ][gateway                  ] [Doctor Faustus] recovered [1] indices into cluster_state
+[2016-08-23 10:54:00,570][INFO ][cluster.routing.allocation] [Doctor Faustus] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][0], [arius][1], [arius][4], [arius][3], [arius][4], [arius][1], [arius][0]] ...]).
+[2016-08-23 10:59:47,109][INFO ][cluster.metadata         ] [Doctor Faustus] [arius] creating index, cause [api], templates [], shards [5]/[1], mappings []
+[2016-08-23 10:59:47,435][INFO ][cluster.routing.allocation] [Doctor Faustus] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][4]] ...]).
+[2016-08-23 10:59:47,474][INFO ][cluster.metadata         ] [Doctor Faustus] [arius] create_mapping [doc]
+[2016-08-23 10:59:53,544][INFO ][cluster.metadata         ] [Doctor Faustus] [arius] update_mapping [doc]

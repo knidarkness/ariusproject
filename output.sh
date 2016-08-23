@@ -1,2 +1,3 @@
 #!/bin/sh
-env/bin/python output_module/output_main.py
+cd output_module
+../env/bin/python output_main.py

@@ -1,3 +1,4 @@
 #!/bin/sh
-env/bin/python core_module/emulator.py
+cd core_module
+../env/bin/python core.py
 
