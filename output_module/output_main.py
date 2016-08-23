@@ -215,7 +215,8 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadLocalPage(self, filename):
-        url = 'file://' + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/data/" + filename
+        url = 'file://' + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/" + filename
+        print url
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 

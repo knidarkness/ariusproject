@@ -49,7 +49,7 @@
 	"marytts_port" : "59125",
 	
 	"default_voice" : "marytts_voice1",
-	"marytts_voice1" : {"INPUT_TYPE":"TEXT", "LOCALE":"en_GB", "VOICE":"dfki-poppy", "OUTPUT_TYPE":"AUDIO", "AUDIO":"WAVE", "effect_Robot_selected": "on",  "effect_Robot_parameters": "amount:100.0;"},
+	"marytts_voice1" : {"INPUT_TYPE":"TEXT", "LOCALE":"en_US", "VOICE":"cmu-slt-hsmm", "OUTPUT_TYPE":"AUDIO", "AUDIO":"WAVE", "effect_Robot_selected": "on",  "effect_Robot_parameters": "amount:10.0;"},
 	"marytts_voice2" : "empty",
 	"marytts_voice3" : "empty"
 }

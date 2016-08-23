@@ -1,0 +1,35 @@
+var SearchHints=function() {
+SearchHints.initializeBase(this);
+this._timeout = 0;
+this._userContext = null;
+this._succeeded = null;
+this._failed = null;
+}
+SearchHints.prototype={
+_get_path:function() {
+ var p = this.get_path();
+ if (p) return p;
+ else return SearchHints._staticInstance.get_path();},
+GetCompletionList:function(prefixText,count,succeededCallback, failedCallback, userContext) {
+return this._invoke(this._get_path(), 'GetCompletionList',false,{prefixText:prefixText,count:count},succeededCallback,failedCallback,userContext); },
+GetHintsListWithURLs:function(prefixText,count,culture,succeededCallback, failedCallback, userContext) {
+return this._invoke(this._get_path(), 'GetHintsListWithURLs',false,{prefixText:prefixText,count:count,culture:culture},succeededCallback,failedCallback,userContext); }}
+SearchHints.registerClass('SearchHints',Sys.Net.WebServiceProxy);
+SearchHints._staticInstance = new SearchHints();
+SearchHints.set_path = function(value) { SearchHints._staticInstance.set_path(value); }
+SearchHints.get_path = function() { return SearchHints._staticInstance.get_path(); }
+SearchHints.set_timeout = function(value) { SearchHints._staticInstance.set_timeout(value); }
+SearchHints.get_timeout = function() { return SearchHints._staticInstance.get_timeout(); }
+SearchHints.set_defaultUserContext = function(value) { SearchHints._staticInstance.set_defaultUserContext(value); }
+SearchHints.get_defaultUserContext = function() { return SearchHints._staticInstance.get_defaultUserContext(); }
+SearchHints.set_defaultSucceededCallback = function(value) { SearchHints._staticInstance.set_defaultSucceededCallback(value); }
+SearchHints.get_defaultSucceededCallback = function() { return SearchHints._staticInstance.get_defaultSucceededCallback(); }
+SearchHints.set_defaultFailedCallback = function(value) { SearchHints._staticInstance.set_defaultFailedCallback(value); }
+SearchHints.get_defaultFailedCallback = function() { return SearchHints._staticInstance.get_defaultFailedCallback(); }
+SearchHints.set_enableJsonp = function(value) { SearchHints._staticInstance.set_enableJsonp(value); }
+SearchHints.get_enableJsonp = function() { return SearchHints._staticInstance.get_enableJsonp(); }
+SearchHints.set_jsonpCallbackParameter = function(value) { SearchHints._staticInstance.set_jsonpCallbackParameter(value); }
+SearchHints.get_jsonpCallbackParameter = function() { return SearchHints._staticInstance.get_jsonpCallbackParameter(); }
+SearchHints.set_path("/CMSPages/SearchHints.asmx");
+SearchHints.GetCompletionList= function(prefixText,count,onSuccess,onFailed,userContext) {SearchHints._staticInstance.GetCompletionList(prefixText,count,onSuccess,onFailed,userContext); }
+SearchHints.GetHintsListWithURLs= function(prefixText,count,culture,onSuccess,onFailed,userContext) {SearchHints._staticInstance.GetHintsListWithURLs(prefixText,count,culture,onSuccess,onFailed,userContext); }
