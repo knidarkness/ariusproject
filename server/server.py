@@ -13,7 +13,7 @@ command = {
     "type": "none",
     "command": "none1"
 }
-
+command_queue = []
 
 @app.errorhandler(404)
 def not_found(err):
@@ -75,18 +75,20 @@ def command_input():
             'command': request.json['command']
         }
         print command
+        command_queue.append(command)
         return jsonify(command), 201
 
 
 @app.route(settings.getValue('flask_server_output_client'), methods=['GET'])
 def get_command():
-    global command
-    tmp_command = command
-    print tmp_command
-    command = {
-        "type": "none",
-        "command": "none"
-    }
+    global command_queue
+    if command_queue:
+        command=command_queue.pop(0)
+    else:
+        command = {
+            "type": "none",
+            "command": "none"
+        }
     return jsonify(tmp_command)
 
 
