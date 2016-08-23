@@ -1,63 +1,18 @@
-[2016-08-22 06:17:02,140][INFO ][node                     ] [Doctor Spectrum] version[2.3.5], pid[3572], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-22 06:17:02,150][INFO ][node                     ] [Doctor Spectrum] initializing ...
-[2016-08-22 06:17:05,121][INFO ][plugins                  ] [Doctor Spectrum] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-22 06:17:05,305][INFO ][env                      ] [Doctor Spectrum] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [1.5gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-22 06:17:05,318][INFO ][env                      ] [Doctor Spectrum] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-22 07:03:25,466][INFO ][node                     ] [Hellfire] version[2.3.5], pid[4607], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-22 07:03:25,471][INFO ][node                     ] [Hellfire] initializing ...
-[2016-08-22 07:13:52,968][INFO ][node                     ] [Green Goblin IV] version[2.3.5], pid[4784], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-22 07:13:52,968][INFO ][node                     ] [Green Goblin IV] initializing ...
-[2016-08-22 07:13:55,869][INFO ][plugins                  ] [Green Goblin IV] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-22 07:13:56,016][INFO ][env                      ] [Green Goblin IV] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [1.5gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-22 07:13:56,022][INFO ][env                      ] [Green Goblin IV] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-22 07:14:03,307][INFO ][node                     ] [Green Goblin IV] initialized
-[2016-08-22 07:14:03,315][INFO ][node                     ] [Green Goblin IV] starting ...
-[2016-08-22 07:14:03,691][INFO ][transport                ] [Green Goblin IV] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-22 07:14:03,718][INFO ][discovery                ] [Green Goblin IV] elasticsearch/wtq4QLXeTqSikLsif57C0w
-[2016-08-22 07:14:06,864][INFO ][cluster.service          ] [Green Goblin IV] new_master {Green Goblin IV}{wtq4QLXeTqSikLsif57C0w}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
-[2016-08-22 07:14:06,892][INFO ][http                     ] [Green Goblin IV] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2016-08-22 07:14:06,893][INFO ][node                     ] [Green Goblin IV] started
-[2016-08-22 07:14:07,197][INFO ][gateway                  ] [Green Goblin IV] recovered [1] indices into cluster_state
-[2016-08-22 07:14:08,739][INFO ][cluster.routing.allocation] [Green Goblin IV] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][3]] ...]).
-[2016-08-22 07:14:36,914][WARN ][cluster.routing.allocation.decider] [Green Goblin IV] high disk watermark [90%] exceeded on [wtq4QLXeTqSikLsif57C0w][Green Goblin IV][/home/arius/ariusproject/elasticsearch/data/elasticsearch/nodes/0] free: 1.5gb[9.6%], shards will be relocated away from this node
-[2016-08-22 07:14:36,915][INFO ][cluster.routing.allocation.decider] [Green Goblin IV] rerouting shards: [high disk watermark exceeded on one or more nodes]
-[2016-08-22 07:14:50,132][INFO ][node                     ] [Green Goblin IV] stopping ...
-[2016-08-22 07:14:50,367][INFO ][node                     ] [Green Goblin IV] stopped
-[2016-08-22 07:14:50,367][INFO ][node                     ] [Green Goblin IV] closing ...
-[2016-08-22 07:14:50,392][INFO ][node                     ] [Green Goblin IV] closed
-[2016-08-23 10:18:22,216][INFO ][node                     ] [Cannonball] version[2.3.5], pid[19704], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-23 10:18:22,218][INFO ][node                     ] [Cannonball] initializing ...
-[2016-08-23 10:18:24,027][INFO ][plugins                  ] [Cannonball] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-23 10:18:24,155][INFO ][env                      ] [Cannonball] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
-[2016-08-23 10:18:24,155][INFO ][env                      ] [Cannonball] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-23 10:18:31,429][INFO ][node                     ] [Cannonball] initialized
-[2016-08-23 10:18:31,431][INFO ][node                     ] [Cannonball] starting ...
-[2016-08-23 10:18:31,713][INFO ][transport                ] [Cannonball] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-23 10:18:31,728][INFO ][discovery                ] [Cannonball] elasticsearch/OTLqRNW2SfmugY5Pi6uSlw
-[2016-08-23 10:18:34,896][INFO ][cluster.service          ] [Cannonball] new_master {Cannonball}{OTLqRNW2SfmugY5Pi6uSlw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
-[2016-08-23 10:18:35,015][INFO ][http                     ] [Cannonball] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2016-08-23 10:18:35,021][INFO ][node                     ] [Cannonball] started
-[2016-08-23 10:18:35,284][INFO ][gateway                  ] [Cannonball] recovered [1] indices into cluster_state
-[2016-08-23 10:18:36,911][INFO ][cluster.routing.allocation] [Cannonball] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][2], [arius][2]] ...]).
-[2016-08-23 10:20:05,180][INFO ][node                     ] [Cannonball] stopping ...
-[2016-08-23 10:20:05,369][INFO ][node                     ] [Cannonball] stopped
-[2016-08-23 10:20:05,369][INFO ][node                     ] [Cannonball] closing ...
-[2016-08-23 10:20:05,431][INFO ][node                     ] [Cannonball] closed
-[2016-08-23 10:24:56,958][INFO ][node                     ] [Americop] version[2.3.5], pid[19942], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-23 10:24:56,970][INFO ][node                     ] [Americop] initializing ...
-[2016-08-23 10:25:00,580][INFO ][plugins                  ] [Americop] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-23 10:25:00,679][INFO ][env                      ] [Americop] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
-[2016-08-23 10:25:00,696][INFO ][env                      ] [Americop] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-23 10:25:09,511][INFO ][node                     ] [Americop] initialized
-[2016-08-23 10:25:09,516][INFO ][node                     ] [Americop] starting ...
-[2016-08-23 10:25:09,825][INFO ][transport                ] [Americop] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-23 10:25:09,848][INFO ][discovery                ] [Americop] elasticsearch/PMEyHqfaQ_SXa9BwpG5_7A
-[2016-08-23 10:25:13,007][INFO ][cluster.service          ] [Americop] new_master {Americop}{PMEyHqfaQ_SXa9BwpG5_7A}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
-[2016-08-23 10:25:13,095][INFO ][http                     ] [Americop] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2016-08-23 10:25:13,096][INFO ][node                     ] [Americop] started
-[2016-08-23 10:25:13,333][INFO ][gateway                  ] [Americop] recovered [1] indices into cluster_state
-[2016-08-23 10:25:14,857][INFO ][cluster.routing.allocation] [Americop] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][0]] ...]).
-[2016-08-23 10:30:32,984][INFO ][node                     ] [Americop] stopping ...
-[2016-08-23 10:30:33,233][INFO ][node                     ] [Americop] stopped
-[2016-08-23 10:30:33,233][INFO ][node                     ] [Americop] closing ...
-[2016-08-23 10:30:33,249][INFO ][node                     ] [Americop] closed
+[2016-08-23 10:57:22,763][INFO ][node                     ] [Kirtsyn Perrin Short Stop] version[2.3.5], pid[20774], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-23 10:57:22,764][INFO ][node                     ] [Kirtsyn Perrin Short Stop] initializing ...
+[2016-08-23 10:57:23,154][INFO ][plugins                  ] [Kirtsyn Perrin Short Stop] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-23 10:57:23,168][INFO ][env                      ] [Kirtsyn Perrin Short Stop] using [1] data paths, mounts [[/ (/dev/sda3)]], net usable_space [101.4gb], net total_space [291.2gb], spins? [possibly], types [ext4]
+[2016-08-23 10:57:23,168][INFO ][env                      ] [Kirtsyn Perrin Short Stop] heap size [989.8mb], compressed ordinary object pointers [true]
+[2016-08-23 10:57:24,201][INFO ][node                     ] [Kirtsyn Perrin Short Stop] initialized
+[2016-08-23 10:57:24,201][INFO ][node                     ] [Kirtsyn Perrin Short Stop] starting ...
+[2016-08-23 10:57:24,244][INFO ][transport                ] [Kirtsyn Perrin Short Stop] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-23 10:57:24,246][INFO ][discovery                ] [Kirtsyn Perrin Short Stop] elasticsearch/1W5ORYqRRJGKiwNrpPEfwA
+[2016-08-23 10:57:27,285][INFO ][cluster.service          ] [Kirtsyn Perrin Short Stop] new_master {Kirtsyn Perrin Short Stop}{1W5ORYqRRJGKiwNrpPEfwA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-23 10:57:27,297][INFO ][http                     ] [Kirtsyn Perrin Short Stop] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-23 10:57:27,297][INFO ][node                     ] [Kirtsyn Perrin Short Stop] started
+[2016-08-23 10:57:27,529][INFO ][gateway                  ] [Kirtsyn Perrin Short Stop] recovered [1] indices into cluster_state
+[2016-08-23 10:57:28,522][INFO ][cluster.routing.allocation] [Kirtsyn Perrin Short Stop] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][4]] ...]).
+[2016-08-23 10:59:00,071][INFO ][cluster.metadata         ] [Kirtsyn Perrin Short Stop] [arius] creating index, cause [api], templates [], shards [5]/[1], mappings []
+[2016-08-23 10:59:00,299][INFO ][cluster.metadata         ] [Kirtsyn Perrin Short Stop] [arius] create_mapping [doc]
+[2016-08-23 10:59:00,835][INFO ][cluster.routing.allocation] [Kirtsyn Perrin Short Stop] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][4]] ...]).
+[2016-08-23 10:59:01,570][INFO ][cluster.metadata         ] [Kirtsyn Perrin Short Stop] [arius] update_mapping [doc]

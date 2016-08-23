@@ -1,106 +1,18 @@
-[2016-08-18 07:38:30,685][INFO ][node                     ] [Hellion] version[2.3.5], pid[5137], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:38:30,690][INFO ][node                     ] [Hellion] initializing ...
-[2016-08-18 07:42:11,063][INFO ][node                     ] [Raggadorr] version[2.3.5], pid[5226], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:42:11,067][INFO ][node                     ] [Raggadorr] initializing ...
-[2016-08-18 07:42:13,650][INFO ][plugins                  ] [Raggadorr] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 07:42:13,811][INFO ][env                      ] [Raggadorr] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 07:42:13,811][INFO ][env                      ] [Raggadorr] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 07:53:13,211][INFO ][node                     ] [Jumbo Carnation] version[2.3.5], pid[5530], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:53:13,224][INFO ][node                     ] [Jumbo Carnation] initializing ...
-[2016-08-18 07:53:16,015][INFO ][plugins                  ] [Jumbo Carnation] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 07:53:16,172][INFO ][env                      ] [Jumbo Carnation] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 07:53:16,177][INFO ][env                      ] [Jumbo Carnation] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 07:53:55,453][INFO ][node                     ] [Invisible Girl] version[2.3.5], pid[5613], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:53:55,462][INFO ][node                     ] [Invisible Girl] initializing ...
-[2016-08-18 07:53:58,980][INFO ][plugins                  ] [Invisible Girl] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 07:53:59,130][INFO ][env                      ] [Invisible Girl] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 07:53:59,141][INFO ][env                      ] [Invisible Girl] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 07:54:59,445][INFO ][node                     ] [Ghost Rider 2099] version[2.3.5], pid[5703], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:54:59,451][INFO ][node                     ] [Ghost Rider 2099] initializing ...
-[2016-08-18 07:55:02,915][INFO ][plugins                  ] [Ghost Rider 2099] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 07:55:03,056][INFO ][env                      ] [Ghost Rider 2099] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 07:55:03,071][INFO ][env                      ] [Ghost Rider 2099] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 07:55:16,785][INFO ][node                     ] [Ghost Rider 2099] initialized
-[2016-08-18 07:55:16,786][INFO ][node                     ] [Ghost Rider 2099] starting ...
-[2016-08-18 07:55:17,450][INFO ][transport                ] [Ghost Rider 2099] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-18 07:55:17,507][INFO ][discovery                ] [Ghost Rider 2099] elasticsearch/t0IzbxUrTxCSwticG1T-bw
-[2016-08-18 07:55:20,763][INFO ][cluster.service          ] [Ghost Rider 2099] new_master {Ghost Rider 2099}{t0IzbxUrTxCSwticG1T-bw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
-[2016-08-18 07:55:20,900][INFO ][http                     ] [Ghost Rider 2099] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2016-08-18 07:55:20,900][INFO ][node                     ] [Ghost Rider 2099] started
-[2016-08-18 07:55:21,369][INFO ][gateway                  ] [Ghost Rider 2099] recovered [1] indices into cluster_state
-[2016-08-18 07:55:24,468][INFO ][cluster.routing.allocation] [Ghost Rider 2099] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][1], [arius][0], [arius][3], [arius][2], [arius][0]] ...]).
-[2016-08-18 07:56:00,149][INFO ][node                     ] [Ghost Rider 2099] stopping ...
-[2016-08-18 07:56:00,306][INFO ][node                     ] [Ghost Rider 2099] stopped
-[2016-08-18 07:56:00,306][INFO ][node                     ] [Ghost Rider 2099] closing ...
-[2016-08-18 07:56:00,320][INFO ][node                     ] [Ghost Rider 2099] closed
-[2016-08-18 07:58:54,684][INFO ][node                     ] [Widget] version[2.3.5], pid[5867], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:58:54,691][INFO ][node                     ] [Widget] initializing ...
-[2016-08-18 07:58:57,637][INFO ][plugins                  ] [Widget] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 07:58:57,759][INFO ][env                      ] [Widget] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 07:58:57,760][INFO ][env                      ] [Widget] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 07:59:27,370][INFO ][node                     ] [Scream] version[2.3.5], pid[5953], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 07:59:27,377][INFO ][node                     ] [Scream] initializing ...
-[2016-08-18 07:59:29,730][INFO ][plugins                  ] [Scream] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 07:59:29,823][INFO ][env                      ] [Scream] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 07:59:29,832][INFO ][env                      ] [Scream] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:00:59,247][INFO ][node                     ] [Amelia Voght] version[2.3.5], pid[6044], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:00:59,254][INFO ][node                     ] [Amelia Voght] initializing ...
-[2016-08-18 08:01:28,680][INFO ][node                     ] [Amalgam] version[2.3.5], pid[6135], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:01:28,686][INFO ][node                     ] [Amalgam] initializing ...
-[2016-08-18 08:01:30,774][INFO ][plugins                  ] [Amalgam] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 08:01:30,823][INFO ][env                      ] [Amalgam] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 08:01:30,823][INFO ][env                      ] [Amalgam] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:02:49,184][INFO ][node                     ] [Hargen the Measurer] version[2.3.5], pid[6233], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:02:49,184][INFO ][node                     ] [Hargen the Measurer] initializing ...
-[2016-08-18 08:02:51,320][INFO ][plugins                  ] [Hargen the Measurer] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 08:02:51,413][INFO ][env                      ] [Hargen the Measurer] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 08:02:51,426][INFO ][env                      ] [Hargen the Measurer] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:02:59,603][INFO ][node                     ] [Hargen the Measurer] initialized
-[2016-08-18 08:02:59,609][INFO ][node                     ] [Hargen the Measurer] starting ...
-[2016-08-18 08:02:59,951][INFO ][transport                ] [Hargen the Measurer] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-18 08:02:59,972][INFO ][discovery                ] [Hargen the Measurer] elasticsearch/zZqY_MmgSNSDdYBf0Cv3Bg
-[2016-08-18 08:03:01,985][INFO ][node                     ] [Hargen the Measurer] stopping ...
-[2016-08-18 08:03:02,018][INFO ][node                     ] [Hargen the Measurer] stopped
-[2016-08-18 08:03:02,018][INFO ][node                     ] [Hargen the Measurer] closing ...
-[2016-08-18 08:03:02,083][INFO ][node                     ] [Hargen the Measurer] closed
-[2016-08-18 08:03:34,266][INFO ][node                     ] [Ajaxis] version[2.3.5], pid[6348], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:03:34,270][INFO ][node                     ] [Ajaxis] initializing ...
-[2016-08-18 08:03:37,117][INFO ][plugins                  ] [Ajaxis] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 08:03:37,229][INFO ][env                      ] [Ajaxis] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 08:03:37,237][INFO ][env                      ] [Ajaxis] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:03:43,029][INFO ][node                     ] [Ajaxis] initialized
-[2016-08-18 08:03:43,038][INFO ][node                     ] [Ajaxis] starting ...
-[2016-08-18 08:03:43,252][INFO ][transport                ] [Ajaxis] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-18 08:03:43,264][INFO ][discovery                ] [Ajaxis] elasticsearch/5lkyC9f5SCK4awjEyS2Bnw
-[2016-08-18 08:03:46,048][INFO ][node                     ] [Ajaxis] stopping ...
-[2016-08-18 08:03:46,083][INFO ][node                     ] [Ajaxis] stopped
-[2016-08-18 08:03:46,083][INFO ][node                     ] [Ajaxis] closing ...
-[2016-08-18 08:03:46,103][INFO ][node                     ] [Ajaxis] closed
-[2016-08-18 08:04:24,969][INFO ][node                     ] [Alaris] version[2.3.5], pid[6469], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:04:24,970][INFO ][node                     ] [Alaris] initializing ...
-[2016-08-18 08:04:26,999][INFO ][plugins                  ] [Alaris] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 08:04:27,104][INFO ][env                      ] [Alaris] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 08:04:27,107][INFO ][env                      ] [Alaris] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:04:43,681][INFO ][node                     ] [Noh-Varr] version[2.3.5], pid[6549], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:04:43,685][INFO ][node                     ] [Noh-Varr] initializing ...
-[2016-08-18 08:04:45,726][INFO ][plugins                  ] [Noh-Varr] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 08:04:45,818][INFO ][env                      ] [Noh-Varr] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 08:04:45,843][INFO ][env                      ] [Noh-Varr] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:05:08,355][INFO ][node                     ] [Longneck] version[2.3.5], pid[6636], build[90f439f/2016-07-27T10:36:52Z]
-[2016-08-18 08:05:08,358][INFO ][node                     ] [Longneck] initializing ...
-[2016-08-18 08:05:11,145][INFO ][plugins                  ] [Longneck] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
-[2016-08-18 08:05:11,269][INFO ][env                      ] [Longneck] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [3.4gb], net total_space [15.6gb], spins? [possibly], types [ext4]
-[2016-08-18 08:05:11,273][INFO ][env                      ] [Longneck] heap size [1015.6mb], compressed ordinary object pointers [true]
-[2016-08-18 08:05:19,792][INFO ][node                     ] [Longneck] initialized
-[2016-08-18 08:05:19,797][INFO ][node                     ] [Longneck] starting ...
-[2016-08-18 08:05:20,067][INFO ][transport                ] [Longneck] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2016-08-18 08:05:20,086][INFO ][discovery                ] [Longneck] elasticsearch/LsaZi5OgTV-6Fdz3avP0CA
-[2016-08-18 08:05:23,248][INFO ][cluster.service          ] [Longneck] new_master {Longneck}{LsaZi5OgTV-6Fdz3avP0CA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
-[2016-08-18 08:05:23,339][INFO ][http                     ] [Longneck] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2016-08-18 08:05:23,339][INFO ][node                     ] [Longneck] started
-[2016-08-18 08:05:23,568][INFO ][gateway                  ] [Longneck] recovered [1] indices into cluster_state
-[2016-08-18 08:05:25,178][INFO ][cluster.routing.allocation] [Longneck] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][0]] ...]).
-[2016-08-18 08:05:53,676][INFO ][node                     ] [Longneck] stopping ...
-[2016-08-18 08:05:53,841][INFO ][node                     ] [Longneck] stopped
-[2016-08-18 08:05:53,841][INFO ][node                     ] [Longneck] closing ...
-[2016-08-18 08:05:53,869][INFO ][node                     ] [Longneck] closed
+[2016-08-18 14:37:55,429][INFO ][node                     ] [Doctor Leery] version[2.3.5], pid[3018], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-18 14:37:55,447][INFO ][node                     ] [Doctor Leery] initializing ...
+[2016-08-18 14:37:56,747][INFO ][plugins                  ] [Doctor Leery] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-18 14:37:56,866][INFO ][env                      ] [Doctor Leery] using [1] data paths, mounts [[/ (/dev/sda3)]], net usable_space [128.6gb], net total_space [291.2gb], spins? [possibly], types [ext4]
+[2016-08-18 14:37:56,866][INFO ][env                      ] [Doctor Leery] heap size [989.8mb], compressed ordinary object pointers [true]
+[2016-08-18 14:38:00,089][INFO ][node                     ] [Doctor Leery] initialized
+[2016-08-18 14:38:00,089][INFO ][node                     ] [Doctor Leery] starting ...
+[2016-08-18 14:38:00,279][INFO ][transport                ] [Doctor Leery] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-18 14:38:00,286][INFO ][discovery                ] [Doctor Leery] elasticsearch/xytgUwcyTBOLqnUQku8RDQ
+[2016-08-18 14:38:03,349][INFO ][cluster.service          ] [Doctor Leery] new_master {Doctor Leery}{xytgUwcyTBOLqnUQku8RDQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-18 14:38:03,363][INFO ][http                     ] [Doctor Leery] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-18 14:38:03,363][INFO ][node                     ] [Doctor Leery] started
+[2016-08-18 14:38:03,745][INFO ][gateway                  ] [Doctor Leery] recovered [1] indices into cluster_state
+[2016-08-18 14:38:05,247][INFO ][cluster.routing.allocation] [Doctor Leery] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][1]] ...]).
+[2016-08-18 14:57:37,060][INFO ][node                     ] [Doctor Leery] stopping ...
+[2016-08-18 14:57:37,100][INFO ][node                     ] [Doctor Leery] stopped
+[2016-08-18 14:57:37,100][INFO ][node                     ] [Doctor Leery] closing ...
+[2016-08-18 14:57:37,103][INFO ][node                     ] [Doctor Leery] closed
