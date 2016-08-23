@@ -5,7 +5,7 @@ import os
 class ConstExtractor():
     def __init__(self, filename='configure.json'):
         filename = os.path.dirname(__file__) + "/" + filename
-        with open(filename) as data_file:
+        with open(filename, 'r') as data_file:
             self.const_dict = json.load(data_file)
 
     def getValue(self, key):

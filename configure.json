@@ -43,7 +43,7 @@
 	"elastic_type": "doc",
 	"elastic_tmp_file_name":"tmp.json",
 	"elastic_docs_dir":"../data/web/data",
-	"elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx", "url"]
+	"elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx", "url"],
 
 	"marytts_host" : "localhost",
 	"marytts_port" : "59125",

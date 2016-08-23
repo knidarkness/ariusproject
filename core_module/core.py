@@ -78,7 +78,7 @@ class Core(threading.Thread):
                 if self._recognize_command(user_input) == 'CANCEL':
                     self._statemachine.handle_message('cancel')
                     request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-                    self._send_command('type':'SPEAK', 'command':'Operation cancelled')
+                    self._send_command({'type':'SPEAK', 'command':'Operation cancelled'})
                     self._send_command(request)
                     continue
                 if self._statemachine.get_state() == 'displaying_data':
@@ -94,12 +94,12 @@ class Core(threading.Thread):
                         continue
                     elif self._recognize_command(user_input) == 'SCROLL_DOWN':
                         request = {'type': 'SCROLL_DOWN', 'command': ''}
-                        self._send_command('type':'SPEAK', 'command':'Scrolling down, sir')
+                        self._send_command({'type':'SPEAK', 'command':'Scrolling down, sir'})
                         self._send_command(request)
                         continue
                     elif self._recognize_command(user_input) == 'SCROLL_UP':
                         request = {'type': 'SCROLL_UP', 'command': ''}
-                        self._send_command('type':'SPEAK', 'command':'Scrolling up as you wish')
+                        self._send_command({'type':'SPEAK', 'command':'Scrolling up as you wish'})
                         self._send_command(request)
                         continue
 
@@ -117,7 +117,7 @@ class Core(threading.Thread):
                     print 'proceeding'
                     if query:
                         self._statemachine.handle_message('request')
-                        self._send_command('type':'SPEAK', 'command':'Search request accepted, my lord')
+                        self._send_command({'type':'SPEAK', 'command':'Search request accepted, my lord'})
                         self._do_work(self._find_data, query)
                     else:
                         print 'search query is empty'

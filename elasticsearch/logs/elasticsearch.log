@@ -25,3 +25,39 @@
 [2016-08-22 07:14:50,367][INFO ][node                     ] [Green Goblin IV] stopped
 [2016-08-22 07:14:50,367][INFO ][node                     ] [Green Goblin IV] closing ...
 [2016-08-22 07:14:50,392][INFO ][node                     ] [Green Goblin IV] closed
+[2016-08-23 10:18:22,216][INFO ][node                     ] [Cannonball] version[2.3.5], pid[19704], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-23 10:18:22,218][INFO ][node                     ] [Cannonball] initializing ...
+[2016-08-23 10:18:24,027][INFO ][plugins                  ] [Cannonball] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-23 10:18:24,155][INFO ][env                      ] [Cannonball] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
+[2016-08-23 10:18:24,155][INFO ][env                      ] [Cannonball] heap size [1015.6mb], compressed ordinary object pointers [true]
+[2016-08-23 10:18:31,429][INFO ][node                     ] [Cannonball] initialized
+[2016-08-23 10:18:31,431][INFO ][node                     ] [Cannonball] starting ...
+[2016-08-23 10:18:31,713][INFO ][transport                ] [Cannonball] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-23 10:18:31,728][INFO ][discovery                ] [Cannonball] elasticsearch/OTLqRNW2SfmugY5Pi6uSlw
+[2016-08-23 10:18:34,896][INFO ][cluster.service          ] [Cannonball] new_master {Cannonball}{OTLqRNW2SfmugY5Pi6uSlw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-23 10:18:35,015][INFO ][http                     ] [Cannonball] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-23 10:18:35,021][INFO ][node                     ] [Cannonball] started
+[2016-08-23 10:18:35,284][INFO ][gateway                  ] [Cannonball] recovered [1] indices into cluster_state
+[2016-08-23 10:18:36,911][INFO ][cluster.routing.allocation] [Cannonball] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][2], [arius][2]] ...]).
+[2016-08-23 10:20:05,180][INFO ][node                     ] [Cannonball] stopping ...
+[2016-08-23 10:20:05,369][INFO ][node                     ] [Cannonball] stopped
+[2016-08-23 10:20:05,369][INFO ][node                     ] [Cannonball] closing ...
+[2016-08-23 10:20:05,431][INFO ][node                     ] [Cannonball] closed
+[2016-08-23 10:24:56,958][INFO ][node                     ] [Americop] version[2.3.5], pid[19942], build[90f439f/2016-07-27T10:36:52Z]
+[2016-08-23 10:24:56,970][INFO ][node                     ] [Americop] initializing ...
+[2016-08-23 10:25:00,580][INFO ][plugins                  ] [Americop] modules [reindex, lang-expression, lang-groovy], plugins [mapper-attachments], sites []
+[2016-08-23 10:25:00,679][INFO ][env                      ] [Americop] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [25.7gb], net total_space [35.3gb], spins? [possibly], types [ext4]
+[2016-08-23 10:25:00,696][INFO ][env                      ] [Americop] heap size [1015.6mb], compressed ordinary object pointers [true]
+[2016-08-23 10:25:09,511][INFO ][node                     ] [Americop] initialized
+[2016-08-23 10:25:09,516][INFO ][node                     ] [Americop] starting ...
+[2016-08-23 10:25:09,825][INFO ][transport                ] [Americop] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2016-08-23 10:25:09,848][INFO ][discovery                ] [Americop] elasticsearch/PMEyHqfaQ_SXa9BwpG5_7A
+[2016-08-23 10:25:13,007][INFO ][cluster.service          ] [Americop] new_master {Americop}{PMEyHqfaQ_SXa9BwpG5_7A}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-23 10:25:13,095][INFO ][http                     ] [Americop] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2016-08-23 10:25:13,096][INFO ][node                     ] [Americop] started
+[2016-08-23 10:25:13,333][INFO ][gateway                  ] [Americop] recovered [1] indices into cluster_state
+[2016-08-23 10:25:14,857][INFO ][cluster.routing.allocation] [Americop] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[arius][0]] ...]).
+[2016-08-23 10:30:32,984][INFO ][node                     ] [Americop] stopping ...
+[2016-08-23 10:30:33,233][INFO ][node                     ] [Americop] stopped
+[2016-08-23 10:30:33,233][INFO ][node                     ] [Americop] closing ...
+[2016-08-23 10:30:33,249][INFO ][node                     ] [Americop] closed

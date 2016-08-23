@@ -12,7 +12,7 @@ from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
 sys.path.append("../")
 from configure import ConstExtractor
-from tts_module import tts_mary
+from tts_module import Speaker
 
 from client import RESTClient
 
