@@ -4,7 +4,6 @@ import sys
 import os
 import subprocess
 import threading
-import thread
 import functools
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QUrl, QEventLoop, QTimer
@@ -257,7 +256,7 @@ class OutputInterface:
         else:
 			self.speaker.stop()
         self.speaker.speak(input_text)
-    
+
     def _speak_stop(self):
         self.speaker.stop()
     def _video_play(self):
