@@ -7,17 +7,19 @@ sys.path.append("../")
 from client import RESTClient
 from sense_extraction import SenseExtractor
 from arius_searcher import ESearchClient
-from configure import ConstExtractor
+from configure import Config
+cfg = Config()
+TAG = "[Core]"
 
 
 class Updater(threading.Thread):
     def __init__(self, lock):
         threading.Thread.__init__(self)
         self._lock = lock
-        self._settings = ConstExtractor()
-        self._connection = RESTClient(self._settings.getValue("core_server_input_address"),
-                                      self._settings.getValue("core_server_input_port"),
-                                      self._settings.getValue("core_server_input_url"))
+
+        self._connection = RESTClient(cfg.get("core_server_input_address"),
+                                      cfg.get("core_server_input_port"),
+                                      cfg.get("core_server_input_url"))
         self.input_speech = None
 
     def run(self):
@@ -25,7 +27,8 @@ class Updater(threading.Thread):
             if not self.input_speech:
                 command = self._connection.GET_request(True, 0)
                 if command['speech_text'] != 'no updates':
-                    print 'RECEIVED COMMAND'
+                    print '==================================================='
+                    print TAG, 'RECEIVED COMMAND'
                     self._lock.acquire()
                     self.input_speech = command['speech_text']
                     self.new_input = True
@@ -39,12 +42,12 @@ class Core(threading.Thread):
         threading.Thread.__init__(self)
         self._lock = threading.RLock()
         self._statemachine = statemachine
-        self._settings = ConstExtractor()
+        cfg = Config()
         self._updater = Updater(self._lock)
 
-        self._result_sender = RESTClient(self._settings.getValue("core_server_output_address"),
-                                         self._settings.getValue("core_server_output_port"),
-                                         self._settings.getValue("core_server_output_url"))
+        self._result_sender = RESTClient(cfg.get("core_server_output_address"),
+                                         cfg.get("core_server_output_port"),
+                                         cfg.get("core_server_output_url"))
 
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
@@ -68,7 +71,7 @@ class Core(threading.Thread):
         self._send_command(data)
         while True:
             if self._updater.input_speech:
-                print 'state in the beginning is {}'.format(self._statemachine.get_state())
+                print TAG, 'state in the beginning is {}'.format(self._statemachine.get_state())
                 user_input = self._updater.input_speech
                 self._lock.acquire()
                 self._updater.input_speech = None
@@ -78,13 +81,13 @@ class Core(threading.Thread):
                 if self._recognize_command(user_input) == 'CANCEL':
                     self._statemachine.handle_message('cancel')
                     request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-                    self._send_command({'type':'SPEAK', 'command':'Operation cancelled'})
+                    self._send_command({'type': 'SPEAK', 'command': 'Operation cancelled'})
                     self._send_command(request)
                     continue
                 if self._statemachine.get_state() == 'displaying_data':
                     if self._recognize_command(user_input) == 'ZOOM_IN':
                         request = {'type': 'ZOOM_IN', 'command': ''}
-                        self._send_command({'type' : 'SPEAK', 'command' : 'Enlarging'})
+                        self._send_command({'type': 'SPEAK', 'command': 'Enlarging'})
                         self._send_command(request)
                         continue
                     elif self._recognize_command(user_input) == 'ZOOM_OUT':
@@ -94,12 +97,12 @@ class Core(threading.Thread):
                         continue
                     elif self._recognize_command(user_input) == 'SCROLL_DOWN':
                         request = {'type': 'SCROLL_DOWN', 'command': ''}
-                        self._send_command({'type':'SPEAK', 'command':'Scrolling down, sir'})
+                        self._send_command({'type': 'SPEAK', 'command': 'Scrolling down, sir'})
                         self._send_command(request)
                         continue
                     elif self._recognize_command(user_input) == 'SCROLL_UP':
                         request = {'type': 'SCROLL_UP', 'command': ''}
-                        self._send_command({'type':'SPEAK', 'command':'Scrolling up as you wish'})
+                        self._send_command({'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
                         self._send_command(request)
                         continue
 
@@ -113,14 +116,14 @@ class Core(threading.Thread):
                             user_input = user_input.replace(word, '')
 
                     query = ' '.join(self._sense_extractor.get_context(user_input))
-                    print 'proceeding'
+                    print TAG, 'Proceeding search query...'
                     if query:
                         self._statemachine.handle_message('request')
-                        self._send_command({'type':'SPEAK', 'command':'Search request accepted, my lord'})
+                        self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
                         self._do_work(self._find_data, query)
                     else:
-                        print 'search query is empty'
-                print 'state in the end is {}'.format(self._statemachine.get_state())
+                        print TAG, 'search query is empty'
+                print TAG, 'state in the end is {}'.format(self._statemachine.get_state())
 
             else:
                 pass
@@ -129,10 +132,10 @@ class Core(threading.Thread):
 
     def _recognize_command(self, data):
         for command_key in self._commands.keys():
-			for command in self._commands[command_key]:
-				if command in data:
-					print "recognized command is {}, {}".format(command_key, type(command_key))
-					return str(command_key)
+            for command in self._commands[command_key]:
+                if command in data:
+                    print TAG, "Recognized command is {}, {}".format(command_key, type(command_key))
+                    return str(command_key)
 
     def _recognize_start_phrase(self, data):
         for start in self._start_phrases:
@@ -141,16 +144,16 @@ class Core(threading.Thread):
         return False
 
     def _find_data(self, request, result):
-        print 'searching data'
+        print TAG, 'Searching data...'
         data = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
         self._send_command(data)
         data = self._ESclient.search(request)
-        print 'opening search screen'
+        print TAG, 'Opening search screen.'
         time.sleep(7)
-        print data
+        print TAG, data
         if data:
             file_ext = os.path.splitext(data[0][0])[1]
-            print file_ext
+            print TAG, 'File extension:', file_ext
             if file_ext == '.pdf':
                 data = {'type': 'OPEN_PDF', 'command': data[0][0]}
                 self._statemachine.handle_message('found')
@@ -158,9 +161,9 @@ class Core(threading.Thread):
                 data = {'type': 'OPEN_LOCAL_PAGE', 'command': data[0][0]}
                 self._statemachine.handle_message('found')
             elif file_ext == '.url':
-                data = open(self._settings.getValue('output_server_home') + data[0][0])
+                data = open(cfg.get('output_server_home') + data[0][0])
                 link = data.readlines()[0]
-                print link
+                print TAG, link
                 data = {'type': 'OPEN_URL', 'command': link}
                 self._statemachine.handle_message('found')
 
@@ -172,7 +175,7 @@ class Core(threading.Thread):
 
     def _do_work(self, function, argument):
         result = []
-        print argument
+        print TAG, argument
         worker = threading.Thread(target=function, args=(argument, result))
         worker.start()
         while not (self._updater.new_input or result):
@@ -182,11 +185,11 @@ class Core(threading.Thread):
             result = None
             return None
         else:
-            print 'cancelled'
+            print TAG, 'Cancelled'
             return None
 
     def _send_command(self, command):
-        print 'send command', command
+        print TAG, 'Send command to Output module: ', command
         self._result_sender.send_data_in_POST(command)
 core = Core()
 core.start()

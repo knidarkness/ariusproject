@@ -15,3 +15,4 @@ while True:
     }
 
     response = output_connection.send_data_in_POST(command, True, 0)
+    print '======='

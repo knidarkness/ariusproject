@@ -1,10 +1,9 @@
 from flask import Flask, jsonify, make_response, request, abort, render_template
 import sys
-sys.path.append("/home/arius/ariusproject/")
-from configure import ConstExtractor
-
-settings = ConstExtractor()
-
+sys.path.append("../")
+from configure import Config
+cfg = Config()
+TAG = "[SERVER]"
 
 app = Flask(__name__)
 noise_available = {"status": "False"}
@@ -14,6 +13,7 @@ command = {
     "command": "none1"
 }
 command_queue = []
+
 
 @app.errorhandler(404)
 def not_found(err):
@@ -25,18 +25,18 @@ def not_recognized(err):
     return make_response(jsonify({'error': 'Not recognized command'}), 400)
 
 
-@app.route(settings.getValue('flask_server_input_noise'), methods=['POST'])
+@app.route(cfg.get('flask_server_input_noise'), methods=['POST'])
 def noise_input():
     global noise_available
     noise_available["status"] = "True"
     if not request.json or "speech_text" not in request.json:
         abort(400)
     else:
-        print "Here is Noise"
+        print TAG, "Here is Noise"
         return jsonify(request.json), 201
 
 
-@app.route(settings.getValue('flask_server_output_noise'), methods=['GET'])
+@app.route(cfg.get('flask_server_output_noise'), methods=['GET'])
 def noise_output():
     global noise_available
     tmp_noise = noise_available
@@ -44,18 +44,18 @@ def noise_output():
     return jsonify(noise_available)
 
 
-@app.route(settings.getValue('flask_server_input_client'), methods=['POST'])
+@app.route(cfg.get('flask_server_input_client'), methods=['POST'])
 def speech_text_input():
     global input_text
     if not request.json or 'speech_text' not in request.json:
         abort(400)
     else:
         input_text = {"speech_text": request.json['speech_text']}
-        print input_text
+        print TAG, input_text
         return jsonify(input_text), 201
 
 
-@app.route(settings.getValue('flask_server_core_input_connection'), methods=['GET'])
+@app.route(cfg.get('flask_server_core_input_connection'), methods=['GET'])
 def get_speech_text():
     global input_text
     tmp_text = input_text
@@ -63,10 +63,10 @@ def get_speech_text():
     return jsonify(tmp_text)
 
 
-@app.route(settings.getValue('flask_server_core_output_connection'), methods=['POST'])
+@app.route(cfg.get('flask_server_core_output_connection'), methods=['POST'])
 def command_input():
     global command
-    print request.json
+    print TAG, request.json
     if not request.json or not 'type' in request.json or 'command' not in request.json:
         abort(400)
     else:
@@ -74,16 +74,16 @@ def command_input():
             'type': request.json['type'],
             'command': request.json['command']
         }
-        print command
+        print TAG, command
         command_queue.append(command)
         return jsonify(command), 201
 
 
-@app.route(settings.getValue('flask_server_output_client'), methods=['GET'])
+@app.route(cfg.get('flask_server_output_client'), methods=['GET'])
 def get_command():
     global command_queue
     if command_queue:
-        command=command_queue.pop(0)
+        command = command_queue.pop(0)
     else:
         command = {
             "type": "none",
@@ -92,19 +92,19 @@ def get_command():
     return jsonify(command)
 
 
-@app.route(settings.getValue('flask_server_idle_address'))
+@app.route(cfg.get('flask_server_idle_address'))
 def idle():
-    return render_template("idle.html", background=settings.getValue("arius_screen_idle_background"))
+    return render_template("idle.html", background=cfg.get("arius_screen_idle_background"))
 
 
-@app.route(settings.getValue('flask_server_error_address'))
+@app.route(cfg.get('flask_server_error_address'))
 def error():
-    return render_template("error.html", background=settings.getValue("arius_screen_error_background"))
+    return render_template("error.html", background=cfg.get("arius_screen_error_background"))
 
 
-@app.route(settings.getValue('flask_server_search_address'))
+@app.route(cfg.get('flask_server_search_address'))
 def search():
-    return render_template("search.html", background=settings.getValue("arius_screen_search_background"))
+    return render_template("search.html", background=cfg.get("arius_screen_search_background"))
 
 if __name__ == '__main__':
-    app.run(debug=True, host=settings.getValue('flask_server_address'), port=int(settings.getValue('flask_server_port')))
+    app.run(debug=True, host=cfg.get('flask_server_address'), port=int(cfg.get('flask_server_port')))

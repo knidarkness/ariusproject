@@ -1,10 +1,7 @@
-import sys
 from urllib import urlencode
 import httplib2
 # To play wave files
 import pygame
-import math # For ceiling
-
 
 
 class Speaker:
@@ -13,32 +10,34 @@ class Speaker:
         self.host = mary_host
         self.port = mary_port
         self.session = None
+
     def speak(self, input_text):
         self.query_hash["INPUT_TEXT"] = input_text
         query = urlencode(self.query_hash)
-        #Run the query to mary http server
+        # Run the query to mary http server
         h_mary = httplib2.Http()
         resp, content = h_mary.request("http://%s:%s/process?" % (self.host, self.port), "POST", query)
-		
-		#  Decode the wav file or raise an exception if no wav files
+
+        #  Decode the wav file or raise an exception if no wav files
         if (resp["content-type"] == "audio/x-wav"):
-    
+
             # Write the wav file
             f = open("/tmp/output_wav.wav", "wb")
             f.write(content)
             f.close()
 
             # Play the wav file
-            pygame.mixer.init(frequency=16000) # Initialise the mixer
+            pygame.mixer.init(frequency=16000)  # Initialise the mixer
             s = pygame.mixer.Sound("/tmp/output_wav.wav")
             s.play()
             #raise Exception("finish")
-        
+
         else:
             raise Exception(content)
+
     def stop(self):
-		pygame.mixer.stop()
-		
+        pygame.mixer.stop()
+
 
 """
     # Build the query
