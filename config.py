@@ -53,7 +53,7 @@ config = {
     "marytts_port": "59125",
 
     "default_voice": "marytts_voice1",
-    "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE"},
+    "default_voice" : "marytts_voice1","marytts_voice1" : {"INPUT_TYPE":"TEXT", "LOCALE":"en_US", "VOICE":"cmu-slt-hsmm", "OUTPUT_TYPE":"AUDIO", "AUDIO":"WAVE", "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters" : "type:2;fc1:500.0;fc2:2000.0"},
     "marytts_voice2": "empty",
     "marytts_voice3": "empty"
 }
