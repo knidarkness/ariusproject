@@ -51,7 +51,6 @@ def noise_input():
 @app.route(config['flask_server_output_noise'], methods=['GET'])
 def noise_output():
     global noise_available
-    tmp_noise = noise_available
     noise_available["status"] = "False"
     return jsonify(noise_available)
 
@@ -81,7 +80,7 @@ def command_input():
     global command
     if app.debug:
         print TAG, request.json, app.debug
-    if not request.json or not 'type' in request.json or 'command' not in request.json:
+    if (not request.json) or ('type' not in request.json) or ('command' not in request.json):
         abort(400)
     else:
         command = {
