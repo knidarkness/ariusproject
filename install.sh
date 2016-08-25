@@ -24,7 +24,11 @@ python configure.py
 make
 make install
 cd ../
-cd ../
+curl -L -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.5/elasticsearch-2.3.5.tar.gz
+tar -xvf elasticsearch-2.3.5.tar.gz
+cd elasticsearch-2.3.5
+sudo bin/plugin install mapper-attachments
+cd ../../
 sudo apt-get install libqt5webkit5-dev
 sudo apt-get install python-pyqt5.qtsvg
 sudo apt-get install python-pyqt5.qtwebkit
