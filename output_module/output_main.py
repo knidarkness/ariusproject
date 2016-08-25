@@ -199,7 +199,7 @@ class OutputInterface:
 
     def _loadVideo(self, filename):
         self._main_browser_reset_zoom()
-        url = config['root_dir'] + config['videoplayer_path']
+        url = config['root_dir'] + config['output_videoplayer_path']
         print url
         # TODO: remove this very strange and stupid code
         html = open(url, "rb").read()

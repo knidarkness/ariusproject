@@ -38,6 +38,7 @@ class FuzzyRecognizer:
     rec = FuzzyRecognizer(some_dictionary, debug=True)
 
     """
+
     def __init__(self, commands, min_confidence=.9, debug=False):
         if type(commands) != dict:
             print 'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands))
@@ -82,7 +83,7 @@ class FuzzyRecognizer:
         will be returned, if not - False.
         """
         if self._debug:
-                print '<============== COMMAND RECOGNIZING BEGAN ===============>'
+            print '<============== COMMAND RECOGNIZING BEGAN ===============>'
 
         if target_command:
             if target_command not in self._commands.keys():
@@ -90,13 +91,13 @@ class FuzzyRecognizer:
                     print 'Given wrong command: there`s no such command in the dictionary. Exiting'
                 raise ValueError('Wrong command')
             for command in self._commands[target_command]:
-                    probability = fuzz.partial_ratio(command, input)
+                probability = fuzz.partial_ratio(command, input)
+                if self._debug:
+                    print 'Probability of command {} for command case {} is {}'.format(target_command, command, probability)
+                if probability >= self._min_confidence:
                     if self._debug:
-                        print 'Probability of command {} for command case {} is {}'.format(target_command, command, probability)
-                    if probability >= self._min_confidence:
-                        if self._debug:
-                            print 'Matching command found.'
-                        return True
+                        print 'Matching command found.'
+                    return True
             if self._debug:
                 print 'Start phrase was not recognized'
                 print '>++++++++++++ COMMAND RECOGNIZING FINISHED ++++++++++++<'
@@ -157,7 +158,7 @@ class FuzzyRecognizer:
             N = len(case.split())
 
             pre_grams = string.split()
-            grams = [' '.join(pre_grams[i:i+N]) for i in xrange(len(pre_grams)-N)]
+            grams = [' '.join(pre_grams[i:i + N]) for i in xrange(len(pre_grams) - N)]
 
             for gram in grams:
                 if fuzz.partial_ratio(gram, string) >= self._min_confidence:
@@ -168,19 +169,21 @@ class FuzzyRecognizer:
                     return string
             if self._debug:
                 print 'Nothing to replace'
+        if self._debug:
+            print '>++++++++++++ FINISHED CLEARING INPUT ++++++++++++<'
         return string
 
 if __name__ == "__main__":
     commands = {
-            "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
-            "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
-            "NO_ZOOM": ['normal size', 'zero zoom', 'no zoom', 'zoom reset', 'reset zoom'],
-            "SCROLL_DOWN": ['page down', 'scroll down'],
-            "SCROLL_UP": ['page up', 'scroll up'],
-            "CANCEL": ['cancel', 'bye', 'thanks'],
-            "WAIT": ['wait'],
-            'START': ['ok arius', 'what the fuck']
-        }
-    rec = FuzzyRecognizer(commands, debug=True)
-    print rec.recognize_command('ok aruis could you tell me about enlarging the GDP')
-    print rec.remove_command('ok aruis could you tell me about enlarging the GDP', 'START')
+        "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
+        "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
+        "NO_ZOOM": ['normal size', 'zero zoom', 'no zoom', 'zoom reset', 'reset zoom'],
+        "SCROLL_DOWN": ['page down', 'scroll down'],
+        "SCROLL_UP": ['page up', 'scroll up'],
+        "CANCEL": ['cancel', 'bye', 'thanks'],
+        "WAIT": ['wait'],
+        'START': ['ok arius', 'what the fuck']
+    }
+    rec = FuzzyRecognizer(commands, min_confidence=.7, debug=True)
+    rec.recognize_command('ok aruis could you tell me about enlarging the GDP')
+    rec.remove_command('ok aruis could you tell me about enlarging the GDP', 'START')
