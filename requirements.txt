@@ -3,4 +3,5 @@ python-RAKE
 elasticsearch
 pygame
 httplib2
-
+fuzzywuzzy
+python-Levenshtein

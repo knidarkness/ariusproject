@@ -2,6 +2,7 @@ import threading
 import sys
 import time
 import os
+from fuzzywuzzy import fuzz
 from statemachine import statemachine
 sys.path.append("../")
 from client import RESTClient
@@ -13,10 +14,10 @@ TAG = "[Core]"
 
 
 class Updater(threading.Thread):
-    def __init__(self, lock):
+    def __init__(self, lock, debug=False):
         threading.Thread.__init__(self)
         self._lock = lock
-
+        self._debug = debug
         self._connection = RESTClient(cfg.get("core_server_input_address"),
                                       cfg.get("core_server_input_port"),
                                       cfg.get("core_server_input_url"))
@@ -27,8 +28,9 @@ class Updater(threading.Thread):
             if not self.input_speech:
                 command = self._connection.GET_request(True, 0)
                 if command['speech_text'] != 'no updates':
-                    print '==================================================='
-                    print TAG, 'RECEIVED COMMAND'
+                    if self._debug:
+                        print '==================================================='
+                        print TAG, 'RECEIVED COMMAND'
                     self._lock.acquire()
                     self.input_speech = command['speech_text']
                     self.new_input = True
@@ -38,8 +40,9 @@ class Updater(threading.Thread):
 
 
 class Core(threading.Thread):
-    def __init__(self):
+    def __init__(self, debug=False):
         threading.Thread.__init__(self)
+        self._debug = debug
         self._lock = threading.RLock()
         self._statemachine = statemachine
         cfg = Config()
@@ -52,6 +55,7 @@ class Core(threading.Thread):
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
 
+        self._command_confidence = float(cfg.get('core_command_recog_confidence')) * 100
         self._start_phrases = ['ok arius', 'what is that', 'what the fuck']
         self._commands = {
             "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
@@ -106,14 +110,10 @@ class Core(threading.Thread):
                         self._send_command(request)
                         continue
 
-                if (self._statemachine.get_state() == 'idle' and self._recognize_start_phrase(user_input)) \
+                if (self._statemachine.get_state() == 'idle' and self._recognize_start_phrase_and_get_input(user_input)) \
                         or self._statemachine.get_state() != 'idle':
-                    for start in self._start_phrases:
-                        if start in user_input:
-                            user_input = user_input.replace(start, '')
-                    for word in user_input.split():
-                        if word in [i for j in self._commands.values() for i in j]:
-                            user_input = user_input.replace(word, '')
+
+                    user_input = self._recognize_start_phrase_and_get_input(user_input)
 
                     query = ' '.join(self._sense_extractor.get_context(user_input))
                     print TAG, 'Proceeding search query...'
@@ -131,17 +131,71 @@ class Core(threading.Thread):
             time.sleep(.1)
 
     def _recognize_command(self, data):
+        command_probability = {key: 0 for key in self._commands.keys()}
+
         for command_key in self._commands.keys():
             for command in self._commands[command_key]:
-                if command in data:
-                    print TAG, "Recognized command is {}, {}".format(command_key, type(command_key))
-                    return str(command_key)
 
-    def _recognize_start_phrase(self, data):
+                c_probability = fuzz.partial_ratio(command, data)
+
+                if c_probability > command_probability[command_key]:
+                    command_probability[command_key] = c_probability
+
+        if max(command_probability):
+            if self._debug:
+                print '<============== COMMAND RECOGNIZING START ===============>'
+                print self._command_confidence
+                print 'Available commands are {}\n'.format(self._commands.keys())
+                print 'Predicted possibility of each command is {}\n'.format(command_probability)
+                print 'Maximal possibility is {}\n'.format(max(command_probability))
+            result = [key for key in command_probability.keys() if command_probability[key] == max(command_probability.values()) and command_probability[key] > self._command_confidence]
+            if self._debug:
+                print 'These commands are equally possible {}'.format(result)
+            if result:
+                if self._debug:
+                    print 'Recognized command is {}'.format(result[0])
+                    print '>++++++++++++ COMMAND RECOGNIZING END ++++++++++++<\n\n'
+                return result[0]
+            if self._debug:
+                print 'Command not recognized'
+                print '>++++++++++++ COMMAND RECOGNIZING END ++++++++++++<\n\n'
+            return None
+
+    def _recognize_start_phrase_and_get_input(self, data):
+        """
+        This function gets an input argument
+        """
+        if self._debug:
+            print '<============== START PHRASE RECOGNIZING BEGAN ===============>'
         for start in self._start_phrases:
-            if start in data:
-                return True
-        return False
+            if self._debug:
+                print 'Recognizer confidence for phrase {} is {}'.format(start, fuzz.partial_ratio(start, data))
+            if fuzz.partial_ratio(start, data) > self._command_confidence:
+                if self._debug:
+                    print 'Start phrase succesfully recognized. It was following one: {}'.format(start)
+                    print 'Recognizer confidence was {}'.format(fuzz.partial_ratio(start, data))
+                    print '>++++++++++++ START PHRASE RECOGNIZING END ++++++++++++<\n\n'
+                data = self._fuzzy_replace(data, start, '')
+                return data
+        if self._debug:
+            print 'Start phrase was not recognized'
+            print '>++++++++++++ START PHRASE RECOGNIZING END ++++++++++++<\n\n'
+        return None
+
+    def _fuzzy_replace(self, string, str_a, str_b):
+        N = len(str_a.split())
+        pre_grams = string.split()
+        grams = [' '.join(pre_grams[i:i+N]) for i in xrange(len(pre_grams)-N)]
+        for gram in grams:
+            if fuzz.partial_ratio(gram, string) > .85:
+                string = string.replace(gram, '')
+                string = string.strip()
+                if self._debug:
+                    print 'User input without a start phrase is: "{}"'.format(string)
+                return string
+        if self._debug:
+            print 'Nothing to replace'
+        return string
 
     def _find_data(self, request, result):
         print TAG, 'Searching data...'
@@ -149,7 +203,7 @@ class Core(threading.Thread):
         self._send_command(data)
         data = self._ESclient.search(request)
         print TAG, 'Opening search screen.'
-        time.sleep(7)
+        time.sleep(.7)
         print TAG, data
         if data:
             file_ext = os.path.splitext(data[0][0])[1]
@@ -191,5 +245,5 @@ class Core(threading.Thread):
     def _send_command(self, command):
         print TAG, 'Send command to Output module: ', command
         self._result_sender.send_data_in_POST(command)
-core = Core()
+core = Core(debug=True)
 core.start()
