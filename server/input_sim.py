@@ -1,17 +1,15 @@
-
 import argparse
 import json
 import time
 import sys
 sys.path.append("../")
 from client import RESTClient
-from configure import ConstExtractor
+from configure import Config
+cfg = Config()
 
-Extractor = ConstExtractor()
-
-host = Extractor.getValue('flask_server_address')
-port = Extractor.getValue('flask_server_port')
-input_url = Extractor.getValue('flask_server_input_client')
+host = cfg.get('flask_server_address')
+port = cfg.get('flask_server_port')
+input_url = cfg.get('flask_server_input_client')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--filename', default='none', help="Send first phrases from file")

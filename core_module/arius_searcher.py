@@ -2,8 +2,8 @@ from elasticsearch import Elasticsearch
 
 import sys
 sys.path.append("../")
-from configure import ConstExtractor
-_settings = ConstExtractor()
+from configure import Config
+cfg = Config()
 
 
 class ESearchClient:
@@ -11,9 +11,9 @@ class ESearchClient:
 
     def __init__(self):
 
-        self._host = _settings.getValue("elastic_host")
-        self._index = _settings.getValue("elastic_index")
-        self._type = _settings.getValue("elastic_type")
+        self._host = cfg.get("elastic_host")
+        self._index = cfg.get("elastic_index")
+        self._type = cfg.get("elastic_type")
         self._es = Elasticsearch(self._host)
 
     def search(self, query):

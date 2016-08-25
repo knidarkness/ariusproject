@@ -2,23 +2,22 @@ import json
 import os
 
 
-class ConstExtractor():
+class Config():
     def __init__(self, filename='configure.json'):
         filename = os.path.dirname(__file__) + "/" + filename
-        with open(filename, 'r') as data_file:
-            self.const_dict = json.load(data_file)
+        with open(filename, 'rb') as data_file:
+            self.const_dict = self.convert(json.load(data_file))
 
-    def getValue(self, key):
-        if key in self.const_dict:
-            if type(self.const_dict[key]) == list:
-                return [el.encode("utf-8") for el in self.const_dict[key]]
-            elif type(self.const_dict[key]) == dict:
-                res_dic = {}
-                for sub_key in self.const_dict[key]:
-                    res_dic[sub_key.encode("utf-8")] = self.const_dict[key][sub_key].encode("utf-8")
-                return res_dic
-            else:
-                return self.const_dict[key].encode("utf-8")
+    def convert(self, input):
+        if isinstance(input, dict):
+            return {self.convert(key): self.convert(value)
+                    for key, value in input.iteritems()}
+        elif isinstance(input, list):
+            return [self.convert(element) for element in input]
+        elif isinstance(input, unicode):
+            return input.encode('utf-8')
         else:
-            print("THERE IS NO SUCH CONSTANTA")
-            raise ValueError
+            return input
+
+    def get(self, key):
+        return self.const_dict[key]

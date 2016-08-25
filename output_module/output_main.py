@@ -5,26 +5,27 @@ import os
 import subprocess
 import threading
 import functools
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QUrl, QEventLoop, QTimer
-from PyQt5.QtWidgets import QApplication, QGridLayout, QWidget
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import QUrl, QTimer
+from PyQt5.QtWidgets import QGridLayout, QWidget
 from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
-sys.path.append("../")
-from configure import ConstExtractor
 from tts_module import Speaker
-
+sys.path.append("../")
+from configure import Config
+cfg = Config()
 from client import RESTClient
+
+TAG = "[Output Module]"
 
 
 class OutputUpdater(threading.Thread):
     def __init__(self, lock):
         threading.Thread.__init__(self)
-        self._settings = ConstExtractor()
 
-        self._server_host = self._settings.getValue("output_server_host")
-        self._server_port = self._settings.getValue("output_server_port")
-        self._server_url = self._settings.getValue("output_server_url")
+        self._server_host = cfg.get("output_server_host")
+        self._server_port = cfg.get("output_server_port")
+        self._server_url = cfg.get("output_server_url")
 
         self._server_connection = RESTClient(self._server_host, self._server_port, self._server_url)
 
@@ -37,15 +38,15 @@ class OutputUpdater(threading.Thread):
 
     def run(self):
         while self.running:
-            # print 'connecting'
+            # print TAG, 'connecting'
             data = self._server_connection.GET_request(True, 0)
             if data['type'] != 'none':
-                print data
+                print TAG, data
                 self._lock.acquire()
                 try:
                     self._current_command_type = data['type']
                     self._current_command_body = data['command']
-                    print 'command received: {} : {}'.format(data['type'], data['command'])
+                    print TAG, 'Command received: {} : {}'.format(data['type'], data['command'])
                 finally:
                     self._lock.release()
             else:
@@ -66,9 +67,9 @@ class OutputInterface:
     def __init__(self, top_size, bottom_size):
         self._app = QtWidgets.QApplication(sys.argv)
         self._app.setStyle("Fusion")
-        self._settings = ConstExtractor()
-        self._pdf_viewer_path = self._settings.getValue("output_data_pdf_viewer")
-        self._pdfs_path = self._settings.getValue("output_pdf_data_files")
+        cfg = Config()
+        self._pdf_viewer_path = cfg.get("output_data_pdf_viewer")
+        self._pdfs_path = cfg.get("output_pdf_data_files")
 
         self._get_screen_height()
 
@@ -95,8 +96,8 @@ class OutputInterface:
         # self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
         self._bottom_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
 
-        self._top_browser_load_url(self._settings.getValue('output_browser_top_page'))
-        self._bottom_browser_load_url(self._settings.getValue('output_browser_bottom_page'))
+        self._top_browser_load_url(cfg.get('output_browser_top_page'))
+        self._bottom_browser_load_url(cfg.get('output_browser_bottom_page'))
 
         self._main_browser.settings().setAttribute(QWebSettings.DeveloperExtrasEnabled, True)  # enable console
         self._main_browser.settings().setAttribute(QWebSettings.PluginsEnabled, True)
@@ -125,12 +126,12 @@ class OutputInterface:
         self._main_window.showFullScreen()
         self._main_window.show()
         sys.exit(self._app.exec_())
-        print 'finished'
+        print TAG, 'Finished'
 
     def _handle_command(self):
         command = self._updater.get_state()
         if command[0] != 'none' and command[0] != None:
-            print 'Handling command {}'.format(command)
+            print TAG, 'Handling command {}'.format(command)
             self._updater.reset()
             if command[0] == 'OPEN_PDF':
                 self._loadPDF(command[1])
@@ -164,7 +165,7 @@ class OutputInterface:
             elif command[0] == "STOP_SPEAK":
                 self._speak_stop()
             else:
-                print 'command not recognized'
+                print TAG, 'command not recognized'
         else:
             pass
 
@@ -176,17 +177,17 @@ class OutputInterface:
         return output[0], output[1]
 
     def _load_error(self):
-        url = 'http://' + self._settings.getValue('flask_server_address') + ':' + self._settings.getValue('flask_server_port') + self._settings.getValue('flask_server_error_address')
+        url = 'http://' + cfg.get('flask_server_address') + ':' + cfg.get('flask_server_port') + cfg.get('flask_server_error_address')
         print url
         self._main_browser.load(QUrl(url))
 
     def _load_idle(self):
-        url = 'http://' + self._settings.getValue('flask_server_address') + ':' + self._settings.getValue('flask_server_port') + self._settings.getValue('flask_server_idle_address')
+        url = 'http://' + cfg.get('flask_server_address') + ':' + cfg.get('flask_server_port') + cfg.get('flask_server_idle_address')
         print url
         self._main_browser.load(QUrl(url))
 
     def _load_search(self):
-        url = 'http://' + self._settings.getValue('flask_server_address') + ':' + self._settings.getValue('flask_server_port') + self._settings.getValue('flask_server_search_address')
+        url = 'http://' + cfg.get('flask_server_address') + ':' + cfg.get('flask_server_port') + cfg.get('flask_server_search_address')
         print url
         self._main_browser.load(QUrl(url))
 
@@ -210,7 +211,7 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadExternalPage(self, url):
-        print 'loading {}'.format(url)
+        print TAG, 'Loading external page: {}'.format(url)
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
@@ -251,15 +252,16 @@ class OutputInterface:
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _speak_text(self, input_text):
-        voice=self._settings.getValue("default_voice")
+        voice = cfg.get("default_voice")
         if self.speaker == None:
-            self.speaker = Speaker(self._settings.getValue(voice), self._settings.getValue("marytts_host"), self._settings.getValue("marytts_port"))
+            self.speaker = Speaker(cfg.get(voice), cfg.get("marytts_host"), cfg.get("marytts_port"))
         else:
-			self.speaker.stop()
+            self.speaker.stop()
         self.speaker.speak(input_text)
 
     def _speak_stop(self):
         self.speaker.stop()
+
     def _video_play(self):
         script_js = """video=document.getElementById("videoplayer"); video.play()"""
         self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
@@ -270,6 +272,5 @@ class OutputInterface:
 
 
 if __name__ == "__main__":
-    conf = ConstExtractor()
-    ui = OutputInterface(float(conf.getValue('output_top_browser_size')), float(conf.getValue('output_bottom_browser_size')))
+    ui = OutputInterface(float(cfg.get('output_top_browser_size')), float(cfg.get('output_bottom_browser_size')))
     ui.run()
