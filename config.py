@@ -34,10 +34,10 @@ config = {
     "output_server_host": "127.0.0.1",
     "output_server_port": "5000",
     "output_server_url": "/output",
-    "output_server_home": "pdf.js/web/",
+    "output_server_home": "output_module/pdf.js/web/",
     "output_pdf_data_files": "data/",
-    "output_data_pdf_viewer": "pdf.js/web/viewer.html",
-    "output_videoplayer_path": "pdf.js/web/videoplayer.html",
+    "output_data_pdf_viewer": "output_module/pdf.js/web/viewer.html",
+    "output_videoplayer_path": "output_module/pdf.js/web/videoplayer.html",
     "output_top_browser_size": ".15",
     "output_bottom_browser_size": ".1",
     "output_browser_top_page": "http://google.com",
@@ -47,7 +47,7 @@ config = {
     "elastic_index": "arius",
     "elastic_type": "doc",
     "elastic_docs_dir": "data/",
-    "elastic_index_file_types": ["html", "pdf", "doc", "docx", "ppt", "pptx", "url"],
+    "elastic_index_file_types": [".html", ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".url"],
 
     "marytts_host": "localhost",
     "marytts_port": "59125",
@@ -57,4 +57,3 @@ config = {
     "marytts_voice2": "empty",
     "marytts_voice3": "empty"
 }
-print config["root_dir"]

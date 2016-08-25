@@ -186,8 +186,8 @@ class OutputInterface:
         print url
         self._main_browser.load(QUrl(url))
 
-    def _loadPDF(self, filename):
-        source = "file://" + config['root_dir'] + config['output_data_pdf_viewer'] + "?file=" + config['root_dir'] + config['elastic_docs_dir']+ filename
+    def _loadPDF(self, path):
+        source = "file://" + config['root_dir'] + config['output_data_pdf_viewer'] + "?file=" + path
         print source
         self._cur_filetype = "pdf"
         self._main_browser.load(QUrl(source))
@@ -208,8 +208,8 @@ class OutputInterface:
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
-    def _loadLocalPage(self, filename):
-        url = 'file://' + config['root_dir'] + config['elastic_docs_dir'] + filename
+    def _loadLocalPage(self, path):
+        url = 'file://' + path
         print url
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))

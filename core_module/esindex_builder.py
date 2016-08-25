@@ -47,7 +47,7 @@ class ESIndexBuilder:
         for path, dirs, files in os.walk(dir):
             for file in files:
                 fname = os.path.join(path, file)
-                base, extension = file.rsplit('.', 1)
+                base, extension = os.path.splitext(fname)
                 if extension.lower() in config["elastic_index_file_types"]:
                     self.index_file(fname)
 

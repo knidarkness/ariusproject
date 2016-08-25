@@ -205,16 +205,18 @@ class Core(threading.Thread):
         time.sleep(.7)
         print TAG, data
         if data:
-            file_ext = os.path.splitext(data[0][0])[1]
+            fname = data[0][0]
+            base, file_ext = os.path.splitext(fname)
+            path = config['root_dir'] + config['elastic_docs_dir'] + fname
             print TAG, 'File extension:', file_ext
             if file_ext == '.pdf':
-                data = {'type': 'OPEN_PDF', 'command': data[0][0]}
+                data = {'type': 'OPEN_PDF', 'command': path}
                 self._statemachine.handle_message('found')
             elif file_ext == '.html':
-                data = {'type': 'OPEN_LOCAL_PAGE', 'command': data[0][0]}
+                data = {'type': 'OPEN_LOCAL_PAGE', 'command': path}
                 self._statemachine.handle_message('found')
             elif file_ext == '.url':
-                data = open(config['output_server_home'] + data[0][0])
+                data = open(path)
                 link = data.readlines()[0]
                 print TAG, link
                 data = {'type': 'OPEN_URL', 'command': link}
