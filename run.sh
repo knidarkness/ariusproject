@@ -1,5 +1,5 @@
 #!/bin/sh
-#gnome-terminal -e required_packages/marytts/bin/marytts-server
+#gnome-terminal -e required_packages/marytts-5.1.2/bin/marytts-server
 #gnome-terminal -e required_packages/elasticsearch/bin/elasticsearch
 cd additional_scripts
 gnome-terminal -e ./server.sh

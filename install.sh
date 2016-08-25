@@ -15,6 +15,11 @@ tar -xvzf pyqt.tar.gz
 cd sip-4.18.1
 python configure.py
 wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
+wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
+unzip marytts-5.1.2.zip
+cd marytts-5.1.2/bin
+./marytts-component-installer
+cd ../../
 chmod +x qt-opensource-linux-x64-5.7.0.run
 ./qt-opensource-linux-x64-5.7.0.run
 sudo apt-get install build-essential
