@@ -1,7 +1,6 @@
 import sys
 sys.path.append("../")
 from client import RESTClient
-
 #input_connection = RESTClient('127.0.0.1', 5000, '/core/input')
 output_connection = RESTClient('127.0.0.1', 5000, '/core/output')
 

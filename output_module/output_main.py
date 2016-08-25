@@ -66,10 +66,6 @@ class OutputInterface:
     def __init__(self, top_size, bottom_size):
         self._app = QtWidgets.QApplication(sys.argv)
         self._app.setStyle("Fusion")
-        ()
-        self._pdf_viewer_path = config["output_data_pdf_viewer"]
-        self._pdfs_path = config["output_pdf_data_files"]
-
         self._get_screen_height()
 
         self._layout = QGridLayout()
@@ -191,21 +187,19 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadPDF(self, filename):
-        source = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/viewer.html?file=" + filename
+        source = "file://" + config['root_dir'] + config['output_data_pdf_viewer'] + "?file=" + config['root_dir'] + config['elastic_docs_dir']+ filename
         print source
         self._cur_filetype = "pdf"
         self._main_browser.load(QUrl(source))
 
     def _loadVideo(self, filename):
-        player_path = "videoplayer.html"
-        url = os.path.dirname(os.path.abspath(__file__)) + "/../data/web/data/" + player_path
+        url = config['root_dir'] + config['videoplayer_path']
         print url
         # TODO: remove this very strange and stupid code
         html = open(url, "rb").read()
         # open videoplayer.html, replace src to new src and rewrite this file
         open(url, "r+").write(html[:html.find("src=") + 5] + filename + html[html.find("\"", html.find("src=") + 5):])
         url = "file:///" + url
-
         self._cur_filetype = "video"
         self._main_browser.load(QUrl(url))
 
@@ -215,7 +209,7 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadLocalPage(self, filename):
-        url = 'file://' + os.path.dirname(os.path.abspath(__file__)) + "/../data/web/" + filename
+        url = 'file://' + config['root_dir'] + config['elastic_docs_dir'] + filename
         print url
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))

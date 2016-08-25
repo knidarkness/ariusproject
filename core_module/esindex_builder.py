@@ -13,9 +13,6 @@ class ESIndexBuilder:
         self._host = config["elastic_host"]
         self._index = config["elastic_index"]
         self._type = config["elastic_type"]
-        self._tmp_file_name = config["elastic_tmp_file_name"]
-        self._docs_dir = config["elastic_docs_dir"]
-        self._elastic_index_file_types = config["elastic_index_file_types"]
         self._es = Elasticsearch(self._host)
         self._debug = debug
 
@@ -24,8 +21,8 @@ class ESIndexBuilder:
         if self._debug:
             print TAG, 'Indexing', path
 
-        fname = path.rsplit('/', 1)[-1]
-        base, extension = fname.rsplit('.', 1)
+        fname = os.path.basename(path)
+        base, extension = os.path.splitext(fname)
 
         # clear filename from unallowed characters
         base = base.replace(" ", "_").replace("/", "_").replace(".", "_")
@@ -39,9 +36,7 @@ class ESIndexBuilder:
             data = open(path, "rb").read()
 
         data = data.encode("base64")
-        # get relative path from pdf viewer directory
-        rel_path = path.rsplit('/', 2)[-2] + "/" + path.rsplit('/', 2)[-1]
-        self._es.index(index=self._index, doc_type=self._type, id=base, body={'file': data, 'title': rel_path})
+        self._es.index(index=self._index, doc_type=self._type, id=base, body={'file': data, 'title': fname})
 
     def index_dir(self, dir):
         """Adds all files in directory to index. You can specify what formats
@@ -53,7 +48,7 @@ class ESIndexBuilder:
             for file in files:
                 fname = os.path.join(path, file)
                 base, extension = file.rsplit('.', 1)
-                if extension.lower() in self._elastic_index_file_types:
+                if extension.lower() in config["elastic_index_file_types"]:
                     self.index_file(fname)
 
     def rebuild_index(self):
@@ -86,4 +81,4 @@ class ESIndexBuilder:
 if __name__ == '__main__':
     builder = ESIndexBuilder(debug=True)
     builder.rebuild_index()
-    builder.index_dir(builder._docs_dir)
+    builder.index_dir(config['root_dir'] + config['elastic_docs_dir'])
