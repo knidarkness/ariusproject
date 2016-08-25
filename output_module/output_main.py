@@ -147,6 +147,8 @@ class OutputInterface:
                 self._main_browser_zoom_in()
             elif command[0] == 'ZOOM_OUT':
                 self._main_browser_zoom_out()
+            elif command[0] == 'ZOOM_NONE':
+                self._main_browser_reset_zoom()
             elif command[0] == 'SCROLL_DOWN':
                 self._main_browser_scroll_down()
             elif command[0] == 'SCROLL_UP':
@@ -172,27 +174,32 @@ class OutputInterface:
         return output[0], output[1]
 
     def _load_error(self):
+        self._main_browser_reset_zoom()
         url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port'] + config['flask_server_error_address']
         print url
         self._main_browser.load(QUrl(url))
 
     def _load_idle(self):
+        self._main_browser_reset_zoom()
         url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port'] + config['flask_server_idle_address']
         print url
         self._main_browser.load(QUrl(url))
 
     def _load_search(self):
+        self._main_browser_reset_zoom()
         url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port'] + config['flask_server_search_address']
         print url
         self._main_browser.load(QUrl(url))
 
     def _loadPDF(self, path):
+        self._main_browser_reset_zoom()
         source = "file://" + config['root_dir'] + config['output_data_pdf_viewer'] + "?file=" + path
         print source
         self._cur_filetype = "pdf"
         self._main_browser.load(QUrl(source))
 
     def _loadVideo(self, filename):
+        self._main_browser_reset_zoom()
         url = config['root_dir'] + config['videoplayer_path']
         print url
         # TODO: remove this very strange and stupid code
@@ -204,11 +211,13 @@ class OutputInterface:
         self._main_browser.load(QUrl(url))
 
     def _loadExternalPage(self, url):
+        self._main_browser_reset_zoom()
         print TAG, 'Loading external page: {}'.format(url)
         self._cur_filetype = "webpage"
         self._main_browser.load(QUrl(url))
 
     def _loadLocalPage(self, path):
+        self._main_browser_reset_zoom()
         url = 'file://' + path
         print url
         self._cur_filetype = "webpage"
@@ -238,6 +247,10 @@ class OutputInterface:
 
     def _main_browser_zoom_in(self):
         self._zoom_factor += .1
+        self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
+
+    def _main_browser_reset_zoom(self):
+        self._zoom_factor = 1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _main_browser_zoom_out(self):
