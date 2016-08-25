@@ -27,7 +27,7 @@ class Speaker:
             f.close()
 
             # Play the wav file
-            pygame.mixer.init(frequency=16000)  # Initialise the mixer
+            pygame.mixer.init()  # Initialise the mixer
             s = pygame.mixer.Sound("/tmp/output_wav.wav")
             s.play()
             #raise Exception("finish")
