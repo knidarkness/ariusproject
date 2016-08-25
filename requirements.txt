@@ -5,3 +5,4 @@ pygame
 httplib2
 fuzzywuzzy
 python-Levenshtein
+argparse

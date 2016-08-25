@@ -11,6 +11,7 @@ class SenseExtractor:
             self._extractor = RAKE.Rake(stopList)
         except IOError:
             print 'File not found'
+            raise
 
     def get_context(self, query):
         data = self._extractor.run(query)

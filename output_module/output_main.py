@@ -1,7 +1,6 @@
 import time
 # import pyautogui
 import sys
-import os
 import subprocess
 import threading
 import functools
@@ -258,18 +257,15 @@ class OutputInterface:
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _speak_text(self, input_text):
-        """voice = config["default_voice"]
-        if self.speaker == None:
+        voice = config["default_voice"]
+        if self.speaker is None:
             self.speaker = Speaker(config[voice], config["marytts_host"], config["marytts_port"])
         else:
             self.speaker.stop()
         self.speaker.speak(input_text)
-        """
-        pass
 
     def _speak_stop(self):
-        # self.speaker.stop()
-        pass
+        self.speaker.stop()
 
     def _video_play(self):
         script_js = """video=document.getElementById("videoplayer"); video.play()"""
