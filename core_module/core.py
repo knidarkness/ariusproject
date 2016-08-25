@@ -142,11 +142,11 @@ class Core(threading.Thread):
 
     def _find_data(self, request, result):
         print 'searching data'
-        data = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
-        self._send_command(data)
+        # data = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
+        # self._send_command(data)
         data = self._ESclient.search(request)
         print 'opening search screen'
-        time.sleep(7)
+        # time.sleep(7)
         print data
         if data:
             file_ext = os.path.splitext(data[0][0])[1]
