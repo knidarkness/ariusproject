@@ -12,8 +12,7 @@ from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
 from tts_module import Speaker
 sys.path.append("../")
-from configure import Config
-cfg = Config()
+from config import config
 from client import RESTClient
 
 TAG = "[Output Module]"
@@ -23,9 +22,9 @@ class OutputUpdater(threading.Thread):
     def __init__(self, lock):
         threading.Thread.__init__(self)
 
-        self._server_host = cfg.get("output_server_host")
-        self._server_port = cfg.get("output_server_port")
-        self._server_url = cfg.get("output_server_url")
+        self._server_host = config["output_server_host"]
+        self._server_port = config["output_server_port"]
+        self._server_url = config["output_server_url"]
 
         self._server_connection = RESTClient(self._server_host, self._server_port, self._server_url)
 
@@ -67,9 +66,9 @@ class OutputInterface:
     def __init__(self, top_size, bottom_size):
         self._app = QtWidgets.QApplication(sys.argv)
         self._app.setStyle("Fusion")
-        cfg = Config()
-        self._pdf_viewer_path = cfg.get("output_data_pdf_viewer")
-        self._pdfs_path = cfg.get("output_pdf_data_files")
+        ()
+        self._pdf_viewer_path = config["output_data_pdf_viewer"]
+        self._pdfs_path = config["output_pdf_data_files"]
 
         self._get_screen_height()
 
@@ -96,8 +95,8 @@ class OutputInterface:
         # self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
         self._bottom_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
 
-        self._top_browser_load_url(cfg.get('output_browser_top_page'))
-        self._bottom_browser_load_url(cfg.get('output_browser_bottom_page'))
+        self._top_browser_load_url(config['output_browser_top_page'])
+        self._bottom_browser_load_url(config['output_browser_bottom_page'])
 
         self._main_browser.settings().setAttribute(QWebSettings.DeveloperExtrasEnabled, True)  # enable console
         self._main_browser.settings().setAttribute(QWebSettings.PluginsEnabled, True)
@@ -177,17 +176,17 @@ class OutputInterface:
         return output[0], output[1]
 
     def _load_error(self):
-        url = 'http://' + cfg.get('flask_server_address') + ':' + cfg.get('flask_server_port') + cfg.get('flask_server_error_address')
+        url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port'] + config['flask_server_error_address']
         print url
         self._main_browser.load(QUrl(url))
 
     def _load_idle(self):
-        url = 'http://' + cfg.get('flask_server_address') + ':' + cfg.get('flask_server_port') + cfg.get('flask_server_idle_address')
+        url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port'] + config['flask_server_idle_address']
         print url
         self._main_browser.load(QUrl(url))
 
     def _load_search(self):
-        url = 'http://' + cfg.get('flask_server_address') + ':' + cfg.get('flask_server_port') + cfg.get('flask_server_search_address')
+        url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port'] + config['flask_server_search_address']
         print url
         self._main_browser.load(QUrl(url))
 
@@ -252,9 +251,9 @@ class OutputInterface:
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _speak_text(self, input_text):
-        voice = cfg.get("default_voice")
+        voice = config["default_voice"]
         if self.speaker == None:
-            self.speaker = Speaker(cfg.get(voice), cfg.get("marytts_host"), cfg.get("marytts_port"))
+            self.speaker = Speaker(config[voice], config["marytts_host"], config["marytts_port"])
         else:
             self.speaker.stop()
         self.speaker.speak(input_text)
@@ -272,5 +271,5 @@ class OutputInterface:
 
 
 if __name__ == "__main__":
-    ui = OutputInterface(float(cfg.get('output_top_browser_size')), float(cfg.get('output_bottom_browser_size')))
+    ui = OutputInterface(float(config['output_top_browser_size']), float(config['output_bottom_browser_size']))
     ui.run()

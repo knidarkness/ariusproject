@@ -4,12 +4,11 @@ import time
 import sys
 sys.path.append("../")
 from client import RESTClient
-from configure import Config
-cfg = Config()
+from config import config
 
-host = cfg.get('flask_server_address')
-port = cfg.get('flask_server_port')
-input_url = cfg.get('flask_server_input_client')
+host = config['flask_server_address']
+port = config['flask_server_port']
+input_url = config['flask_server_input_client']
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--filename', default='none', help="Send first phrases from file")

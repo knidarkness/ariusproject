@@ -8,8 +8,7 @@ sys.path.append("../")
 from client import RESTClient
 from sense_extraction import SenseExtractor
 from arius_searcher import ESearchClient
-from configure import Config
-cfg = Config()
+from config import config
 TAG = "[Core]"
 
 
@@ -18,9 +17,9 @@ class Updater(threading.Thread):
         threading.Thread.__init__(self)
         self._lock = lock
         self._debug = debug
-        self._connection = RESTClient(cfg.get("core_server_input_address"),
-                                      cfg.get("core_server_input_port"),
-                                      cfg.get("core_server_input_url"))
+        self._connection = RESTClient(config["core_server_input_address"],
+                                      config["core_server_input_port"],
+                                      config["core_server_input_url"])
         self.input_speech = None
 
     def run(self):
@@ -45,17 +44,17 @@ class Core(threading.Thread):
         self._debug = debug
         self._lock = threading.RLock()
         self._statemachine = statemachine
-        cfg = Config()
+        ()
         self._updater = Updater(self._lock)
 
-        self._result_sender = RESTClient(cfg.get("core_server_output_address"),
-                                         cfg.get("core_server_output_port"),
-                                         cfg.get("core_server_output_url"))
+        self._result_sender = RESTClient(config["core_server_output_address"],
+                                         config["core_server_output_port"],
+                                         config["core_server_output_url"])
 
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
 
-        self._command_confidence = float(cfg.get('core_command_recog_confidence')) * 100
+        self._command_confidence = float(config['core_command_recog_confidence']) * 100
         self._start_phrases = ['ok arius', 'what is that', 'what the fuck']
         self._commands = {
             "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
@@ -185,7 +184,7 @@ class Core(threading.Thread):
     def _fuzzy_replace(self, string, str_a, str_b):
         N = len(str_a.split())
         pre_grams = string.split()
-        grams = [' '.join(pre_grams[i:i+N]) for i in xrange(len(pre_grams)-N)]
+        grams = [' '.join(pre_grams[i:i + N]) for i in xrange(len(pre_grams) - N)]
         for gram in grams:
             if fuzz.partial_ratio(gram, string) > .85:
                 string = string.replace(gram, '')
@@ -215,7 +214,7 @@ class Core(threading.Thread):
                 data = {'type': 'OPEN_LOCAL_PAGE', 'command': data[0][0]}
                 self._statemachine.handle_message('found')
             elif file_ext == '.url':
-                data = open(cfg.get('output_server_home') + data[0][0])
+                data = open(config['output_server_home'] + data[0][0])
                 link = data.readlines()[0]
                 print TAG, link
                 data = {'type': 'OPEN_URL', 'command': link}

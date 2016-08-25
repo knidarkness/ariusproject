@@ -3,20 +3,19 @@ import urllib
 from elasticsearch import Elasticsearch
 import sys
 sys.path.append("../")
-from configure import Config
-cfg = Config()
+from config import config
 
 TAG = "[Index Builder]"
 
 
 class ESIndexBuilder:
     def __init__(self, debug=False):
-        self._host = cfg.get("elastic_host")
-        self._index = cfg.get("elastic_index")
-        self._type = cfg.get("elastic_type")
-        self._tmp_file_name = cfg.get("elastic_tmp_file_name")
-        self._docs_dir = cfg.get("elastic_docs_dir")
-        self._elastic_index_file_types = cfg.get("elastic_index_file_types")
+        self._host = config["elastic_host"]
+        self._index = config["elastic_index"]
+        self._type = config["elastic_type"]
+        self._tmp_file_name = config["elastic_tmp_file_name"]
+        self._docs_dir = config["elastic_docs_dir"]
+        self._elastic_index_file_types = config["elastic_index_file_types"]
         self._es = Elasticsearch(self._host)
         self._debug = debug
 

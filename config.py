@@ -1,4 +1,4 @@
-{
+config = {
 	"flask_server_address": "127.0.0.1",
 	"flask_server_port": "5000",
 
