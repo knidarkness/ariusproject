@@ -214,17 +214,16 @@ class Core(threading.Thread):
         if data:
             fname = data[0][0]
             base, file_ext = os.path.splitext(fname)
-            path = config['root_dir'] + config['elastic_docs_dir'] + fname
             if self._verbose:
                 print TAG, 'File extension:', file_ext
             if file_ext == '.pdf':
-                data = {'type': 'OPEN_PDF', 'command': path}
+                data = {'type': 'OPEN_PDF', 'command': fname}
                 self._statemachine.handle_message('found')
             elif file_ext == '.html':
-                data = {'type': 'OPEN_LOCAL_PAGE', 'command': path}
+                data = {'type': 'OPEN_LOCAL_PAGE', 'command': fname}
                 self._statemachine.handle_message('found')
             elif file_ext == '.url':
-                data = open(path)
+                data = open(fname)
                 link = data.readlines()[0]
                 if self._verbose:
                     print TAG, link

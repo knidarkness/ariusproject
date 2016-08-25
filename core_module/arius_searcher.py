@@ -27,7 +27,8 @@ class ESearchClient:
                                 "file.content": queryItem
                             }
                         } for queryItem in query.split()
-                    ]
+                    ],
+                    "minimum_number_should_match": "2<75%"
                 }
             }
         }
@@ -39,7 +40,7 @@ class ESearchClient:
         return result
 
 if __name__ == '__main__':
-    query = 'anomaly'
+    query = 'Innovative Education'
     # query = "ARIUS"
     # query = "html"
     # query = 'Linux'
