@@ -1,16 +1,19 @@
 sudo apt-get update
 sudo apt-get install default-jre
 sudo apt-get install default-jdk
-tar -xvzf required_packages/PyQt5_gpl-5.7.tar.gz 
-tar -xvzf required_packages/sip-4.18.1.tar.gz
 sudo apt install python-pip
 pip install virtualenv
 virtualenv --system-site-packages env
 source env/bin/activate
 pip install -r requirements.txt
+mkdir required_packages
+cd required_packages
+wget "https://sourceforge.net/projects/pyqt/files/sip/sip-4.18.1/sip-4.18.1.tar.gz/download" -O sip.tar.gz
+wget "https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.7/PyQt5_gpl-5.7.tar.gz/download" -O pyqt.tar.gz
+tar -xvzf sip.tar.gz
+tar -xvzf pyqt.tar.gz
 cd sip-4.18.1
 python configure.py
-cd ../
 wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
 chmod +x qt-opensource-linux-x64-5.7.0.run
 ./qt-opensource-linux-x64-5.7.0.run
@@ -20,6 +23,7 @@ cd PyQt5_gpl-5.7
 python configure.py
 make
 make install
+cd ../
 cd ../
 sudo apt-get install libqt5webkit5-dev
 sudo apt-get install python-pyqt5.qtsvg
