@@ -39,9 +39,10 @@ class Updater(threading.Thread):
 
 
 class Core(threading.Thread):
-    def __init__(self, debug=False):
+    def __init__(self, debug=False, verbose=False):
         threading.Thread.__init__(self)
         self._debug = debug
+        self._verbose = verbose
         self._lock = threading.RLock()
         self._statemachine = statemachine
         ()
@@ -74,7 +75,8 @@ class Core(threading.Thread):
         self._send_command(data)
         while True:
             if self._updater.input_speech:
-                print TAG, 'state in the beginning is {}'.format(self._statemachine.get_state())
+                if self._verbose:
+                    print TAG, 'state in the beginning is {}'.format(self._statemachine.get_state())
                 user_input = self._updater.input_speech
                 self._lock.acquire()
                 self._updater.input_speech = None
@@ -115,14 +117,17 @@ class Core(threading.Thread):
                     user_input = self._recognize_start_phrase_and_get_input(user_input)
 
                     query = ' '.join(self._sense_extractor.get_context(user_input))
-                    print TAG, 'Proceeding search query...'
+                    if self._verbose:
+                        print TAG, 'Proceeding search query...'
                     if query:
                         self._statemachine.handle_message('request')
                         self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
                         self._do_work(self._find_data, query)
                     else:
-                        print TAG, 'search query is empty'
-                print TAG, 'state in the end is {}'.format(self._statemachine.get_state())
+                        if self._verbose:
+                            print TAG, 'search query is empty'
+                if self._verbose:
+                    print TAG, 'state in the end is {}'.format(self._statemachine.get_state())
 
             else:
                 pass
@@ -197,18 +202,21 @@ class Core(threading.Thread):
         return string
 
     def _find_data(self, request, result):
-        print TAG, 'Searching data...'
+        if self._verbose:
+            print TAG, 'Searching data...'
         data = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
         self._send_command(data)
         data = self._ESclient.search(request)
-        print TAG, 'Opening search screen.'
         time.sleep(.7)
-        print TAG, data
+        if self._verbose:
+            print TAG, 'Opening search screen.'
+            print TAG, data
         if data:
             fname = data[0][0]
             base, file_ext = os.path.splitext(fname)
             path = config['root_dir'] + config['elastic_docs_dir'] + fname
-            print TAG, 'File extension:', file_ext
+            if self._verbose:
+                print TAG, 'File extension:', file_ext
             if file_ext == '.pdf':
                 data = {'type': 'OPEN_PDF', 'command': path}
                 self._statemachine.handle_message('found')
@@ -218,7 +226,8 @@ class Core(threading.Thread):
             elif file_ext == '.url':
                 data = open(path)
                 link = data.readlines()[0]
-                print TAG, link
+                if self._verbose:
+                    print TAG, link
                 data = {'type': 'OPEN_URL', 'command': link}
                 self._statemachine.handle_message('found')
 
@@ -230,7 +239,8 @@ class Core(threading.Thread):
 
     def _do_work(self, function, argument):
         result = []
-        print TAG, argument
+        if self._verbose:
+            print TAG, argument
         worker = threading.Thread(target=function, args=(argument, result))
         worker.start()
         while not (self._updater.new_input or result):
@@ -240,18 +250,23 @@ class Core(threading.Thread):
             result = None
             return None
         else:
-            print TAG, 'Cancelled'
+            if self._verbose:
+                print TAG, 'Cancelled'
             return None
 
     def _send_command(self, command):
-        print TAG, 'Send command to Output module: ', command
+        if self._verbose:
+            print TAG, 'Send command to Output module: ', command
         self._result_sender.send_data_in_POST(command)
 
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug', help='Enables debug mode and extra messages')
+    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug', help='Enables debug mode and extra messages'
+                        ' - detailed ouput of received commands, proceeding and sent messages.')
+    parser.add_argument('-v', '--verbose', action='store_true', dest='en_verbose', help='Enables verbose mode - shows basic info: states of statemachine,'
+                        ' received messages and sent commands.')
     args = parser.parse_args()
-    core = Core(debug=args.en_debug)
+    core = Core(debug=args.en_debug, verbose=args.en_verbose)
     core.start()

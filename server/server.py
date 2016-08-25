@@ -4,6 +4,9 @@ This is a server of the Arius project.
 It can be run from command line with arguments '-d' or '--debug' to
 enable debug mode, in which all messages received and sent by server will
 be printed.
+
+Also, if you want to see all connections made to server, you can run it
+with '-v' or '--verbose' flags.
 """
 
 from flask import Flask, jsonify, make_response, request, abort, render_template
