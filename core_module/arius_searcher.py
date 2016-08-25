@@ -27,22 +27,23 @@ class ESearchClient:
                                 "file.content": queryItem
                             }
                         } for queryItem in query.split()
-                    ],
-                    "minimum_number_should_match": "2<75%"
+                    ]
                 }
             }
         }
 
-        response = self._es.search(index=self._index, doc_type=self._type, body=queryBody)
+        response = self._es.search(index=self._index, doc_type=self._type, body=queryBody, size=10000, from_=0)
         result = []
         for doc in response['hits']['hits']:
             result.append((doc['_source']['title'], doc['_score']))
         return result
 
 if __name__ == '__main__':
-    query = 'softserve arius'
+    query = 'anomaly'
     # query = "ARIUS"
     # query = "html"
     # query = 'Linux'
-    AS = ESearchClient()
-    print(AS.search(query))
+    ES = ESearchClient()
+    res = ES.search(query)
+    print(res)
+    print len(res), 'files'

@@ -15,6 +15,7 @@ class ESIndexBuilder:
         self._type = config["elastic_type"]
         self._es = Elasticsearch(self._host)
         self._debug = debug
+        self._counter = 0
 
     def index_file(self, path):
         """Adds a single file to index."""
@@ -36,7 +37,8 @@ class ESIndexBuilder:
             data = open(path, "rb").read()
 
         data = data.encode("base64")
-        self._es.index(index=self._index, doc_type=self._type, id=base, body={'file': data, 'title': fname})
+        self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" + str(self._counter), body={'file': data, 'title': path})
+        self._counter += 1
 
     def index_dir(self, dir):
         """Adds all files in directory to index. You can specify what formats
@@ -82,3 +84,4 @@ if __name__ == '__main__':
     builder = ESIndexBuilder(debug=True)
     builder.rebuild_index()
     builder.index_dir(config['root_dir'] + config['elastic_docs_dir'])
+    print builder._counter, 'files were added to index'
