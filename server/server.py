@@ -1,5 +1,14 @@
+"""
+This is a server of the Arius project.
+
+It can be run from command line with arguments '-d' or '--debug' to
+enable debug mode, in which all messages received and sent by server will
+be printed.
+"""
+
 from flask import Flask, jsonify, make_response, request, abort, render_template
 import sys
+import logging
 sys.path.append("../")
 from config import config
 TAG = "[SERVER]"
@@ -31,7 +40,8 @@ def noise_input():
     if not request.json or "speech_text" not in request.json:
         abort(400)
     else:
-        print TAG, "Here is Noise"
+        if app.debug:
+            print TAG, "Here is Noise", app.debug
         return jsonify(request.json), 201
 
 
@@ -50,7 +60,8 @@ def speech_text_input():
         abort(400)
     else:
         input_text = {"speech_text": request.json['speech_text']}
-        print TAG, input_text
+        if app.debug:
+            print TAG, input_text, app.debug
         return jsonify(input_text), 201
 
 
@@ -65,7 +76,8 @@ def get_speech_text():
 @app.route(config['flask_server_core_output_connection'], methods=['POST'])
 def command_input():
     global command
-    print TAG, request.json
+    if app.debug:
+        print TAG, request.json, app.debug
     if not request.json or not 'type' in request.json or 'command' not in request.json:
         abort(400)
     else:
@@ -73,7 +85,8 @@ def command_input():
             'type': request.json['type'],
             'command': request.json['command']
         }
-        print TAG, command
+        if app.debug:
+            print TAG, command, app.debug
         command_queue.append(command)
         return jsonify(command), 201
 
@@ -106,4 +119,19 @@ def search():
     return render_template("search.html", background=config["arius_screen_search_background"])
 
 if __name__ == '__main__':
-    app.run(debug=True, host=config['flask_server_address'], port=int(config['flask_server_port']))
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action='store_true', dest='debug', help='Enables debug mode'
+                        ' - all messages received and sent by server are displayed')
+    parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Enables verbose'
+                        ' mode - displays all requests received by server')
+    args = parser.parse_args()
+    if args.debug:
+        print 'Debug mode enabled'
+    if not args.verbose:
+        log = logging.getLogger('werkzeug')
+        log.setLevel(logging.ERROR)
+    else:
+        print 'Verbose mode on'
+    print 'Starting server'
+    app.run(debug=args.debug, host=config['flask_server_address'], port=int(config['flask_server_port']))

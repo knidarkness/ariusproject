@@ -246,5 +246,12 @@ class Core(threading.Thread):
     def _send_command(self, command):
         print TAG, 'Send command to Output module: ', command
         self._result_sender.send_data_in_POST(command)
-core = Core(debug=True)
-core.start()
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug', help='Enables debug mode and extra messages')
+    args = parser.parse_args()
+    core = Core(debug=args.en_debug)
+    core.start()
