@@ -68,15 +68,15 @@ config = {
     "marytts_voice3": "empty",
     
     "predefined_videos" : {
-        "austin_ss_ux_ui.mp4": ["austin", "texas", "headquarter", "ux/ui"],
-        "barista_coffe.mp4": ["coffe", "smart home"],
-        "beer_recognizer.mp4": ["computer vision", "object recognition", "beer"],
-        "human_accelerator_ss.mp4": ["healthcare", "human accelerator"],
-        "mylko_byod.mp4": ["bring your own device", "apple watch", "byod"],
-        "mylko_cool_thing.mp4": ["internet of things", "take the cloud to the ground", "iot"],
-        "SaaS_offer_ss.mp4": ["software as a service", "software service", "SaaS"],
-        "security_ss.mp4": ["security", "information privacy"],
-        "tc_ss.mp4": ["techical communication", "documentation"]
+        "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],
+        "barista_coffe": ["coffe", "smart home"],
+        "beer_recognizer": ["computer vision", "object recognition", "beer"],
+        "human_accelerator_ss": ["healthcare", "human accelerator"],
+        "mylko_byod": ["bring your own device", "apple watch", "byod"],
+        "mylko_cool_thing": ["internet of things", "take the cloud to the ground", "iot"],
+        "SaaS_offer_ss": ["software as a service", "software service", "SaaS"],
+        "security_ss": ["security", "information privacy"],
+        "tc_ss": ["techical communication", "documentation"]
     }
 	
     
