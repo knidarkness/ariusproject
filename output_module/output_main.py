@@ -257,17 +257,16 @@ class OutputInterface:
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _speak_text(self, input_text):
-        """voice = config["default_voice"]
+        voice = config["default_voice"]
         if self.speaker is None:
             self.speaker = Speaker(config[voice], config["marytts_host"], config["marytts_port"])
         else:
             self.speaker.stop()
         self.speaker.speak(input_text)
-        """
         pass
 
     def _speak_stop(self):
-        # self.speaker.stop()
+        self.speaker.stop()
         pass
 
     def _video_play(self):
