@@ -29,7 +29,18 @@ config = {
     "core_server_output_port": "5000",
     "core_server_output_url": "/core/output",
 
-    "core_command_recog_confidence": "0.7",
+    "core_command_recog_confidence": 0.7,
+    "core_commands": {
+        "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
+        "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
+        "NO_ZOOM": ['normal size', 'zero zoom', 'no zoom', 'zoom reset', 'reset zoom'],
+        "SCROLL_DOWN": ['page down', 'scroll down'],
+        "SCROLL_UP": ['page up', 'scroll up'],
+        "CANCEL": ['cancel', 'bye', 'thanks'],
+        "WAIT": ['wait'],
+        "START": ['ok arius', 'what is that', 'what the fuck']
+    },
+    "core_update_interval": 0.1,
 
     "output_server_host": "127.0.0.1",
     "output_server_port": "5000",

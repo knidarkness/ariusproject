@@ -6,6 +6,7 @@ class SenseExtractor:
     This class should be used for key-phrases extraction from the  user`s query. It
     looks like it is the most convinient algorithm for this purpose.
     """
+
     def __init__(self, stopList):
         try:
             self._extractor = RAKE.Rake(stopList)
@@ -13,7 +14,7 @@ class SenseExtractor:
             print 'File not found'
             raise
 
-    def get_context(self, query):
+    def get_keywords(self, query):
         data = self._extractor.run(query)
         result = []
 

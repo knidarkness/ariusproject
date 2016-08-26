@@ -4,27 +4,25 @@
 <head>
     <title></title>
     <style type="text/css">
+    body{background-color:#000;}
     video#videoplayer {
         position: fixed;
         top: 50%;
         left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
+        width: 100%;
         height: auto;
         z-index: -100;
         -ms-transform: translateX(-50%) translateY(-50%);
         -moz-transform: translateX(-50%) translateY(-50%);
         -webkit-transform: translateX(-50%) translateY(-50%);
         transform: translateX(-50%) translateY(-50%);
-
     }
     </style>
 </head>
 
 <body>
-    <video id="videoplayer">
-        <source src="/home/tarasz/PythonProjects/ariusproject/data/IoT_ SoftServe`s R&D Director Speaking on FOG & Digitization.mp4" type="video/mp4">
+    <video id="videoplayer" autoplay>
+        <source src="/home/tarasz/PythonProjects/ariusproject/data/IoT_ SoftServe`s R&D Director Speaking on FOG & Digitization.mp4"  type="video/mp4">
     </video>
 </body>
 

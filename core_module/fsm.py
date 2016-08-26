@@ -10,7 +10,7 @@ class FSM(object):
     [key=current_state]:[(message, prev_state, end_state)]
     """
 
-    def __init__(self, init_state, states_dict, prev_state=''):
+    def __init__(self, init_state, states_dict, prev_state='', verbose=False):
         """
         Usual init function. The onle interesting thing is how we generate
         a list of all allowed messages. I take a message from every state case
@@ -25,6 +25,7 @@ class FSM(object):
         self.__message_list = message_list
         self.__states_dict = states_dict
         self.__current_message = None
+        self._verbose = verbose
 
     def handle_message(self, message):
         """
@@ -35,6 +36,8 @@ class FSM(object):
         if message in self.__message_list:
             self.__current_message = message
             self.update()
+            if self._verbose:
+                print 'State was changed from', self.get_prev_state(), 'to', self.get_state()
             return 0
         else:
             raise ValueError('This message is not in allowed messages')

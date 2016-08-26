@@ -33,7 +33,7 @@ class ESearchClient:
             }
         }
 
-        response = self._es.search(index=self._index, doc_type=self._type, body=queryBody, size=10000, from_=0)
+        response = self._es.search(index=self._index, doc_type=self._type, body=queryBody, size=50, from_=0)
         result = []
         for doc in response['hits']['hits']:
             result.append((doc['_source']['title'], doc['_score']))
