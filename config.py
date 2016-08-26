@@ -15,8 +15,6 @@ config = {
     "flask_server_error_address": "/screens/error",
     "flask_server_search_address": "/screens/search",
 
-    "output_update_interval": "1",
-
     "arius_screen_idle_background": "#000",
     "arius_screen_search_background": "#000",
     "arius_screen_error_background": "#000",
@@ -48,10 +46,11 @@ config = {
     "output_server_home": "output_module/pdf.js/web/",
     "output_data_pdf_viewer": "output_module/pdf.js/web/viewer.html",
     "output_videoplayer_path": "output_module/pdf.js/web/videoplayer.html",
-    "output_top_browser_size": ".15",
-    "output_bottom_browser_size": ".1",
+    "output_header_height": .15,
+    "output_footer_height": .1,
     "output_browser_top_page": "http://google.com",
     "output_browser_bottom_page": "http://geektimes.ru",
+    "output_update_frequency": .1,
 
     "elastic_host": "http://localhost:9200",
     "elastic_index": "arius",
