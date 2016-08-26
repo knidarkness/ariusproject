@@ -54,5 +54,16 @@ config = {
     "default_voice": "marytts_voice1",
     "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
     "marytts_voice2": "empty",
-    "marytts_voice3": "empty"
+    "marytts_voice3": "empty",
+    
+    "austing_ss_ux_ui.mp4": ["austin", "texas", "headquarter", "ux/ui"],
+    "barista_coffe.mp4": ["coffe", "smart home"],
+    "beer_recognizer.mp4": ["computer vision", "object recognition", "beer"],
+    "human_accelerator_ss.mp4": ["healthcare", "human accelerator"],
+    "mylko_byod.mp4": ["bring your own device", "apple watch", "byod"],
+    "mylko_cool_thing.mp4": ["internet of things", "take the cloud to the ground", "iot"],
+    "SaaS_offer_ss.mp4": ["software as a service", "software service", "SaaS"],
+    "security_ss.mp4": ["security", "information privacy"],
+    "tc_ss.mp4": ["techical communication", "documentation"]
+    
 }
