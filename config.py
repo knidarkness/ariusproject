@@ -67,14 +67,17 @@ config = {
     "marytts_voice2": "empty",
     "marytts_voice3": "empty",
     
-    "austing_ss_ux_ui.mp4": ["austin", "texas", "headquarter", "ux/ui"],
-    "barista_coffe.mp4": ["coffe", "smart home"],
-    "beer_recognizer.mp4": ["computer vision", "object recognition", "beer"],
-    "human_accelerator_ss.mp4": ["healthcare", "human accelerator"],
-    "mylko_byod.mp4": ["bring your own device", "apple watch", "byod"],
-    "mylko_cool_thing.mp4": ["internet of things", "take the cloud to the ground", "iot"],
-    "SaaS_offer_ss.mp4": ["software as a service", "software service", "SaaS"],
-    "security_ss.mp4": ["security", "information privacy"],
-    "tc_ss.mp4": ["techical communication", "documentation"]
+    "predefined_videos" : {
+        "austin_ss_ux_ui.mp4": ["austin", "texas", "headquarter", "ux/ui"],
+        "barista_coffe.mp4": ["coffe", "smart home"],
+        "beer_recognizer.mp4": ["computer vision", "object recognition", "beer"],
+        "human_accelerator_ss.mp4": ["healthcare", "human accelerator"],
+        "mylko_byod.mp4": ["bring your own device", "apple watch", "byod"],
+        "mylko_cool_thing.mp4": ["internet of things", "take the cloud to the ground", "iot"],
+        "SaaS_offer_ss.mp4": ["software as a service", "software service", "SaaS"],
+        "security_ss.mp4": ["security", "information privacy"],
+        "tc_ss.mp4": ["techical communication", "documentation"]
+    }
+	
     
 }
