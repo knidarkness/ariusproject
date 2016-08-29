@@ -25,7 +25,6 @@ command = {
 }
 command_queue = []
 
-
 @app.errorhandler(404)
 def not_found(err):
     return make_response(jsonify({'error': 'Not found'}), 404)
@@ -127,8 +126,8 @@ def black():
 
 
 @app.route(config['flask_server_video_addr'])
-def video():
-    return render_template("videoplayer.html")
+def video(video_id):
+    return render_template("videoplayer.html", video_path="/static/videos/"+video_id)
 
 if __name__ == '__main__':
     import argparse
