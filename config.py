@@ -50,7 +50,8 @@ config = {
     "output_footer_height": .1,
     "output_browser_top_page": "http://google.com",
     "output_browser_bottom_page": "http://geektimes.ru",
-    "output_update_frequency": .1,
+    "output_update_frequency": .5,
+    "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
     "elastic_host": "http://localhost:9200",
     "elastic_index": "arius",
@@ -65,8 +66,8 @@ config = {
     "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
     "marytts_voice2": "empty",
     "marytts_voice3": "empty",
-    
-    "predefined_videos" : {
+
+    "predefined_videos": {
         "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],
         "barista_coffe": ["coffe", "smart home"],
         "beer_recognizer": ["computer vision", "object recognition", "beer"],
@@ -77,6 +78,6 @@ config = {
         "security_ss": ["security", "information privacy"],
         "tc_ss": ["techical communication", "documentation"]
     }
-	
-    
+
+
 }

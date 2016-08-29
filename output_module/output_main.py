@@ -10,12 +10,27 @@ from PyQt5.QtCore import QUrl, QTimer
 from PyQt5.QtWidgets import QGridLayout, QWidget
 from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
+from PyQt5 import QtWebKitWidgets
 from tts_module import Speaker
+from PyQt5.QtNetwork import QNetworkRequest
 sys.path.append("../")
 from config import config
 from client import RESTClient
 
 TAG = "[Output Module]"
+
+
+class FakeBrowser(QtWebKitWidgets.QWebPage):
+    """
+    This is a class for changing user-agent in
+    the QWebPage.
+    """
+
+    def __init__(self, parent=None):
+        super(FakeBrowser, self).__init__()
+
+    def userAgentForUrl(self, url):
+        return config['output_user_agent']
 
 
 class OutputUpdater(threading.Thread):
@@ -37,7 +52,8 @@ class OutputUpdater(threading.Thread):
         self._server_port = config["output_server_port"]
         self._server_url = config["output_server_url"]
 
-        self._server_connection = RESTClient(self._server_host, self._server_port, self._server_url)
+        self._server_connection = RESTClient(
+            self._server_host, self._server_port, self._server_url)
 
         self._current_command_type = None
         self._current_command_body = None
@@ -61,7 +77,8 @@ class OutputUpdater(threading.Thread):
                 try:
                     self._current_command_type = data['type']
                     self._current_command_body = data['command']
-                    logger.info('Command received: {} : {}'.format(data['type'], data['command']))
+                    logger.info('Command received: {} : {}'.format(
+                        data['type'], data['command']))
                 finally:
                     self._lock.release()
             else:
@@ -121,46 +138,64 @@ class OutputInterface:
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         self._main_browser = QWebView()  # create a main content view
-        self._zoom_factor = 1  # and initialize zoom factor variable which will be used to control zoom
+        # and initialize zoom factor variable which will be used to control
+        # zoom
+        main_page = FakeBrowser(self)
+        self._main_browser.setPage(main_page)
+        self._zoom_factor = 1
 
         self._top_browser = QWebView()  # and create top and bottom views
         self._bottom_browser = QWebView()
 
-        self._top_browser_height = config['output_header_height'] * self._screen_height  # calculate views sizes
-        self._bottom_browser_height = config['output_footer_height'] * self._screen_height
+        self._top_browser_height = config[
+            'output_header_height'] * self._screen_height  # calculate views sizes
+        self._bottom_browser_height = config[
+            'output_footer_height'] * self._screen_height
 
-        self._top_browser.setMaximumHeight(self._top_browser_height)  # and assign them to the views
+        self._top_browser.setMaximumHeight(
+            self._top_browser_height)  # and assign them to the views
         self._top_browser.setMinimumHeight(self._top_browser_height)
 
         self._bottom_browser.setMaximumHeight(self._bottom_browser_height)
         self._bottom_browser.setMinimumHeight(self._bottom_browser_height)
 
-        self._top_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)  # remove the scroll bars
+        self._top_browser.page().mainFrame().setScrollBarPolicy(
+            QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)  # remove the scroll bars
         # self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
-        self._bottom_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+        self._bottom_browser.page().mainFrame().setScrollBarPolicy(
+            QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
 
-        self._top_browser_load_url(config['output_browser_top_page'])  # load default design
+        self._top_browser_load_url(
+            config['output_browser_top_page'])  # load default design
         self._bottom_browser_load_url(config['output_browser_bottom_page'])
 
-        self._main_browser.settings().setAttribute(QWebSettings.DeveloperExtrasEnabled, True)  # enable console
-        self._main_browser.settings().setAttribute(QWebSettings.PluginsEnabled, True)  # enable plugins
+        self._main_browser.settings().setAttribute(
+            QWebSettings.DeveloperExtrasEnabled, True)  # enable console
+        self._main_browser.settings().setAttribute(
+            QWebSettings.PluginsEnabled, True)  # enable plugins
         QWebSettings.setObjectCacheCapacities(0, 0, 0)  # disable caching
 
         self._layout.addWidget(self._top_browser, 1, 0)  # set views positions
         self._layout.addWidget(self._main_browser, 2, 0)
         self._layout.addWidget(self._bottom_browser, 3, 0)
 
-        self._lock = threading.RLock()  # create a RLock object to syncronyze threads.
-        self._updater = OutputUpdater(self._lock)  # and create an updater object
+        # create a RLock object to syncronyze threads.
+        self._lock = threading.RLock()
+        # and create an updater object
+        self._updater = OutputUpdater(self._lock)
 
         self._updater.start()  # which is ran in another non-blocking stream
 
         self.timeoutTimer = QTimer()  # create a timer to check for commands
-        tCallback = functools.partial(self._handle_command)  # set a timer`s function
+        tCallback = functools.partial(
+            self._handle_command)  # set a timer`s function
         self.timeoutTimer.timeout.connect(tCallback)
-        self.timeoutTimer.start(config['output_update_frequency'])  # and start it
+        self.timeoutTimer.start(
+            config['output_update_frequency'])  # and start it
 
-        self._cur_filetype = None  # as no data is displayed on the main view - curent content type is None
+        # as no data is displayed on the main view - curent content type is
+        # None
+        self._cur_filetype = None
 
         self._speaker = None
 
@@ -173,7 +208,8 @@ class OutputInterface:
         self._main_window.setLayout(self._layout)  # assign a layout to it
         self._main_window.showFullScreen()  # set full screen enabled
         self._main_window.show()  # and finally, show the window
-        sys.exit(self._app.exec_())  # and set a trigger to exit the app, as window is closed
+        # and set a trigger to exit the app, as window is closed
+        sys.exit(self._app.exec_())
         logger.info('Finished')
 
     def _handle_command(self):
@@ -223,7 +259,8 @@ class OutputInterface:
                 self._main_browser_scroll_up()
 
             # Following two commands are responsible for playing
-            # video and pausing it.
+            # video and pausing it. As a second part of the command
+            # name of the video file should be given.
 
             elif command[0] == 'PLAY':
                 self._video_play()
@@ -231,6 +268,8 @@ class OutputInterface:
                 self._video_pause()
 
             # and these two are for text-to-speech
+            # The 'command' body should be a text you
+            # you want to hear.
 
             elif command[0] == "SPEAK":
                 self._speak_text(command[1])
@@ -248,7 +287,8 @@ class OutputInterface:
         which is not very nice way, however we didn`t find
         anything better.
         """
-        output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4', shell=True, stdout=subprocess.PIPE).communicate()[0]
+        output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4',
+                                  shell=True, stdout=subprocess.PIPE).communicate()[0]
         output = [int(val) for val in output.split('x')]
         # logger.debug('Screen dimensions are: {} x {}'.format(output[0], output[1]))
         self._screen_height = output[1]
@@ -263,17 +303,28 @@ class OutputInterface:
         the main content view.
         """
         self._main_browser_reset_zoom()  # set zoom level to 1 in case if previous page was zoomed
-        url = 'http://' + config['flask_server_address'] + ':' + config['flask_server_port']  # this a default path to the arius server
+        # this a default path to the arius server
+        url = 'http://' + config['flask_server_address'] + \
+            ':' + config['flask_server_port']
         if screen_type == 'IDLE':  # and here in depend of type of the required screen
-            url = url + config['flask_server_idle_address']  # we set the last path of the URL to the exact screen
+            # we set the last path of the URL to the exact screen
+            url = url + config['flask_server_idle_address']
         elif screen_type == 'ERROR':
             url = url + config['flask_server_error_address']
         elif screen_type == 'SEARCH':
             url = url + config['sflask_server_search_address']
         else:  # and if the target screen wasn`t recognized we can also handle it
             logger.info('WRONG SCREEN TYPE: {}'.format(screen_type))
-        logger.debug('Opening {} screen on following address {}'.format(screen_type, url))
+        logger.debug(
+            'Opening {} screen on following address {}'.format(screen_type, url))
         self._main_browser.load(QUrl(url))
+
+    def _custom_ua(self, url):
+        """
+        This function returns a custom user agent data
+        which is stored in config.py file as 'output_user_agent'
+        """
+        return config['output_user_agent']
 
     def _load_content(self, content_type, content):
         """
@@ -288,13 +339,19 @@ class OutputInterface:
         self._main_browser_reset_zoom()  # reset zoom
         if content_type == 'local_url':
             source = 'file://' + content  # simply open the file by its path
-            self._cur_filetype = "webpage"  # specify type of currently opened file for zoom and scroll methods
+            # specify type of currently opened file for zoom and scroll methods
+            self._cur_filetype = "webpage"
         elif content_type == 'external_url':
             self._cur_filetype = "webpage"
-            source = content  # no needs required as, link should be given in 'http://yoursite.com/yourpage'
+            # no needs required as, link should be given in
+            # 'http://yoursite.com/yourpage'
+            source = content
         elif content_type == 'local_pdf':
-            # to render PDF`s we use PDF.js, so we open its page and send it a path for the target file.
-            source = "file://" + config['root_dir'] + config['output_data_pdf_viewer'] + "?file=" + content
+            # to render PDF`s we use PDF.js, so we open its page and send it a
+            # path for the target file.
+            source = "file://" + \
+                config['root_dir'] + \
+                config['output_data_pdf_viewer'] + "?file=" + content
             self._cur_filetype = "pdf"
         elif content_type == 'local_video':
             # in case of opening local videos we need to modify the path to the video in the source code of
@@ -303,10 +360,24 @@ class OutputInterface:
             self._cur_filetype = "video"
             source = config['root_dir'] + config['output_videoplayer_path']
             html = open(source, "rb").read()
-            open(source, "r+").write(html[:html.find("src=") + 5] + content + html[html.find("\"", html.find("src=") + 5):])
+            open(source, "r+").write(html[:html.find("src=") + 5] +
+                                     content + html[html.find("\"", html.find("src=") + 5):])
             source = "file:///" + source
+
+        # Set a custom user agent to avoid message about deprecated version of browser
+
+        self._main_browser.page().userAgentForUrl = self._custom_ua
+
         logger.info('Loading data on address: {}'.format(source))
-        self._main_browser.load(QUrl(source))  # we give a command to our main content view to load given address.
+
+        # Create a request to be able to set user-agent data. Without
+        # it, it`s impossible to customize request data.
+        request = QNetworkRequest()
+        request.setUrl(QUrl(source))
+        request.setRawHeader("USER-AGENT", config['output_user_agent'])
+
+        # and finally load the result
+        self._main_browser.load(request)
 
     def _top_browser_load_url(self, url):
         """
@@ -340,9 +411,11 @@ class OutputInterface:
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
-            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
+            self._main_browser.page().mainFrame().evaluateJavaScript(
+                "smooth_scroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
         elif self._cur_filetype == "webpage":
-            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, 300, 1000);")
+            self._main_browser.page().mainFrame().evaluateJavaScript(
+                "smooth_scroll_by(document.body, 300, 1000);")
 
     def _main_browser_scroll_up(self):
         """
@@ -354,9 +427,11 @@ class OutputInterface:
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
-            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")
+            self._main_browser.page().mainFrame().evaluateJavaScript(
+                "smooth_scroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")
         elif self._cur_filetype == "webpage":
-            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_scroll_by(document.body, -300, 1000);")
+            self._main_browser.page().mainFrame().evaluateJavaScript(
+                "smooth_scroll_by(document.body, -300, 1000);")
 
     def _main_browser_zoom_in(self):
         """
@@ -395,10 +470,14 @@ class OutputInterface:
         logger.info('Speaking following text {}'.format(input_text))
         voice = config["default_voice"]
         if self._speaker is None:  # if there wasn`t no tts requests before, create a TTS client
-            self._speaker = Speaker(config[voice], config["marytts_host"], config["marytts_port"])
-        else:  # otherwise just stop previous speaking session (if Arius isn`t speaking at the moment, nothing will crash)
+            self._speaker = Speaker(config[voice], config[
+                                    "marytts_host"], config["marytts_port"])
+        # otherwise just stop previous speaking session (if Arius isn`t
+        # speaking at the moment, nothing will crash)
+        else:
             self._speaker.stop()
-        self._speaker.speak(input_text)  # and send given text as a tts request.
+        # and send given text as a tts request.
+        self._speaker.speak(input_text)
 
     def _speak_stop(self):
         """
@@ -432,8 +511,10 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='store_true', dest='en_verbose', help='Enables terminal output of current commands')
-    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug', help='Enables terminal output of all internall processes')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        dest='en_verbose', help='Enables terminal output of current commands')
+    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug',
+                        help='Enables terminal output of all internall processes')
 
     args = parser.parse_args()
 
@@ -449,7 +530,8 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=logging.CRITICAL)
 
-    formatter = logging.Formatter("[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
+    formatter = logging.Formatter(
+        "[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     ui = OutputInterface()

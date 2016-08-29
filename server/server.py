@@ -136,4 +136,5 @@ if __name__ == '__main__':
     else:
         print 'Verbose mode on'
     print 'Starting server'
-    app.run(debug=args.debug, host=config['flask_server_address'], port=int(config['flask_server_port']))
+    app.run(debug=args.debug, host=config[
+            'flask_server_address'], port=int(config['flask_server_port']))
