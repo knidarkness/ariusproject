@@ -127,7 +127,7 @@ def black():
 
 @app.route(config['flask_server_video_addr'])
 def video(video_id):
-    return render_template("videoplayer.html", video_path="/static/videos/"+video_id)
+    return render_template("videoplayer.html", video_path="/static/videos/"+video_id+".mp4")
 
 if __name__ == '__main__':
     import argparse

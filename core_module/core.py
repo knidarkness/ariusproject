@@ -49,8 +49,8 @@ class Core(threading.Thread):
 
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
-        self._command_recognizer = FuzzyRecognizer(config['core_commands'], min_confidence=config['core_command_recog_confidence'], debug=self._debug)
-        self._video_recognizer = FuzzyRecognizer(config['predefined_videos'], min_confidence=config['core_command_recog_confidence'], debug=self._debug)
+        self._command_recognizer = FuzzyRecognizer(config['core_commands'], min_confidence=config['core_command_recog_confidence'], verbose=self._verbose)
+        self._video_recognizer = FuzzyRecognizer(config['predefined_videos'], min_confidence=config['core_command_recog_confidence'], verbose=self._verbose)
         states_dict = {}
         states_dict['idle'] = [('cancel', None, 'idle'), ('request', None, 'searching_data'), ('display_video', None, 'displaying_video')]
         states_dict['searching_data'] = [('cancel', None, 'idle'), ('display', None, 'displaying_data'), ('not_found', None, 'search_data_failed')]
@@ -90,7 +90,7 @@ class Core(threading.Thread):
                         self._handle_command('OPEN_VIDEO', recognized_video)
                     elif query:
                         logger.info('Proceeding search query...')
-                        self._handle_command('SEARCH', query)
+                        self._do_work(self._find_data, query)
                     else:
                         logger.info('Search query is empty')
             time.sleep(config['core_update_interval'])
@@ -108,7 +108,7 @@ class Core(threading.Thread):
             self._send_command({'type': 'SPEAK', 'command': 'Zooming out'})
         elif command == "SCROLL_DOWN":
             request = {'type': 'SCROLL_DOWN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Scrolling down, sir'})
+            self._send_command({'type': 'SPEAK', 'command': 'Scroll down, sir'})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
             self._send_command({'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
@@ -116,7 +116,6 @@ class Core(threading.Thread):
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._statemachine.handle_message('request')
             self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
-            self._do_work(self._find_data, arg)
         elif command == "OPEN_VIDEO":
             request = {'type': 'OPEN_VIDEO', 'command': arg}
             self._statemachine.handle_message('display_video')
@@ -124,6 +123,7 @@ class Core(threading.Thread):
         self._send_command(request)
 
     def _find_data(self, request, result):
+        self._handle_command('SEARCH')
         logger.info('Searching data...')
         data = self._ESclient.search(request)
         logger.debug(data)
@@ -148,6 +148,7 @@ class Core(threading.Thread):
         return None
 
     def _do_work(self, function, argument):
+
         result = []
         logger.info(argument)
         worker = threading.Thread(target=function, args=(argument, result))

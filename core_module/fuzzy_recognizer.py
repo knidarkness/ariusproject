@@ -39,17 +39,17 @@ class FuzzyRecognizer:
 
     """
 
-    def __init__(self, commands, min_confidence=.9, debug=False):
+    def __init__(self, commands, min_confidence=.9, verbose=False):
         if type(commands) != dict:
             print 'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands))
             raise ValueError('Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
         if min_confidence > 1 or min_confidence < 0:
             print 'Too low or too high value of minimal confidence. It should be between 0 and 1'
             raise ValueError('Too low or too high value of minimal confidence')
-        if type(debug) != bool:
-            print 'Wrong type of debug flag. It must be bool: True or False, but not a {}.'.format(type(debug))
-            raise ValueError('Wrong type of debug flag. It must be bool: True or False,  but not a {}.'.format(type(debug)))
-        self._debug = debug
+        if type(verbose) != bool:
+            print 'Wrong type of verbose flag. It must be bool: True or False, but not a {}.'.format(type(verbose))
+            raise ValueError('Wrong type of verbose flag. It must be bool: True or False,  but not a {}.'.format(type(verbose)))
+        self._verbose = verbose
         self._min_confidence = min_confidence * 100
         self._commands = commands
 
@@ -82,23 +82,23 @@ class FuzzyRecognizer:
         If probability level of given command is high enough True
         will be returned, if not - False.
         """
-        if self._debug:
+        if self._verbose:
             print '<============== COMMAND RECOGNIZING BEGAN ===============>'
 
         if target_command:
             if target_command not in self._commands.keys():
-                if self._debug:
+                if self._verbose:
                     print 'Given wrong command: there`s no such command in the dictionary. Exiting'
                 raise ValueError('Wrong command')
             for command in self._commands[target_command]:
                 probability = fuzz.partial_ratio(command, input)
-                if self._debug:
+                if self._verbose:
                     print 'Probability of command {} for command case {} is {}'.format(target_command, command, probability)
                 if probability >= self._min_confidence:
-                    if self._debug:
+                    if self._verbose:
                         print 'Matching command found.'
                     return True
-            if self._debug:
+            if self._verbose:
                 print 'Start phrase was not recognized'
                 print '>++++++++++++ COMMAND RECOGNIZING FINISHED ++++++++++++<'
             return False
@@ -116,18 +116,18 @@ class FuzzyRecognizer:
 
             result = [key for key in command_probability.keys() if command_probability[key] == max(command_probability.values()) and command_probability[key] > self._min_confidence]
 
-            if self._debug:
+            if self._verbose:
                 print 'The list of all available commands is: {}'.format(self._commands.keys())
                 print 'The list of probabilities of each command is: {}'.format(command_probability)
                 print 'The list of found matching commands (better if there`s only one item) is: {}'.format(result)
 
             if result:
-                if self._debug:
+                if self._verbose:
                     print 'Command was succesfully recognized'
                     print 'Recognized command is {}'.format(result[0])
                     print '>++++++++++++ COMMAND RECOGNIZING FINISHED ++++++++++++<'
                 return result[0]
-            if self._debug:
+            if self._verbose:
                 print 'Command was not recognized'
                 print '>++++++++++++ COMMAND RECOGNIZING FINISHED ++++++++++++<'
             return None
@@ -148,12 +148,12 @@ class FuzzyRecognizer:
 
         As you could see, method returns a string without a command.
         """
-        if self._debug:
+        if self._verbose:
             print '<============ STARTED CLEARING INPUT ============>'
         if command is None:
             return string
         if command not in self._commands.keys():
-            if self._debug:
+            if self._verbose:
                 print 'Given wrong command: there`s no such command in the dictionary. Exiting'
             raise ValueError('Wrong command')
         for case in self._commands[command]:
@@ -166,12 +166,12 @@ class FuzzyRecognizer:
                 if fuzz.partial_ratio(gram, string) >= self._min_confidence:
                     string = string.replace(gram, '')
                     string = string.strip()
-                    if self._debug:
+                    if self._verbose:
                         print 'String with removed command phrase is: "{}"'.format(string)
                     return string
-            if self._debug:
+            if self._verbose:
                 print 'Nothing to replace'
-        if self._debug:
+        if self._verbose:
             print '>++++++++++++ FINISHED CLEARING INPUT ++++++++++++<'
         return string
 
