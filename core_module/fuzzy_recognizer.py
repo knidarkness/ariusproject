@@ -150,6 +150,8 @@ class FuzzyRecognizer:
         """
         if self._debug:
             print '<============ STARTED CLEARING INPUT ============>'
+        if command is None:
+            return string
         if command not in self._commands.keys():
             if self._debug:
                 print 'Given wrong command: there`s no such command in the dictionary. Exiting'

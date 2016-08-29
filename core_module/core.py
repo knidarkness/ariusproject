@@ -37,9 +37,8 @@ class Updater(threading.Thread):
 
 
 class Core(threading.Thread):
-    def __init__(self, debug=False, verbose=False):
+    def __init__(self, verbose=False):
         threading.Thread.__init__(self)
-        self._debug = debug
         self._verbose = verbose
         self._lock = threading.RLock()
         self._updater = Updater(self._lock)
@@ -50,12 +49,14 @@ class Core(threading.Thread):
 
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
-        self._recognizer = FuzzyRecognizer(config['core_commands'], min_confidence=config['core_command_recog_confidence'], debug=self._debug)
+        self._command_recognizer = FuzzyRecognizer(config['core_commands'], min_confidence=config['core_command_recog_confidence'], debug=self._debug)
+        self._video_recognizer = FuzzyRecognizer(config['predefined_videos'], min_confidence=config['core_command_recog_confidence'], debug=self._debug)
         states_dict = {}
-        states_dict['idle'] = [('cancel', None, 'idle'), ('request', None, 'searching_data')]
-        states_dict['searching_data'] = [('cancel', None, 'idle'), ('display', None, 'displaying_data'), ('not_found', None, 'search_failed')]
-        states_dict['search_failed'] = [('cancel', None, 'idle'), ('request', None, 'searching_data')]
+        states_dict['idle'] = [('cancel', None, 'idle'), ('request', None, 'searching_data'), ('display_video', None, 'displaying_video')]
+        states_dict['searching_data'] = [('cancel', None, 'idle'), ('display', None, 'displaying_data'), ('not_found', None, 'search_data_failed')]
+        states_dict['search_data_failed'] = [('cancel', None, 'idle'), ('request', None, 'searching_data')]
         states_dict['displaying_data'] = [('cancel', None, 'idle'), ('command', None, 'displaying_data'), ('request', None, 'searching_data')]
+        states_dict['displaying_video'] = [('cancel', None, 'idle'), ('command', None, 'displaying_video'), ('request', None, 'searching_data')]
         self._statemachine = FSM('idle', states_dict, 'idle', verbose=self._verbose)
 
     def run(self):
@@ -65,12 +66,13 @@ class Core(threading.Thread):
         while True:
             if self._updater.input_speech:
                 user_input = self._updater.input_speech
+                logger.debug(user_input)
                 self._lock.acquire()
                 self._updater.input_speech = None
                 self._lock.release()
 
-                recognized_command = self._recognizer.recognize_command(user_input)
-                if recognized_command is not None:
+                recognized_command = self._command_recognizer.recognize_command(user_input)
+                if recognized_command:
                     if recognized_command == 'CANCEL':
                         self._handle_command(recognized_command)
                         continue
@@ -81,18 +83,19 @@ class Core(threading.Thread):
                 if (self._statemachine.get_state() == 'idle' and recognized_command == 'START' ) \
                         or self._statemachine.get_state() != 'idle':
 
-                    user_input = self._recognizer.remove_command(user_input, recognized_command)
+                    user_input = self._command_recognizer.remove_command(user_input, recognized_command)
                     query = ' '.join(self._sense_extractor.get_keywords(user_input))
-
-                    if query:
+                    recognized_video = self._video_recognizer.recognize_command(user_input)
+                    if recognized_video:
+                        self._handle_command('OPEN_VIDEO', recognized_video)
+                    elif query:
                         logger.info('Proceeding search query...')
-                        self._handle_command('SEARCH')
-                        self._do_work(self._find_data, query)
+                        self._handle_command('SEARCH', query)
                     else:
                         logger.info('Search query is empty')
             time.sleep(config['core_update_interval'])
 
-    def _handle_command(self, command):
+    def _handle_command(self, command, arg=None):
         if command == "CANCEL":
             self._statemachine.handle_message('cancel')
             request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
@@ -112,6 +115,11 @@ class Core(threading.Thread):
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._statemachine.handle_message('request')
+            self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
+            self._do_work(self._find_data, arg)
+        elif command == "OPEN_VIDEO":
+            request = {'type': 'OPEN_VIDEO', 'command': arg}
+            self._statemachine.handle_message('display_video')
             self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
         self._send_command(request)
 
@@ -185,5 +193,5 @@ if __name__ == '__main__':
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
-    core = Core()
+    core = Core(verbose=args.en_verbose)
     core.start()
