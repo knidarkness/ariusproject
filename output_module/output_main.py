@@ -166,8 +166,8 @@ class OutputInterface:
             QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
 
         self._top_browser_load_url(
-            config['output_browser_top_page'])  # load default design
-        self._bottom_browser_load_url(config['output_browser_bottom_page'])
+            config['flask_server_home'] + config['output_browser_top_page'])  # load default design
+        self._bottom_browser_load_url(config['flask_server_home'] + config['output_browser_bottom_page'])
 
         self._main_browser.settings().setAttribute(
             QWebSettings.DeveloperExtrasEnabled, True)  # enable console

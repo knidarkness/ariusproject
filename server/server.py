@@ -120,6 +120,11 @@ def error():
 def search():
     return render_template("search.html", background=config["arius_screen_search_background"])
 
+
+@app.route(config['flask_server_black_address'])
+def black():
+    return render_template("black.html")
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()

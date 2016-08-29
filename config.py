@@ -14,6 +14,7 @@ config = {
     "flask_server_idle_address": "/screens/idle",
     "flask_server_error_address": "/screens/error",
     "flask_server_search_address": "/screens/search",
+    "flask_server_black_address": "/screens/black",
 
     "arius_screen_idle_background": "#000",
     "arius_screen_search_background": "#000",
@@ -48,8 +49,8 @@ config = {
     "output_videoplayer_path": "output_module/pdf.js/web/videoplayer.html",
     "output_header_height": .15,
     "output_footer_height": .1,
-    "output_browser_top_page": "http://google.com",
-    "output_browser_bottom_page": "http://geektimes.ru",
+    "output_browser_top_page": "/screens/black",
+    "output_browser_bottom_page": "/screens/black",
     "output_update_frequency": .5,
     "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
@@ -81,3 +82,6 @@ config = {
 
 
 }
+
+config["flask_server_home"] = 'http://' + config['flask_server_address'] + \
+    ':' + config['flask_server_port']
