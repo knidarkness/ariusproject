@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 import threading
 import sys
 import time
@@ -167,13 +168,19 @@ if __name__ == '__main__':
                         ' received messages and sent commands.')
     args = parser.parse_args()
 
+    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+    logging.getLogger("elasticsearch").setLevel(logging.CRITICAL)
+    logging.getLogger("elasticsearch.trace").setLevel(logging.CRITICAL)
+
     logger = logging.getLogger("Core")
     logger.propagate = False
     ch = logging.StreamHandler()
     if args.en_verbose:
         logging.basicConfig(level=logging.INFO)
-    else:
+    elif args.en_debug:
         logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.CRITICAL)
     formatter = logging.Formatter("[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
     ch.setFormatter(formatter)
     logger.addHandler(ch)

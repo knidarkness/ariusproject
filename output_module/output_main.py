@@ -19,7 +19,7 @@ TAG = "[Output Module]"
 
 
 class OutputUpdater(threading.Thread):
-    def __init__(self, lock, verbose=False):
+    def __init__(self, lock):
         """
         This is a constructor method for an updater
         class of the Arius output module.
@@ -33,7 +33,6 @@ class OutputUpdater(threading.Thread):
         """
         threading.Thread.__init__(self)
 
-        self.__verbose = verbose
         self._server_host = config["output_server_host"]
         self._server_port = config["output_server_port"]
         self._server_url = config["output_server_url"]
@@ -55,15 +54,14 @@ class OutputUpdater(threading.Thread):
         as self._current_commnad_type & self._current_command_body.
         """
         while self.running:
-            logging.debug('connecting')
             data = self._server_connection.GET_request(True, 0)
             if data['type'] != 'none':
-                logging.debug('Received data {}'.format(data))
+                logger.debug('Received data {}'.format(data))
                 self._lock.acquire()
                 try:
                     self._current_command_type = data['type']
                     self._current_command_body = data['command']
-                    logging.info('Command received: {} : {}'.format(data['type'], data['command']))
+                    logger.info('Command received: {} : {}'.format(data['type'], data['command']))
                 finally:
                     self._lock.release()
             else:
@@ -88,7 +86,7 @@ class OutputUpdater(threading.Thread):
 
 
 class OutputInterface:
-    def __init__(self, verbose=False):
+    def __init__(self):
         """
         This constructor function initializes a layout of the Arius output
         module but doesn`t displays it on the screen.
@@ -114,7 +112,6 @@ class OutputInterface:
         a timer instance which checks that stream for new commands
         from the server, and in case if there`s some update handles it.
         """
-        self._verbose = verbose  # init a verbose flag - if on -> terminal debug output on
         self._app = QtWidgets.QApplication(sys.argv)
         self._app.setStyle("Fusion")
         self._get_screen_height()
@@ -177,7 +174,7 @@ class OutputInterface:
         self._main_window.showFullScreen()  # set full screen enabled
         self._main_window.show()  # and finally, show the window
         sys.exit(self._app.exec_())  # and set a trigger to exit the app, as window is closed
-        logging.info('Finished')
+        logger.info('Finished')
 
     def _handle_command(self):
         """
@@ -186,7 +183,7 @@ class OutputInterface:
         """
         command = self._updater.get_state()  # get a new command
         if command[0] != 'none' and command[0] != None:  # if there`s a command, handle it
-            logging.info('Handling command {}'.format(command))
+            logger.info('Handling command {}'.format(command))
 
             self._updater.reset()  # clear the updater object command buffer
 
@@ -240,7 +237,7 @@ class OutputInterface:
             elif command[0] == "STOP_SPEAK":
                 self._speak_stop()
             else:
-                logging.info('command not recognized {}'.format(command))
+                logger.info('command not recognized {}'.format(command))
         else:
             pass
 
@@ -253,7 +250,7 @@ class OutputInterface:
         """
         output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4', shell=True, stdout=subprocess.PIPE).communicate()[0]
         output = [int(val) for val in output.split('x')]
-        # logging.debug('Screen dimensions are: {} x {}'.format(output[0], output[1]))
+        # logger.debug('Screen dimensions are: {} x {}'.format(output[0], output[1]))
         self._screen_height = output[1]
         self._screen_width = output[0]
         return output[0], output[1]
@@ -270,13 +267,13 @@ class OutputInterface:
         if screen_type == 'IDLE':  # and here in depend of type of the required screen
             url = url + config['flask_server_idle_address']  # we set the last path of the URL to the exact screen
         elif screen_type == 'ERROR':
-            url = url + config['server_flask_error_address']
+            url = url + config['flask_server_error_address']
         elif screen_type == 'SEARCH':
-            url = url + config['server_flask_search_address']
+            url = url + config['sflask_server_search_address']
         else:  # and if the target screen wasn`t recognized we can also handle it
-            logging.info('WRONG SCREEN TYPE: {}'.format(screen_type))
-        logging.debug('Opening {} screen on following address {}'.format(screen_type, url))
-        self._main_browser.load(QUrl())
+            logger.info('WRONG SCREEN TYPE: {}'.format(screen_type))
+        logger.debug('Opening {} screen on following address {}'.format(screen_type, url))
+        self._main_browser.load(QUrl(url))
 
     def _load_content(self, content_type, content):
         """
@@ -308,7 +305,7 @@ class OutputInterface:
             html = open(source, "rb").read()
             open(source, "r+").write(html[:html.find("src=") + 5] + content + html[html.find("\"", html.find("src=") + 5):])
             source = "file:///" + source
-            logging.info('Loading data on address: {}'.format(source))
+        logger.info('Loading data on address: {}'.format(source))
         self._main_browser.load(QUrl(source))  # we give a command to our main content view to load given address.
 
     def _top_browser_load_url(self, url):
@@ -319,7 +316,7 @@ class OutputInterface:
         or
         file://data/somepage.html
         """
-        logging.info('Loading {} to the top content view.'.format(url))
+        logger.info('Loading {} to the top content view.'.format(url))
         self._top_browser.load(QUrl(url))
 
     def _bottom_browser_load_url(self, url):
@@ -339,7 +336,7 @@ class OutputInterface:
         dependence of the current content type if provides different
         implementations of scroll, but generally it gives the same result.
         """
-        logging.debug('Scrolling main content view down')
+        logger.debug('Scrolling main content view down')
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
@@ -353,7 +350,7 @@ class OutputInterface:
         dependence of the current content type if provides different
         implementations of scroll, but generally it gives the same result.
         """
-        logging.debug('Scrolling main content view down')
+        logger.debug('Scrolling main content view down')
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
@@ -366,7 +363,7 @@ class OutputInterface:
         This methoud simply zooms main content view in. It works
         well with all content types.
         """
-        logging.debug('Zooming main content view in')
+        logger.debug('Zooming main content view in')
         self._zoom_factor += .1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
@@ -376,7 +373,7 @@ class OutputInterface:
         It should be called before loading a new page or in order to cancel any zoom
         changes.
         """
-        logging.debug('Resetting zoom in the main content view')
+        logger.debug('Resetting zoom in the main content view')
         self._zoom_factor = 1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
@@ -385,7 +382,7 @@ class OutputInterface:
         This methoud simply zooms main content view out. It works
         well with all content types.
         """
-        logging.debug('Zooming main content view ouy')
+        logger.debug('Zooming main content view ouy')
         self._zoom_factor -= .1
         self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
@@ -395,7 +392,7 @@ class OutputInterface:
         As a back-end of this method Mary TTS is used.
         Voices can be configured through config.py quit easy.
         """
-        logging.info('Speaking following text {}'.format(input_text))
+        logger.info('Speaking following text {}'.format(input_text))
         voice = config["default_voice"]
         if self._speaker is None:  # if there wasn`t no tts requests before, create a TTS client
             self._speaker = Speaker(config[voice], config["marytts_host"], config["marytts_port"])
@@ -407,7 +404,7 @@ class OutputInterface:
         """
         This method simply stops current voice output.
         """
-        logging.info('Stop speaking')
+        logger.info('Stop speaking')
         self._speaker.stop()
 
     def _video_play(self):
@@ -415,7 +412,7 @@ class OutputInterface:
         This method is used to begin playing video on the current page.
         It should be run only if current content type is 'video'.
         """
-        logging.debug('Playing video')
+        logger.debug('Playing video')
         if self._cur_filetype == 'video':
             script_js = """video=document.getElementById("videoplayer"); video.play()"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
@@ -425,7 +422,7 @@ class OutputInterface:
         This method is used to pause currently playing video on the page.
         It should be run only if current content type is 'video'.
         """
-        logging.debug('Video paused')
+        logger.debug('Video paused')
         if self._cur_filetype == 'video':
             script_js = """video=document.getElementById("videoplayer"); video.pause()"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
@@ -447,8 +444,10 @@ if __name__ == "__main__":
 
     if args.en_verbose:
         logging.basicConfig(level=logging.INFO)
-    else:
+    elif args.en_debug:
         logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.CRITICAL)
 
     formatter = logging.Formatter("[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
     ch.setFormatter(formatter)
