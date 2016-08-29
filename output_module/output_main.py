@@ -174,6 +174,10 @@ class OutputInterface:
         self._main_browser.settings().setAttribute(
             QWebSettings.PluginsEnabled, True)  # enable plugins
         QWebSettings.setObjectCacheCapacities(0, 0, 0)  # disable caching
+        self._main_browser.settings().setAttribute(
+            QWebSettings.AcceleratedCompositingEnabled, True) # some staff from the internet  
+        self._main_browser.settings().setAttribute(
+            QWebSettings.WebGLEnabled, True) # some staff from the internet    
 
         self._layout.addWidget(self._top_browser, 1, 0)  # set views positions
         self._layout.addWidget(self._main_browser, 2, 0)
