@@ -125,6 +125,11 @@ def search():
 def black():
     return render_template("black.html")
 
+
+@app.route(config['flask_server_video_addr'])
+def video():
+    return render_template("videoplayer.html")
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
