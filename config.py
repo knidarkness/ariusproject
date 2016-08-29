@@ -15,6 +15,8 @@ config = {
     "flask_server_error_address": "/screens/error",
     "flask_server_search_address": "/screens/search",
     "flask_server_black_address": "/screens/black",
+    "flask_server_video_addr": "/video/<string:video_id>",
+    "flask_server_video_addr_client": "/video/",
 
     "arius_screen_idle_background": "#000",
     "arius_screen_search_background": "#000",

@@ -167,7 +167,8 @@ class OutputInterface:
 
         self._top_browser_load_url(
             config['flask_server_home'] + config['output_browser_top_page'])  # load default design
-        self._bottom_browser_load_url(config['flask_server_home'] + config['output_browser_bottom_page'])
+        self._bottom_browser_load_url(
+            config['flask_server_home'] + config['output_browser_bottom_page'])
 
         self._main_browser.settings().setAttribute(
             QWebSettings.DeveloperExtrasEnabled, True)  # enable console
@@ -175,9 +176,9 @@ class OutputInterface:
             QWebSettings.PluginsEnabled, True)  # enable plugins
         QWebSettings.setObjectCacheCapacities(0, 0, 0)  # disable caching
         self._main_browser.settings().setAttribute(
-            QWebSettings.AcceleratedCompositingEnabled, True) # some staff from the internet  
+            QWebSettings.AcceleratedCompositingEnabled, True)  # some staff from the internet
         self._main_browser.settings().setAttribute(
-            QWebSettings.WebGLEnabled, True) # some staff from the internet    
+            QWebSettings.WebGLEnabled, True)  # some staff from the internet
 
         self._layout.addWidget(self._top_browser, 1, 0)  # set views positions
         self._layout.addWidget(self._main_browser, 2, 0)
@@ -316,7 +317,7 @@ class OutputInterface:
         elif screen_type == 'ERROR':
             url = url + config['flask_server_error_address']
         elif screen_type == 'SEARCH':
-            url = url + config['sflask_server_search_address']
+            url = url + config['flask_server_search_address']
         else:  # and if the target screen wasn`t recognized we can also handle it
             logger.info('WRONG SCREEN TYPE: {}'.format(screen_type))
         logger.debug(
@@ -361,14 +362,12 @@ class OutputInterface:
             # in case of opening local videos we need to modify the path to the video in the source code of
             # the videoplayer, so don`t die after reading this code. It works just in the same style as other
             # filetypes, but in a very weird way.
+            source = config['flask_server_home'] + \
+                config['flask_server_video_addr_client'] + content
+            logger.info('Opening video at {}'.format(source))
             self._cur_filetype = "video"
-            source = config['root_dir'] + config['output_videoplayer_path']
-            html = open(source, "rb").read()
-            open(source, "r+").write(html[:html.find("src=") + 5] +
-                                     content + html[html.find("\"", html.find("src=") + 5):])
-            source = "file:///" + source
-
-        # Set a custom user agent to avoid message about deprecated version of browser
+        # Set a custom user agent to avoid message about deprecated version of
+        # browser
 
         self._main_browser.page().userAgentForUrl = self._custom_ua
 
