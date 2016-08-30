@@ -1,5 +1,4 @@
 import time
-# import pyautogui
 import sys
 import subprocess
 import threading
@@ -16,8 +15,6 @@ from PyQt5.QtNetwork import QNetworkRequest
 sys.path.append("../")
 from config import config
 from client import RESTClient
-
-TAG = "[Output Module]"
 
 
 class FakeBrowser(QtWebKitWidgets.QWebPage):

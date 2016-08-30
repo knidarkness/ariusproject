@@ -84,7 +84,7 @@ class Core(threading.Thread):
                         or self._statemachine.get_state() != 'idle':
                     user_input = self._command_recognizer.remove_command(user_input, 'START')
                     query = ' '.join(self._sense_extractor.get_keywords(user_input))
-                    recognized_video = self._video_recognizer.recognize_command(user_input)
+                    recognized_video = self._video_recognizer.recognize_command(query)
                     if recognized_video:
                         self._handle_command('OPEN_VIDEO', recognized_video)
                     elif query:
@@ -107,10 +107,10 @@ class Core(threading.Thread):
             self._send_command({'type': 'SPEAK', 'command': 'Zooming out'})
         elif command == "SCROLL_DOWN":
             request = {'type': 'SCROLL_DOWN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Scrolling down, sir'})
+            self._send_command({'type': 'SPEAK', 'command': 'Down'})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
+            self._send_command({'type': 'SPEAK', 'command': 'Up'})
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._statemachine.handle_message('request')

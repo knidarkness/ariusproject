@@ -22,8 +22,8 @@
       src: url("{{url_for('static', filename='fonts/Raleway-Thin.ttf')}}") format('truetype');
     }
     .container {
-        width: 50%;
-        height: 70%;
+        width: 100%;
+        height: 100%;
         overflow: auto;
         margin: auto;
         position: absolute;
@@ -31,6 +31,11 @@
         left: 0;
         bottom: 0;
         right: 0;
+        -ms-transform: scale(1); /* IE 9 */
+        -o-transform: scale(1); /* IE 9 */
+        -moz-transform: scale(1); /* IE 9 */
+        -webkit-transform: scale(0.7); /* Safari */
+        transform: scale(0.7);
     }
     
     .message {

@@ -6,7 +6,8 @@
     <style type="text/css">
     body {
         background-color: {{background}};
-        overflow: hidden;
+        overflow: hidden;  
+
     }
     
     ::-webkit-scrollbar {
@@ -24,8 +25,8 @@
       src: url("{{url_for('static', filename='fonts/Raleway-Thin.ttf')}}") format('truetype');
     }
     .container {
-        width: 50%;
-        height: 60%;
+        width: 100%;
+        height: 100%;
         overflow: auto;
         margin: auto;
         position: absolute;
@@ -33,6 +34,11 @@
         left: 0;
         bottom: 0;
         right: 0;
+        -ms-transform: scale(1); /* IE 9 */
+        -o-transform: scale(1); /* IE 9 */
+        -moz-transform: scale(1); /* IE 9 */
+        -webkit-transform: scale(0.7); /* Safari */
+        transform: scale(0.7);
     }
     
     .logo {
@@ -44,7 +50,7 @@
     }
     
     .spinner {
-        margin: 60px auto;
+        margin: 20px auto;
         width: 40px;
         height: 40px;
         position: relative;
@@ -117,6 +123,7 @@
 </head>
 
 <body>
+    <div class="container_main">
     <div class="container">
         <div class="logo">ARIUS</div>
         <div class="spinner">
@@ -124,6 +131,7 @@
             <div class="cube2"></div>
         </div>
         <div class='spinner_caption'>Listening...</div>
+    </div>
     </div>
 </body>
 
