@@ -42,13 +42,15 @@ class FuzzyRecognizer:
     def __init__(self, commands, min_confidence=.9, verbose=False):
         if type(commands) != dict:
             print 'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands))
-            raise ValueError('Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
+            raise ValueError(
+                'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
         if min_confidence > 1 or min_confidence < 0:
             print 'Too low or too high value of minimal confidence. It should be between 0 and 1'
             raise ValueError('Too low or too high value of minimal confidence')
         if type(verbose) != bool:
             print 'Wrong type of verbose flag. It must be bool: True or False, but not a {}.'.format(type(verbose))
-            raise ValueError('Wrong type of verbose flag. It must be bool: True or False,  but not a {}.'.format(type(verbose)))
+            raise ValueError(
+                'Wrong type of verbose flag. It must be bool: True or False,  but not a {}.'.format(type(verbose)))
         self._verbose = verbose
         self._min_confidence = min_confidence * 100
         self._commands = commands
@@ -114,7 +116,8 @@ class FuzzyRecognizer:
                     if c_probability > command_probability[command_key]:
                         command_probability[command_key] = c_probability
 
-            result = [key for key in command_probability.keys() if command_probability[key] == max(command_probability.values()) and command_probability[key] > self._min_confidence]
+            result = [key for key in command_probability.keys() if command_probability[key] == max(
+                command_probability.values()) and command_probability[key] > self._min_confidence]
 
             if self._verbose:
                 print 'The list of all available commands is: {}'.format(self._commands.keys())
@@ -156,24 +159,37 @@ class FuzzyRecognizer:
             if self._verbose:
                 print 'Given wrong command: there`s no such command in the dictionary. Exiting'
             raise ValueError('Wrong command')
+        # indicator if smth was changed. Used for debug purposes only.
+        replaced = False
         for case in self._commands[command]:
+            print 'Clearing for {} and string is "{}"'.format(case, string)
             N = len(case.split())
 
             pre_grams = string.split()
-            grams = [' '.join(pre_grams[i:i + N]) for i in xrange(len(pre_grams) - N)]
+            grams = [' '.join(pre_grams[i:i + N])
+                     for i in xrange(len(pre_grams) - N)]
 
             for gram in grams:
-                if fuzz.partial_ratio(gram, string) >= self._min_confidence:
+                if fuzz.partial_ratio(gram, case) >= self._min_confidence:
+                    if self._verbose:
+                        print gram, string
+                        print 'Confidence for {} is {}'.format(gram, fuzz.partial_ratio(gram, string))
                     string = string.replace(gram, '')
                     string = string.strip()
                     if self._verbose:
-                        print 'String with removed command phrase is: "{}"'.format(string)
-                    return string
-            if self._verbose:
-                print 'Nothing to replace'
+                        print 'String is "{}"'.format(string)
+                    replaced = True
         if self._verbose:
-            print '>++++++++++++ FINISHED CLEARING INPUT ++++++++++++<'
-        return string
+            if not replaced:
+                print 'Nothing to replace'
+                print 'String with removed command phrase is: "{}"'.format(string)
+                print '>++++++++++++ FINISHED CLEARING INPUT ++++++++++++<'
+        # as we can have a string like 'test   test word' lets replace
+        # all multiple whitespaces with one. The easiest way to achive
+        # this and avoid RE is to use splitting string to a list and then
+        # joining it with one whitespace. All multiple whitespaces won`t be
+        # in the list as they are not treated as separate tokens while splitting.
+        return ' '.join(string.split())
 
 if __name__ == "__main__":
     commands = {
@@ -188,4 +204,5 @@ if __name__ == "__main__":
     }
     rec = FuzzyRecognizer(commands, min_confidence=.7, debug=True)
     rec.recognize_command('ok aruis could you tell me about enlarging the GDP')
-    rec.remove_command('ok aruis could you tell me about enlarging the GDP', 'START')
+    rec.remove_command(
+        'ok aruis could you tell me about enlarging the GDP', 'START')
