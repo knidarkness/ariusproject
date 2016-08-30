@@ -162,7 +162,8 @@ class FuzzyRecognizer:
         # indicator if smth was changed. Used for debug purposes only.
         replaced = False
         for case in self._commands[command]:
-            print 'Clearing for {} and string is "{}"'.format(case, string)
+            if self._verbose:
+                print 'Clearing for {} and string is "{}"'.format(case, string)
             N = len(case.split())
 
             pre_grams = string.split()
@@ -188,7 +189,8 @@ class FuzzyRecognizer:
         # all multiple whitespaces with one. The easiest way to achive
         # this and avoid RE is to use splitting string to a list and then
         # joining it with one whitespace. All multiple whitespaces won`t be
-        # in the list as they are not treated as separate tokens while splitting.
+        # in the list as they are not treated as separate tokens while
+        # splitting.
         return ' '.join(string.split())
 
 if __name__ == "__main__":
