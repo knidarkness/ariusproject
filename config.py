@@ -59,6 +59,15 @@ config = {
     "output_update_frequency": .5,
     "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
+    "voice_command_output": {
+        "CANCEL": "Operation cancelled",
+        "ZOOM_IN": "Enlarging",
+        "ZOOM_OUT": "Zooming out",
+        "SCROLL_DOWN": "Down",
+        "SCROLL_UP": "Up",
+        "SEARCH_BEGAN": "Search request accepted, my lord"
+    },
+
     "elastic_host": "http://localhost:9200",
     "elastic_index": "arius",
     "elastic_type": "doc",
@@ -75,7 +84,7 @@ config = {
     "marytts_voice2_volume": 1.0,
     "marytts_voice3": "empty",
     "marytts_voice3_volume": 1.0,
-    
+
     "background_music": "organ_background.wav",
     "background_music_volume": 0.2,
 
