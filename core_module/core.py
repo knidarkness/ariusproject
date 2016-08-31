@@ -49,15 +49,24 @@ class Core(threading.Thread):
 
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
-        self._command_recognizer = FuzzyRecognizer(config['core_commands'], min_confidence=config['core_command_recog_confidence'], verbose=self._verbose)
-        self._video_recognizer = FuzzyRecognizer(config['predefined_videos'], min_confidence=config['core_command_recog_confidence'], verbose=self._verbose)
+        self._command_recognizer = FuzzyRecognizer(config['core_commands'], min_confidence=config[
+                                                   'core_command_recog_confidence'], verbose=self._verbose)
+        self._video_recognizer = FuzzyRecognizer(config['predefined_videos'], min_confidence=config[
+                                                 'core_command_recog_confidence'], verbose=self._verbose)
         states_dict = {}
-        states_dict['idle'] = [('cancel', None, 'idle'), ('request', None, 'searching_data'), ('display_video', None, 'displaying_video')]
-        states_dict['searching_data'] = [('cancel', None, 'idle'), ('display', None, 'displaying_data'), ('not_found', None, 'search_data_failed')]
-        states_dict['search_data_failed'] = [('cancel', None, 'idle'), ('request', None, 'searching_data')]
-        states_dict['displaying_data'] = [('cancel', None, 'idle'), ('command', None, 'displaying_data'), ('request', None, 'searching_data')]
-        states_dict['displaying_video'] = [('cancel', None, 'idle'), ('command', None, 'displaying_video'), ('request', None, 'searching_data')]
-        self._statemachine = FSM('idle', states_dict, 'idle', verbose=self._verbose)
+        states_dict['idle'] = [('cancel', None, 'idle'), ('request', None,
+                                                          'searching_data'), ('display_video', None, 'displaying_video')]
+        states_dict['searching_data'] = [('cancel', None, 'idle'), (
+            'display', None, 'displaying_data'), ('not_found', None, 'search_data_failed')]
+        states_dict['search_data_failed'] = [
+            ('cancel', None, 'idle'), ('request', None, 'searching_data')]
+        states_dict['displaying_data'] = [('cancel', None, 'idle'), (
+            'command', None, 'displaying_data'), ('request', None, 'searching_data')]
+        states_dict['displaying_video'] = [('cancel', None, 'idle'), (
+            'command', None, 'displaying_video'), ('request', None, 'searching_data')]
+        self._statemachine = FSM(
+            'idle', states_dict, 'idle', verbose=self._verbose)
+        self._history = []
 
     def run(self):
         self._updater.start()
@@ -80,13 +89,17 @@ class Core(threading.Thread):
                         if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN', 'SCROLL_UP']:
                             self._handle_command(recognized_command)
                             continue
-                if (self._statemachine.get_state() == 'idle' and recognized_command == 'START' ) \
+                if (self._statemachine.get_state() == 'idle' and recognized_command == 'START') \
                         or self._statemachine.get_state() != 'idle':
+
+                    logger.debug("=============\nHistory:\n{}".format("\n".join(self._history)))
                     user_input = self._command_recognizer.remove_command(user_input, 'START')
-                    query = ' '.join(self._sense_extractor.get_keywords(user_input))
-                    recognized_video = self._video_recognizer.recognize_command(query)
-                    if recognized_video:
+                    query = ' '.join(
+                        self._sense_extractor.get_keywords(user_input))
+                    recognized_video = self._video_recognizer.recognize_command(user_input)
+                    if recognized_video and recognized_video not in self._history:
                         self._handle_command('OPEN_VIDEO', recognized_video)
+                        self._history.append(recognized_video)
                     elif query:
                         logger.info('Proceeding search query...')
                         self._do_work(self._find_data, query)
@@ -99,6 +112,7 @@ class Core(threading.Thread):
             self._statemachine.handle_message('cancel')
             request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
             self._send_command({'type': 'SPEAK', 'command': 'Operation cancelled'})
+            self._history = []
         elif command == "ZOOM_IN":
             request = {'type': 'ZOOM_IN', 'command': ''}
             self._send_command({'type': 'SPEAK', 'command': 'Enlarging'})
@@ -107,10 +121,14 @@ class Core(threading.Thread):
             self._send_command({'type': 'SPEAK', 'command': 'Zooming out'})
         elif command == "SCROLL_DOWN":
             request = {'type': 'SCROLL_DOWN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Down'})
+            self._send_command({'type': 'SPEAK', 'command': 'Scrolling down, sir'})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Up'})
+            self._send_command({'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
+        elif command == "PLAY":
+            request = {'type': 'PLAY', 'command': ''}
+        elif command == "PAUSE":
+            request = {'type': 'PAUSE', 'command': ''}
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._statemachine.handle_message('request')
@@ -127,8 +145,17 @@ class Core(threading.Thread):
         data = self._ESclient.search(request)
         logger.debug(data)
         if data:
-            # get the most relevant result in sorted list of results
-            fname = data[0][0]
+            fname = None
+            _id = 0
+            while fname in self._history or fname is None:
+                _id += 1
+                if _id == len(data):
+                    data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}
+                    self._statemachine.handle_message('not_found')
+                    result.append(data)
+                    return None
+                fname = data[_id][0]
+            self._history.append(fname)
             base, file_ext = os.path.splitext(fname)
             logger.info('File extension:')
 
@@ -189,7 +216,8 @@ if __name__ == '__main__':
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.CRITICAL)
-    formatter = logging.Formatter("[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
+    formatter = logging.Formatter(
+        "[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
