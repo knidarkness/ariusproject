@@ -132,8 +132,12 @@ def video(video_id):
     """
     with app.open_resource('static/video_data.json') as f:
         video_data = json.load(f)
-    return render_template("videoplayer.html", video_path="/static/videos/"+video_data[video_id]["video_name"],
-                            support_text=video_data[video_id]["support_text"])
+
+    if video_id in video_data:
+        return render_template("videoplayer.html", video_path="/static/videos/"+video_data[video_id]["video_name"], title=video_data[video_id]["video_name"],
+                                support_text=video_data[video_id]["support_text"])
+    else:
+        return render_template("error.html")
 
 @app.route(config['flask_server_local_page'])
 def page(page_path):

@@ -1,0 +1,19 @@
+body {
+        background-color:#fff;
+        margin: 0px;
+}
+
+#videoplayer {
+        position: fixed;
+        top: 0%;
+        left: 50%;
+        width: 100%;
+        height: auto;
+        z-index: -100;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+#support_text {
+        width: 80%;
+        position: ;
+}
