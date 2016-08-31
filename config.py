@@ -50,7 +50,6 @@ config = {
     "output_server_url": "/output",
     "output_server_home": "output_module/pdf.js/web/",
     "output_data_pdf_viewer": "output_module/pdf.js/web/viewer.html",
-    "output_videoplayer_path": "server/templates/videoplayer.html",
     "output_header_height": .1,
     "output_footer_height": .4,
     "output_browser_top_page": "/screens/black",
