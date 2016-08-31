@@ -1,6 +1,7 @@
 import os
 import urllib
 from elasticsearch import Elasticsearch
+from bs4 import BeautifulSoup
 import sys
 sys.path.append("../")
 from config import config
@@ -28,16 +29,19 @@ class ESIndexBuilder:
         # clear filename from unallowed characters
         base = base.replace(" ", "_").replace("/", "_").replace(".", "_")
 
-        if extension.lower() == 'url':
+        if extension.lower() == '.url':
             # download webpage from the Internet
             url = open(path, "rb").read()
             data = urllib.urlopen(url).read()
         else:
             # read local file
             data = open(path, "rb").read()
-
+            if extension.lower() == '.html':
+                data = self._get_content(data)
+                data = data.encode('utf-8').strip()
         data = data.encode("base64")
-        self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" + str(self._counter), body={'file': data, 'title': path})
+        rel_path = os.path.relpath(path, config['root_dir'] + config['elastic_docs_dir'])
+        self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" + str(self._counter), body={'file': data, 'title': rel_path})
         self._counter += 1
 
     def index_dir(self, dir):
@@ -52,6 +56,14 @@ class ESIndexBuilder:
                 base, extension = os.path.splitext(fname)
                 if extension.lower() in config["elastic_index_file_types"]:
                     self.index_file(fname)
+
+    def _get_content(self, content):
+        """Extracts text from main section of webpage."""
+        soup = BeautifulSoup(content, 'html.parser')
+        for _id in ['main_page', 'main-wrapper']:
+            if soup.find('section', id=_id) != None:
+                return soup.find('section', id=_id).text
+        return content
 
     def rebuild_index(self):
         """Completely removes the old index and creates new."""
