@@ -131,11 +131,12 @@ class OutputInterface:
             raise Exception
         self._fullscreen = fullscreen
         if sizes:
-            self._width = sizes[0]
-            self._height = sizes[1]
+            self._screen_width = sizes[0]
+            self._screen_height = sizes[1]
         self._app = QtWidgets.QApplication(sys.argv)
         self._app.setStyle("Fusion")
-        self._get_screen_height()
+        if self._fullscreen:
+            self._get_screen_height()
 
         self._layout = QGridLayout()  # create a main view of an app
         self._layout.setSpacing(0)  # and do some design settings
@@ -218,11 +219,29 @@ class OutputInterface:
         if self._fullscreen:
             self._main_window.showFullScreen()  # set full screen enabled
         else:
-            self._main_window.resize(self._width, self._height)
+            self._main_window.resize(self._screen_width, self._screen_height)
         self._main_window.show()  # and finally, show the window
         # and set a trigger to exit the app, as window is closed
         sys.exit(self._app.exec_())
         logger.info('Finished')
+
+    def _get_screen_height(self):
+        """
+        This method is used to get dimensions of user`s screen.
+        To do this is uses system utilite 'xrandr' via subprocess module,
+        which is not very nice way, however we didn`t find
+        anything better.
+        """
+        if self._fullscreen:
+            output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4',
+                                      shell=True, stdout=subprocess.PIPE).communicate()[0]
+            output = [int(val) for val in output.split('x')]
+            # logger.debug('Screen dimensions are: {} x {}'.format(output[0], output[1]))
+            self._screen_height = output[1]
+            self._screen_width = output[0]
+        else:
+            output = [self._width, self._height]
+        return output[0], output[1]
 
     def _handle_command(self):
         """
@@ -292,21 +311,6 @@ class OutputInterface:
         else:
             pass
 
-    def _get_screen_height(self):
-        """
-        This method is used to get dimensions of user`s screen.
-        To do this is uses system utilite 'xrandr' via subprocess module,
-        which is not very nice way, however we didn`t find
-        anything better.
-        """
-        output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4',
-                                  shell=True, stdout=subprocess.PIPE).communicate()[0]
-        output = [int(val) for val in output.split('x')]
-        # logger.debug('Screen dimensions are: {} x {}'.format(output[0], output[1]))
-        self._screen_height = output[1]
-        self._screen_width = output[0]
-        return output[0], output[1]
-
     def _load_screen(self, screen_type):
         """
         This method is responsible for opening system
@@ -351,7 +355,8 @@ class OutputInterface:
         self._main_browser_reset_zoom()  # reset zoom
         if content_type == 'local_url':
             source = config['flask_server_home'] + \
-                config['flask_server_local_page_client'] + content  # simply get the file from flask-server by its relative path-id
+                config['flask_server_local_page_client'] + \
+                content  # simply get the file from flask-server by its relative path-id
             # specify type of currently opened file for zoom and scroll methods
             self._cur_filetype = "webpage"
         elif content_type == 'external_url':
