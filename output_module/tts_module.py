@@ -16,7 +16,8 @@ class Speaker:
         query = urlencode(self.query_hash)
         # Run the query to mary http server
         h_mary = httplib2.Http()
-        resp, content = h_mary.request("http://%s:%s/process?" % (self.host, self.port), "POST", query)
+        resp, content = h_mary.request(
+            "http://%s:%s/process?" % (self.host, self.port), "POST", query)
 
         #  Decode the wav file or raise an exception if no wav files
         if (resp["content-type"] == "audio/x-wav"):
@@ -30,7 +31,7 @@ class Speaker:
             pygame.mixer.init()  # Initialise the mixer
             s = pygame.mixer.Sound("/tmp/output_wav.wav")
             s.play()
-            #raise Exception("finish")
+            # raise Exception("finish")
 
         else:
             raise Exception(content)

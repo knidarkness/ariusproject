@@ -17,6 +17,7 @@ from config import config
 from client import RESTClient
 from player import Player
 
+
 class FakeBrowser(QtWebKitWidgets.QWebPage):
     """
     This is a class for changing user-agent in
