@@ -134,8 +134,10 @@ def video(video_id):
         video_data = json.load(f)
 
     if video_id in video_data:
-        return render_template("videoplayer.html", video_path="/static/videos/"+video_data[video_id]["video_name"], title=video_data[video_id]["video_name"],
-                                support_text=video_data[video_id]["support_text"])
+        return render_template("videoplayer.html", video_path="/static/videos/"+video_data[video_id]["video_name"], 
+                                title=video_data[video_id]["title"],
+                                support_text=video_data[video_id]["support_text"], 
+                                style=url_for('static', filename='css/'+video_data[video_id]["style"]+'.css'))
     else:
         return render_template("error.html")
 
