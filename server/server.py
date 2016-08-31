@@ -9,7 +9,7 @@ Also, if you want to see all connections made to server, you can run it
 with '-v' or '--verbose' flags.
 """
 
-from flask import Flask, jsonify, make_response, request, abort, render_template
+from flask import Flask, jsonify, make_response, request, abort, render_template, json, url_for
 import sys
 import logging
 sys.path.append("../")
@@ -130,7 +130,10 @@ def video(video_id):
     """
     We get string which indetifies which predefined video we show
     """
-    return render_template("videoplayer.html", video_path="/static/videos/"+video_id+".mp4")
+    with app.open_resource('static/video_data.json') as f:
+        video_data = json.load(f)
+    return render_template("videoplayer.html", video_path="/static/videos/"+video_data[video_id]["video_name"],
+                            support_text=video_data[video_id]["support_text"])
 
 @app.route(config['flask_server_local_page'])
 def page(page_path):
