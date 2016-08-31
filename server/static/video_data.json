@@ -1,0 +1,74 @@
+{
+	"austin_ss_ux_ui":{
+		"video_name": "austin_ss_ux_ui.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "It is video about moving headquarter of SoftServe to Austin, Texas"
+		},
+		
+	"barista_coffe":{
+		"video_name": "barista_coffe.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "It is the video-presentation of RnDs project 'Barista. Smart coffe-machine'"
+		},
+	
+	"beer_recognizer":{
+		"video_name": "beer_recognizer.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "It is the video-presentation of object-recognition app. (Recognize beer bottles)"
+		},
+	
+	"human_accelerator_ss":{
+		"video_name": "human_accelerator_ss.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "It is the advertisment of SoftServe service related to healthcare"
+		},
+	
+	"mylko_byod":{
+		"video_name": "mylko_byod.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "Vasyl Mylko about byod"
+		},
+	
+	"mylko_cool_thing":{
+		"video_name": "mylko_cool_thing.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "Vasyl Mylko about IoT"
+		},
+		
+	"SaaS_offer_ss":{
+		"video_name": "SaaS_offer_ss.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "SaaS offer of SS. Ads."
+		},
+	
+	"security_ss":{
+		"video_name": "security_ss.mp4",
+		"style": "default",
+		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+		"description": "Ads. If you need security - you need SoftServe"
+		},
+	
+	"tc_ss":{
+		"video_name": "tc_ss.mp4",
+		"style": "default",
+		"support_text": "What is the secret recipe for successful software? Not only is it a well-crafted product which delivers continuous value, but also one that is widely used, which is possible only if all the great features are properly communicated to the end users. So, what is the key to success for both your product and users? The answer is an extensive well-thought-out use of marketing and technical communication. Technical communication properly crafted for the target audience enables users to understand the product they have purchased and feel confident about using it. Make sure you communicate technical information using plain language, describe all possible use cases with the easiest workarounds and workflows, and help users by recording videos for a steep learning curve. Note how stc.org, a professional association dedicated to the advancement of the theory and practice of technical communication, states its primary goal: apply “a user-centered approach to providing the right information, in the right way, at the right time to make someone’s life easier and more productive”. So, make the most of your technical communication to add real value to your product and achieve long-term success.",
+		"description": "Technical communication is important"
+		}
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

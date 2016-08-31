@@ -50,7 +50,7 @@ config = {
     "output_server_url": "/output",
     "output_server_home": "output_module/pdf.js/web/",
     "output_data_pdf_viewer": "output_module/pdf.js/web/viewer.html",
-    "output_videoplayer_path": "output_module/pdf.js/web/videoplayer.html",
+    "output_videoplayer_path": "server/templates/videoplayer.html",
     "output_header_height": .1,
     "output_footer_height": .4,
     "output_browser_top_page": "/screens/black",
@@ -61,7 +61,7 @@ config = {
     "elastic_host": "http://localhost:9200",
     "elastic_index": "arius",
     "elastic_type": "doc",
-    "elastic_docs_dir": "data/",
+    "elastic_docs_dir": "server/static/local_pages/",
     "elastic_index_file_types": [".html", ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".url"],
 
     "marytts_host": "localhost",
