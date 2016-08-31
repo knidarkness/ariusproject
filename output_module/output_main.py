@@ -15,7 +15,7 @@ from PyQt5.QtNetwork import QNetworkRequest
 sys.path.append("../")
 from config import config
 from client import RESTClient
-
+from player import Player
 
 class FakeBrowser(QtWebKitWidgets.QWebPage):
     """
@@ -206,7 +206,10 @@ class OutputInterface:
         # None
         self._cur_filetype = None
 
+        # text to speech speaker
         self._speaker = None
+        # audioplayer
+        self._player = Player()
 
     def run(self):
         """
@@ -239,12 +242,16 @@ class OutputInterface:
             # calling of _load_content method with specified content type.
 
             if command[0] == 'OPEN_PDF':
+                self._player.play()
                 self._load_content('local_pdf', command[1])
             elif command[0] == 'OPEN_URL':
+                self._player.play()
                 self._load_content('external_url', command[1])
             elif command[0] == 'OPEN_LOCAL_PAGE':
+                self._player.play()
                 self._load_content('local_url', command[1])
             elif command[0] == 'OPEN_VIDEO':
+                self._player.stop()
                 self._load_content('local_video', command[1])
 
             # Command to open a system scren (e.g. {'type': 'OPEN_SCREEN', 'command':'OPEN_IDLE'})
@@ -252,22 +259,28 @@ class OutputInterface:
             # work.
 
             elif command[0] == 'OPEN_SCREEN':
+                self._player.play()
                 self._load_screen(command[1])
 
             # Zoom commands are handled each with its own method.
 
             elif command[0] == 'ZOOM_IN':
+                self._player.play()
                 self._main_browser_zoom_in()
             elif command[0] == 'ZOOM_OUT':
+                self._player.play()
                 self._main_browser_zoom_out()
             elif command[0] == 'ZOOM_NONE':
+                self._player.play()
                 self._main_browser_reset_zoom()
 
             # as well as scroll.
 
             elif command[0] == 'SCROLL_DOWN':
+                self._player.play()
                 self._main_browser_scroll_down()
             elif command[0] == 'SCROLL_UP':
+                self._player.play()
                 self._main_browser_scroll_up()
 
             # Following two commands are responsible for playing
@@ -275,8 +288,10 @@ class OutputInterface:
             # name of the video file should be given.
 
             elif command[0] == 'PLAY':
+                self._player.play()
                 self._video_play()
             elif command[0] == 'PAUSE':
+                self._player.play()
                 self._video_pause()
 
             # and these two are for text-to-speech
@@ -284,8 +299,10 @@ class OutputInterface:
             # you want to hear.
 
             elif command[0] == "SPEAK":
+                self._player.play()
                 self._speak_text(command[1])
             elif command[0] == "STOP_SPEAK":
+                self._player.play()
                 self._speak_stop()
             else:
                 logger.info('command not recognized {}'.format(command))

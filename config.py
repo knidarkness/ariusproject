@@ -68,8 +68,14 @@ config = {
 
     "default_voice": "marytts_voice1",
     "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
+    "marytts_voice1_volume": 1.0,
     "marytts_voice2": "empty",
+    "marytts_voice2_volume": 1.0,
     "marytts_voice3": "empty",
+    "marytts_voice3_volume": 1.0,
+    
+    "background_music": "organ_background.wav",
+    "background_music_volume": 0.2,
 
     "predefined_videos": {
         "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],
