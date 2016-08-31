@@ -175,7 +175,7 @@ class FuzzyRecognizer:
                     if self._verbose:
                         print gram, string
                         print 'Confidence for {} is {}'.format(gram, fuzz.partial_ratio(gram, string))
-                    string = string.replace(gram, '')https://offerland.info/l/e9c29fcc-2f0f-11e6-9af1-02https://offerland.info/l/e9c29fcc-2f0f-11e6-9af1-02401b02a2b5/v/dda95d48-6e8b-11e6-b873-1140e3a18bc3/401b02a2b5/v/dda95d48-6e8b-11e6-b873-1140e3a18bc3/
+                    string = string.replace(gram, '')
                     string = string.strip()
                     if self._verbose:
                         print 'String is "{}"'.format(string)

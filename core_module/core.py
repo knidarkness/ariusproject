@@ -66,6 +66,7 @@ class Core(threading.Thread):
             'command', None, 'displaying_video'), ('request', None, 'searching_data')]
         self._statemachine = FSM(
             'idle', states_dict, 'idle', verbose=self._verbose)
+        self._history = []
 
     def run(self):
         self._updater.start()
@@ -79,8 +80,7 @@ class Core(threading.Thread):
                 self._updater.input_speech = None
                 self._lock.release()
 
-                recognized_command = self._command_recognizer.recognize_command(
-                    user_input)
+                recognized_command = self._command_recognizer.recognize_command(user_input)
                 if recognized_command:
                     if recognized_command == 'CANCEL':
                         self._handle_command(recognized_command)
@@ -91,14 +91,15 @@ class Core(threading.Thread):
                             continue
                 if (self._statemachine.get_state() == 'idle' and recognized_command == 'START') \
                         or self._statemachine.get_state() != 'idle':
-                    user_input = self._command_recognizer.remove_command(
-                        user_input, 'START')
+
+                    logger.debug("=============\nHistory:\n{}".format("\n".join(self._history)))
+                    user_input = self._command_recognizer.remove_command(user_input, 'START')
                     query = ' '.join(
                         self._sense_extractor.get_keywords(user_input))
-                    recognized_video = self._video_recognizer.recognize_command(
-                        user_input)
-                    if recognized_video:
+                    recognized_video = self._video_recognizer.recognize_command(user_input)
+                    if recognized_video and recognized_video not in self._history:
                         self._handle_command('OPEN_VIDEO', recognized_video)
+                        self._history.append(recognized_video)
                     elif query:
                         logger.info('Proceeding search query...')
                         self._do_work(self._find_data, query)
@@ -110,8 +111,8 @@ class Core(threading.Thread):
         if command == "CANCEL":
             self._statemachine.handle_message('cancel')
             request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-            self._send_command(
-                {'type': 'SPEAK', 'command': 'Operation cancelled'})
+            self._send_command({'type': 'SPEAK', 'command': 'Operation cancelled'})
+            self._history = []
         elif command == "ZOOM_IN":
             request = {'type': 'ZOOM_IN', 'command': ''}
             self._send_command({'type': 'SPEAK', 'command': 'Enlarging'})
@@ -120,22 +121,22 @@ class Core(threading.Thread):
             self._send_command({'type': 'SPEAK', 'command': 'Zooming out'})
         elif command == "SCROLL_DOWN":
             request = {'type': 'SCROLL_DOWN', 'command': ''}
-            self._send_command(
-                {'type': 'SPEAK', 'command': 'Scrolling down, sir'})
+            self._send_command({'type': 'SPEAK', 'command': 'Scrolling down, sir'})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
-            self._send_command(
-                {'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
+            self._send_command({'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
+        elif command == "PLAY":
+            request = {'type': 'PLAY', 'command': ''}
+        elif command == "PAUSE":
+            request = {'type': 'PAUSE', 'command': ''}
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._statemachine.handle_message('request')
-            self._send_command(
-                {'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
+            self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
         elif command == "OPEN_VIDEO":
             request = {'type': 'OPEN_VIDEO', 'command': arg}
             self._statemachine.handle_message('display_video')
-            self._send_command(
-                {'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
+            self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
         self._send_command(request)
 
     def _find_data(self, request, result):
@@ -144,8 +145,17 @@ class Core(threading.Thread):
         data = self._ESclient.search(request)
         logger.debug(data)
         if data:
-            # get the most relevant result in sorted list of results
-            fname = data[0][0]
+            fname = None
+            _id = 0
+            while fname in self._history or fname is None:
+                _id += 1
+                if _id == len(data):
+                    data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}
+                    self._statemachine.handle_message('not_found')
+                    result.append(data)
+                    return None
+                fname = data[_id][0]
+            self._history.append(fname)
             base, file_ext = os.path.splitext(fname)
             logger.info('File extension:')
 

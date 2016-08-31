@@ -41,6 +41,8 @@ config = {
         "SCROLL_UP": ['page up', 'scroll up'],
         "CANCEL": ['cancel', 'bye', 'thanks'],
         "WAIT": ['wait'],
+        "PAUSE": ['pause'],
+        "PLAY": ['play'],
         "START": ['ok arius', 'what is that', 'what the fuck']
     },
     "core_update_interval": 0.1,
