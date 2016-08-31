@@ -9,3 +9,5 @@ sip-4.18.1/
 required_packages/
 *.mp4
 *.webm
+server/static/local_pages/*
+!server/static/local/pages/s

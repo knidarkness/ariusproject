@@ -17,6 +17,8 @@ config = {
     "flask_server_black_address": "/screens/black",
     "flask_server_video_addr": "/video/<string:video_id>",
     "flask_server_video_addr_client": "/video/",
+    "flask_server_local_page": "/page/<path:page_path>",
+    "flask_server_local_page_client": "/page/",
 
     "arius_screen_idle_background": "#000",
     "arius_screen_search_background": "#000",

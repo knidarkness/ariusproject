@@ -127,7 +127,17 @@ def black():
 
 @app.route(config['flask_server_video_addr'])
 def video(video_id):
+    """
+    We get string which indetifies which predefined video we show
+    """
     return render_template("videoplayer.html", video_path="/static/videos/"+video_id+".mp4")
+
+@app.route(config['flask_server_local_page'])
+def page(page_path):
+    """
+    We get relative path to the page in static directory and return the page
+    """
+    return app.send_static_file('local_pages/'+page_path)
 
 if __name__ == '__main__':
     import argparse

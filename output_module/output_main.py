@@ -350,7 +350,8 @@ class OutputInterface:
         """
         self._main_browser_reset_zoom()  # reset zoom
         if content_type == 'local_url':
-            source = 'file://' + content  # simply open the file by its path
+            source = config['flask_server_home'] + \
+                config['flask_server_local_page_client'] + content  # simply get the file from flask-server by its relative path-id
             # specify type of currently opened file for zoom and scroll methods
             self._cur_filetype = "webpage"
         elif content_type == 'external_url':
