@@ -38,8 +38,12 @@ class ESIndexBuilder:
             data = open(path, "rb").read()
             if extension.lower() == '.html':
                 data = self._get_content(data)
-                data = data.encode('utf-8').strip()
-        data = data.encode("base64")
+        try:
+            data = data.encode('utf-8')
+            data = data.encode("base64")
+        except Exception:
+            print TAG, 'ERROR - Bad file encoding'
+            return
         rel_path = os.path.relpath(path, config['root_dir'] + config['elastic_docs_dir'])
         self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" + str(self._counter), body={'file': data, 'title': rel_path})
         self._counter += 1
