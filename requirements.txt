@@ -7,3 +7,5 @@ fuzzywuzzy
 python-Levenshtein
 argparse
 bs4
+nltk
+quepy
