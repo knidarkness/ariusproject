@@ -56,7 +56,7 @@ config = {
     "output_footer_height": .4,
     "output_browser_top_page": "/screens/black",
     "output_browser_bottom_page": "/screens/black",
-    "output_update_frequency": .5,
+    "output_update_frequency": 100,
     "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
     "elastic_host": "http://localhost:9200",

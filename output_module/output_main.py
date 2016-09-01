@@ -17,6 +17,7 @@ from config import config
 from client import RESTClient
 from player import Player
 
+
 class FakeBrowser(QtWebKitWidgets.QWebPage):
     """
     This is a class for changing user-agent in
@@ -109,8 +110,8 @@ class OutputInterface:
         Then, QGridLayout is created and its appearance is configured: margins
         and spaces between elements is set to 0.
 
-        After that, we create three QWebViews: one for our main content view and
-        two others for header and footer views.
+        After that, we create three QWebViews: one for our main content view 
+        and two others for header and footer views.
 
         Immideately after creating these instances we assign them their heights
         according to percentages given by user and dimensions of the screen.
@@ -181,9 +182,9 @@ class OutputInterface:
             QWebSettings.PluginsEnabled, True)  # enable plugins
         QWebSettings.setObjectCacheCapacities(0, 0, 0)  # disable caching
         self._main_browser.settings().setAttribute(
-            QWebSettings.AcceleratedCompositingEnabled, True)  # some staff from the internet
+            QWebSettings.AcceleratedCompositingEnabled, True)
         self._main_browser.settings().setAttribute(
-            QWebSettings.WebGLEnabled, True)  # some staff from the internet
+            QWebSettings.WebGLEnabled, True)
 
         self._layout.addWidget(self._top_browser, 1, 0)  # set views positions
         self._layout.addWidget(self._main_browser, 2, 0)

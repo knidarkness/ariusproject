@@ -14,7 +14,7 @@ body {
 #support_text {
         border: 1px solid black;
         border-radius: 15%;
-        margin: 1% 5% 5% 5%;
+        margin: 1% 20% 5% 20%;
         padding: 1% 5% 5% 5%;
         text-align: justify;
         font-family: 'Raleway', sans-serif;
@@ -25,4 +25,10 @@ body {
         text-align: center;
         font-family: 'Raleway', sans-serif;
         src: url("{{url_for('static', filename='fonts/Raleway-Thin.ttf')}}") format('truetype');
+}
+
+.mylko_r {
+    position: relative;
+    margin: 10px;
+    width: 15%;
 }
