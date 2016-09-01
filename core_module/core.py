@@ -80,7 +80,8 @@ class Core(threading.Thread):
                 self._updater.input_speech = None
                 self._lock.release()
 
-                recognized_command = self._command_recognizer.recognize_command(user_input)
+                recognized_command = self._command_recognizer.recognize_command(
+                    user_input)
                 if recognized_command:
                     if recognized_command == 'CANCEL':
                         self._handle_command(recognized_command)
@@ -92,11 +93,14 @@ class Core(threading.Thread):
                 if (self._statemachine.get_state() == 'idle' and recognized_command == 'START') \
                         or self._statemachine.get_state() != 'idle':
 
-                    logger.debug("=============\nHistory:\n{}".format("\n".join(self._history)))
-                    user_input = self._command_recognizer.remove_command(user_input, 'START')
+                    logger.debug("=============\nHistory:\n{}".format(
+                        "\n".join(self._history)))
+                    user_input = self._command_recognizer.remove_command(
+                        user_input, 'START')
                     query = ' '.join(
                         self._sense_extractor.get_keywords(user_input))
-                    recognized_video = self._video_recognizer.recognize_command(user_input)
+                    recognized_video = self._video_recognizer.recognize_command(
+                        user_input)
                     if recognized_video and recognized_video not in self._history:
                         self._handle_command('OPEN_VIDEO', recognized_video)
                         self._history.append(recognized_video)
@@ -111,20 +115,25 @@ class Core(threading.Thread):
         if command == "CANCEL":
             self._statemachine.handle_message('cancel')
             request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-            self._send_command({'type': 'SPEAK', 'command': 'Operation cancelled'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['CANCEL']})
             self._history = []
         elif command == "ZOOM_IN":
             request = {'type': 'ZOOM_IN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Enlarging'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['ZOOM_IN']})
         elif command == "ZOOM_OUT":
             request = {'type': 'ZOOM_OUT', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Zooming out'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['ZOOM_OUT']})
         elif command == "SCROLL_DOWN":
             request = {'type': 'SCROLL_DOWN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Scrolling down, sir'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['SCROLL_DOWN']})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': 'Scrolling up as you wish'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['SCROLL_UP']})
         elif command == "PLAY":
             request = {'type': 'PLAY', 'command': ''}
         elif command == "PAUSE":
@@ -132,11 +141,13 @@ class Core(threading.Thread):
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._statemachine.handle_message('request')
-            self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['SEARCH_BEGAN']})
         elif command == "OPEN_VIDEO":
             request = {'type': 'OPEN_VIDEO', 'command': arg}
             self._statemachine.handle_message('display_video')
-            self._send_command({'type': 'SPEAK', 'command': 'Search request accepted, my lord'})
+            self._send_command({'type': 'SPEAK', 'command': config[
+                               'voice_command_output']['SEARCH_BEGAN']})
         self._send_command(request)
 
     def _find_data(self, request, result):
