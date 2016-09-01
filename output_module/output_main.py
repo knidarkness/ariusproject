@@ -32,6 +32,12 @@ class FakeBrowser(QtWebKitWidgets.QWebPage):
         return config['output_user_agent']
 
 
+class Command:
+    def __init__(self, c_type, c_body):
+        self.c_type = c_type
+        self.c_body = c_body
+
+
 class OutputUpdater(threading.Thread):
     def __init__(self, lock):
         """
@@ -54,6 +60,8 @@ class OutputUpdater(threading.Thread):
         self._server_connection = RESTClient(
             self._server_host, self._server_port, self._server_url)
 
+        self._command_queue = []
+
         self._current_command_type = None
         self._current_command_body = None
 
@@ -75,23 +83,20 @@ class OutputUpdater(threading.Thread):
                 logger.debug('Received data {}'.format(data))
                 self._lock.acquire()
                 try:
-                    self._current_command_type = data['type']
-                    self._current_command_body = data['command']
+                    self._command_queue.append(Command(data['type'], data['command']))
                     logger.info('Command received: {} : {}'.format(
                         data['type'], data['command']))
                 finally:
                     self._lock.release()
             else:
                 pass
-            # time.sleep(config['output_update_frequency'])
 
     def reset(self):
         """
         Just reset all values.
         """
         self._lock.acquire()
-        self._current_command_body = None
-        self._current_command_type = None
+        self._command_queue[:] = []
         self._lock.release()
 
     def get_state(self):
@@ -99,7 +104,10 @@ class OutputUpdater(threading.Thread):
         Return current values. Pure try to provide
         incapsulation.
         """
-        return self._current_command_type, self._current_command_body
+        if not self._command_queue:
+            return None, None
+        data = self._command_queue.pop(0)
+        return data.c_type, data.c_body
 
 
 class OutputInterface:
@@ -112,7 +120,7 @@ class OutputInterface:
         Then, QGridLayout is created and its appearance is configured: margins
         and spaces between elements is set to 0.
 
-        After that, we create three QWebViews: one for our main content view 
+        After that, we create three QWebViews: one for our main content view
         and two others for header and footer views.
 
         Immideately after creating these instances we assign them their heights
@@ -258,7 +266,7 @@ class OutputInterface:
         if command[0] != 'none' and command[0] != None:  # if there`s a command, handle it
             logger.info('Handling command {}'.format(command))
 
-            self._updater.reset()  # clear the updater object command buffer
+            # self._updater.reset()  # clear the updater object command buffer
 
             # Commands for opening all types of content are handled by
             # calling of _load_content method with specified content type.
@@ -321,6 +329,7 @@ class OutputInterface:
             # you want to hear.
 
             elif command[0] == "SPEAK":
+                print 'SPEAK'
                 self._player.play()
                 self._speak_text(command[1])
             elif command[0] == "STOP_SPEAK":
