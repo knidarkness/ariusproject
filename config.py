@@ -43,7 +43,8 @@ config = {
         "WAIT": ['wait'],
         "PAUSE": ['pause'],
         "PLAY": ['play'],
-        "START": ['ok arius', 'what is that', 'what the fuck']
+        "START": ['ok arius', 'what is that', 'what the fuck'],
+        "DETAILED_DATA": ['show more']
     },
     "core_update_interval": 0.1,
 
