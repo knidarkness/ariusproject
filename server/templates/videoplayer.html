@@ -5,7 +5,7 @@
     <title></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/video.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{style}}">
 
 </head>
 
@@ -15,20 +15,22 @@
             <source src="{{video_path}}"  type="video/mp4">
         </video>
 
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <div id="support text">
-            <h1 >{{title}}</h1>
-            <p>{{support_text}}</p>
+
+        <div id="support_text">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+                <h1 >{{title}}</h1>
+                <p>{{support_text}}</p>
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+            <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
         </div>
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
-        <img class="mylko_r" src="{{url_for('static', filename='preview/mylko.gif')}}">
+
 
     </body>
 </html>

@@ -68,6 +68,7 @@ class OutputUpdater(threading.Thread):
         as self._current_commnad_type & self._current_command_body.
         """
         while self.running:
+            print "updated"
             data = self._server_connection.GET_request(True, 0)
             if data['type'] != 'none':
                 logger.debug('Received data {}'.format(data))
@@ -81,7 +82,7 @@ class OutputUpdater(threading.Thread):
                     self._lock.release()
             else:
                 pass
-            time.sleep(config['output_update_frequency'])
+            # time.sleep(config['output_update_frequency'])
 
     def reset(self):
         """

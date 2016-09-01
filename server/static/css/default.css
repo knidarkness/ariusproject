@@ -5,17 +5,13 @@ body {
 
 #videoplayer {
         border: 2px solid black;
-        margin: 5% 1% 0% 0%;
-        padding: 0% 1% 0% 0%;
-        width: 100%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+        width: 99%;
         height: auto;
     }
 
 #support_text {
-        border: 1px solid black;
-        border-radius: 15%;
-        margin: 1% 20% 5% 20%;
-        padding: 1% 5% 5% 5%;
         text-align: justify;
         font-family: 'Raleway', sans-serif;
         src: url("{{url_for('static', filename='fonts/Raleway-Thin.ttf')}}") format('truetype');
@@ -30,5 +26,5 @@ body {
 .mylko_r {
     position: relative;
     margin: 10px;
-    width: 15%;
+    width: 10%;
 }
