@@ -3,7 +3,6 @@ import threading
 import sys
 import time
 import os
-import logging
 from fsm import FSM
 from fuzzy_recognizer import FuzzyRecognizer
 from sense_extraction import SenseExtractor
@@ -11,6 +10,8 @@ from arius_searcher import ESearchClient
 sys.path.append("../")
 from client import RESTClient
 from config import config
+from logger import Logger 
+logger = Logger("Core")
 
 
 class Updater(threading.Thread):
@@ -37,9 +38,8 @@ class Updater(threading.Thread):
 
 
 class Core(threading.Thread):
-    def __init__(self, verbose=False):
+    def __init__(self):
         threading.Thread.__init__(self)
-        self._verbose = verbose
         self._lock = threading.RLock()
         self._updater = Updater(self._lock)
 
@@ -50,11 +50,9 @@ class Core(threading.Thread):
         self._ESclient = ESearchClient()
         self._sense_extractor = SenseExtractor('stop.txt')
         self._command_recognizer = FuzzyRecognizer(config['core_commands'],
-                                                   min_confidence=config['core_command_recog_confidence'],
-                                                   verbose=self._verbose)
+                                                   min_confidence=config['core_command_recog_confidence'])
         self._video_recognizer = FuzzyRecognizer(config['predefined_videos'],
-                                                 min_confidence=config['core_command_recog_confidence'],
-                                                 verbose=self._verbose)
+                                                 min_confidence=config['core_command_recog_confidence'])
         states_dict = {}
         states_dict['idle'] = [('cancel', None, 'idle'),
                                ('request', None, 'searching_video')]
@@ -82,7 +80,7 @@ class Core(threading.Thread):
                                            ('request', None, 'searching_video'),
                                            ('more_info', None, 'searching_data')]
 
-        self._statemachine = FSM('idle', states_dict, 'idle', verbose=self._verbose)
+        self._statemachine = FSM('idle', states_dict, 'idle')
         self._history = []
         self._prev_query = None
 
@@ -235,23 +233,11 @@ if __name__ == '__main__':
                         ' received messages and sent commands.')
     args = parser.parse_args()
 
-    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-    logging.getLogger("elasticsearch").setLevel(logging.CRITICAL)
-    logging.getLogger("elasticsearch.trace").setLevel(logging.CRITICAL)
-
-    logger = logging.getLogger("Core")
-    logger.propagate = False
-    ch = logging.StreamHandler()
     if args.en_verbose:
-        logging.basicConfig(level=logging.INFO)
+        logger.setLevel("info")
     elif args.en_debug:
-        logging.basicConfig(level=logging.DEBUG)
+        logger.setLevel("debug")
     else:
-        logging.basicConfig(level=logging.CRITICAL)
-    formatter = logging.Formatter(
-        "[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-
-    core = Core(verbose=(args.en_verbose or args.en_debug))
+        logger.setLevel("critical")
+    core = Core()
     core.start()

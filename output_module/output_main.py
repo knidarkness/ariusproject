@@ -3,7 +3,6 @@ import sys
 import subprocess
 import threading
 import functools
-import logging
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QUrl, QTimer
 from PyQt5.QtWidgets import QGridLayout, QWidget
@@ -16,6 +15,8 @@ sys.path.append("../")
 from config import config
 from client import RESTClient
 from player import Player
+from logger import Logger 
+logger = Logger("Output")
 
 
 class FakeBrowser(QtWebKitWidgets.QWebPage):
@@ -68,7 +69,7 @@ class OutputUpdater(threading.Thread):
         as self._current_commnad_type & self._current_command_body.
         """
         while self.running:
-            print "updated"
+            # print "updated"
             data = self._server_connection.GET_request(True, 0)
             if data['type'] != 'none':
                 logger.debug('Received data {}'.format(data))
@@ -433,7 +434,7 @@ class OutputInterface:
         or
         file:
         """
-        logging.info('Loading {} to the bottom content view.'.format(url))
+        logger.info('Loading {} to the bottom content view.'.format(url))
         self._bottom_browser.load(QUrl(url))
 
     def _main_browser_scroll_down(self):
@@ -558,26 +559,16 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    logger = logging.getLogger("Output")
-
-    logger.propagate = False
-    ch = logging.StreamHandler()
-
     if args.en_verbose:
-        logging.basicConfig(level=logging.INFO)
+        logger.setLevel("info")
     elif args.en_debug:
-        logging.basicConfig(level=logging.DEBUG)
+        logger.setLevel("debug")
     else:
-        logging.basicConfig(level=logging.CRITICAL)
+        logger.setLevel("critical")
 
-    formatter = logging.Formatter(
-        "[%(name)s][%(asctime)s][%(levelname)s] - %(message)s")
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
     if args.size == 'fullscreen':
         ui = OutputInterface(fullscreen=True)
     elif not args.size:
-        print 'Ssas'
         ui = OutputInterface(fullscreen=True)
     elif re.match(r'([0-9]+x[0-9]+)', args.size):
         size = args.size.split('x')

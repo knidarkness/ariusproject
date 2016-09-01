@@ -11,10 +11,11 @@ with '-v' or '--verbose' flags.
 
 from flask import Flask, jsonify, make_response, request, abort, render_template, json, url_for
 import sys
-import logging
 sys.path.append("../")
 from config import config
-TAG = "[SERVER]"
+from logger import Logger 
+import logging
+logger = Logger("werkzeug")
 
 app = Flask(__name__)
 noise_available = {"status": "False"}
@@ -42,8 +43,7 @@ def noise_input():
     if not request.json or "speech_text" not in request.json:
         abort(400)
     else:
-        if app.debug:
-            print TAG, "Here is Noise", app.debug
+        logger.debug("Here is Noise %s")
         return jsonify(request.json), 201
 
 
@@ -61,8 +61,7 @@ def speech_text_input():
         abort(400)
     else:
         input_text = {"speech_text": request.json['speech_text']}
-        if app.debug:
-            print TAG, input_text, app.debug
+        logger.debug(input_text)
         return jsonify(input_text), 201
 
 
@@ -77,8 +76,7 @@ def get_speech_text():
 @app.route(config['flask_server_core_output_connection'], methods=['POST'])
 def command_input():
     global command
-    if app.debug:
-        print TAG, request.json, app.debug
+    logger.debug(request.json)
     if (not request.json) or ('type' not in request.json) or ('command' not in request.json):
         abort(400)
     else:
@@ -86,8 +84,7 @@ def command_input():
             'type': request.json['type'],
             'command': request.json['command']
         }
-        if app.debug:
-            print TAG, command, app.debug
+        logger.debug(command)
         command_queue.append(command)
         return jsonify(command), 201
 
@@ -156,13 +153,11 @@ if __name__ == '__main__':
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Enables verbose'
                         ' mode - displays all requests received by server')
     args = parser.parse_args()
-    if args.debug:
-        print 'Debug mode enabled'
-    if not args.verbose:
-        log = logging.getLogger('werkzeug')
-        log.setLevel(logging.ERROR)
+    if args.verbose:
+        logger.setLevel("info")
+    elif args.debug:
+        logger.setLevel("debug")
     else:
-        print 'Verbose mode on'
+        logger.setLevel("critical")
     print 'Starting server'
-    app.run(debug=args.debug, host=config[
-            'flask_server_address'], port=int(config['flask_server_port']))
+    app.run(host=config['flask_server_address'], port=int(config['flask_server_port']))
