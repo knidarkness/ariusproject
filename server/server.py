@@ -13,9 +13,10 @@ from flask import Flask, jsonify, make_response, request, abort, render_template
 import sys
 sys.path.append("../")
 from config import config
-from logger import Logger 
+from logger import Logger
 import logging
-logger = Logger("werkzeug")
+logging.getLogger('werkzeug').setLevel(logging.ERROR)
+logger = Logger("SERVER")
 
 app = Flask(__name__)
 noise_available = {"status": "False"}
@@ -25,6 +26,7 @@ command = {
     "command": "none1"
 }
 command_queue = []
+
 
 @app.errorhandler(404)
 def not_found(err):
@@ -131,19 +133,20 @@ def video(video_id):
         video_data = json.load(f)
 
     if video_id in video_data:
-        return render_template("videoplayer.html", video_path="/static/videos/"+video_data[video_id]["video_name"], 
-                                title=video_data[video_id]["title"],
-                                support_text=video_data[video_id]["support_text"], 
-                                style=url_for('static', filename='css/'+video_data[video_id]["style"]+'.css'))
+        return render_template("videoplayer.html", video_path="/static/videos/" + video_data[video_id]["video_name"],
+                               title=video_data[video_id]["title"],
+                               support_text=video_data[video_id]["support_text"],
+                               style=url_for('static', filename='css/' + video_data[video_id]["style"] + '.css'))
     else:
         return render_template("error.html")
+
 
 @app.route(config['flask_server_local_page'])
 def page(page_path):
     """
     We get relative path to the page in static directory and return the page
     """
-    return app.send_static_file('local_pages/'+page_path)
+    return app.send_static_file('local_pages/' + page_path)
 
 if __name__ == '__main__':
     import argparse

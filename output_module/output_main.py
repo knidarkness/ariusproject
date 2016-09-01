@@ -15,7 +15,7 @@ sys.path.append("../")
 from config import config
 from client import RESTClient
 from player import Player
-from logger import Logger 
+from logger import Logger
 logger = Logger("Output")
 
 
@@ -90,6 +90,7 @@ class OutputUpdater(threading.Thread):
                     self._lock.release()
             else:
                 pass
+            time.sleep(.05)
 
     def reset(self):
         """

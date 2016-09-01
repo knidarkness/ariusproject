@@ -2,8 +2,8 @@
 import threading
 import sys
 import time
-import random
 import os
+import random
 from fsm import FSM
 from fuzzy_recognizer import FuzzyRecognizer
 from sense_extraction import SenseExtractor
@@ -11,7 +11,7 @@ from arius_searcher import ESearchClient
 sys.path.append("../")
 from client import RESTClient
 from config import config
-from logger import Logger 
+from logger import Logger
 logger = Logger("Core")
 
 
@@ -83,6 +83,7 @@ class Core(threading.Thread):
 
         self._statemachine = FSM('idle', states_dict, 'idle')
         self._history = []
+        self._prev_query = None
 
     def run(self):
         self._updater.start()
@@ -96,32 +97,43 @@ class Core(threading.Thread):
                 self._updater.input_speech = None
                 self._lock.release()
 
-                recognized_command = self._command_recognizer.recognize_command(
-                    user_input)
-                if recognized_command:
-                    if recognized_command == 'CANCEL':
+                recognized_command = self._command_recognizer.recognize_command(user_input)
+                if recognized_command == 'CANCEL':
+                    self._handle_command(recognized_command)
+                    continue
+                if self._statemachine.get_state() == 'displaying_data':
+                    if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN', 'SCROLL_UP']:
                         self._handle_command(recognized_command)
                         continue
-                    if self._statemachine.get_state() == 'displaying_data':
-                        if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN', 'SCROLL_UP']:
-                            self._handle_command(recognized_command)
-                            continue
+                if self._statemachine.get_state() == 'displaying_video':
+                    if recognized_command in ['PAUSE', 'PLAY']:
+                        self._handle_command(recognized_command)
+                        continue
+
+                if (self._statemachine.get_state() in ['displaying_video', 'displaying_data'] and recognized_command == 'DETAILED_DATA'):
+                    logger.info('Trying to find more info...')
+                    self._statemachine.handle_message('more_info')
+                    print 'PREVIOUS QUERY\n', self._prev_query
+                    query = ' '.join(self._sense_extractor.get_keywords(self._prev_query))
+                    logger.info('Proceeding search query %s', query)
+                    self._do_work(self._find_data, query)
+                    continue
+
                 if (self._statemachine.get_state() == 'idle' and recognized_command == 'START') \
                         or self._statemachine.get_state() != 'idle':
-
-                    logger.debug("=============\nHistory:\n{}".format(
-                        "\n".join(self._history)))
-                    user_input = self._command_recognizer.remove_command(
-                        user_input, 'START')
-                    query = ' '.join(
-                        self._sense_extractor.get_keywords(user_input))
-                    recognized_video = self._video_recognizer.recognize_command(
-                        user_input)
+                    self._statemachine.handle_message('request')
+                    logger.debug("=============\nHistory:\n{}".format("\n".join(self._history)))
+                    user_input = self._command_recognizer.remove_command(user_input, 'START')
+                    recognized_video = self._video_recognizer.recognize_command(user_input)
+                    query = ' '.join(self._sense_extractor.get_keywords(user_input))
                     if recognized_video and recognized_video not in self._history:
                         self._handle_command('OPEN_VIDEO', recognized_video)
+                        self._prev_query = user_input
                         self._history.append(recognized_video)
                     elif query:
-                        logger.info('Proceeding search query...')
+                        self._statemachine.handle_message('not_found')
+                        self._prev_query = user_input
+                        logger.info('Proceeding search query %s', query)
                         self._do_work(self._find_data, query)
                     else:
                         logger.info('Search query is empty')
@@ -151,16 +163,16 @@ class Core(threading.Thread):
             request = {'type': 'PAUSE', 'command': ''}
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
-            self._statemachine.handle_message('request')
             self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
         elif command == "OPEN_VIDEO":
             request = {'type': 'OPEN_VIDEO', 'command': arg}
-            self._statemachine.handle_message('display_video')
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
+            self._statemachine.handle_message('display')
+            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['DISPLAY_VIDEO'])})
         self._send_command(request)
 
     def _find_data(self, request, result):
         self._handle_command('SEARCH')
+
         logger.info('Searching data...')
         data = self._ESclient.search(request)
         logger.debug(data)
@@ -177,7 +189,7 @@ class Core(threading.Thread):
                 fname = data[_id][0]
             self._history.append(fname)
             base, file_ext = os.path.splitext(fname)
-            logger.info('File extension:')
+            logger.info('File extension: %s', file_ext)
 
             if file_ext == '.pdf':
                 data = {'type': 'OPEN_PDF', 'command': fname}
@@ -217,9 +229,11 @@ class Core(threading.Thread):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug', help='Enables debug mode and extra messages'
+    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug',
+                        help='Enables debug mode and extra messages'
                         ' - detailed ouput of received commands, proceeding and sent messages.')
-    parser.add_argument('-v', '--verbose', action='store_true', dest='en_verbose', help='Enables verbose mode - shows basic info: states of statemachine,'
+    parser.add_argument('-v', '--verbose', action='store_true', dest='en_verbose',
+                        help='Enables verbose mode - shows basic info: states of statemachine,'
                         ' received messages and sent commands.')
     args = parser.parse_args()
 

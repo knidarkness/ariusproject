@@ -66,7 +66,8 @@ config = {
         "ZOOM_OUT": ["Zooming out", "Will be done"],
         "SCROLL_DOWN": ["Down", "Ok, my lord"],
         "SCROLL_UP": ["Up", "Moving up"],
-        "SEARCH_BEGAN": ["Search request accepted, my lord", "Request accepted", "Searched"]
+        "SEARCH_BEGAN": ["Search request accepted, my lord", "Request accepted", "Searched"],
+        "DISPLAY_VIDEO":['Displaying', 'Opening video']
     },
 
     "elastic_host": "http://localhost:9200",
