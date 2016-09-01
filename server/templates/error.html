@@ -3,67 +3,7 @@
 
 <head>
     <title></title>
-    <style type="text/css">
-    body {
-        background-color: {{background}};
-        overflow: hidden;
-    }
-    
-    ::-webkit-scrollbar {
-        display: none;
-    }
-
-    @font-face {
-      font-family: 'Varela Round';
-      src: url("{{url_for('static', filename='fonts/VarelaRound-Regular.ttf')}}") format('truetype');
-    }
-    @font-face {
-      font-family: 'Raleway';
-      src: url("{{url_for('static', filename='fonts/Raleway-Thin.ttf')}}") format('truetype');
-    }
-    .container {
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        -ms-transform: scale(1); /* IE 9 */
-        -o-transform: scale(1); /* IE 9 */
-        -moz-transform: scale(1); /* IE 9 */
-        -webkit-transform: scale(0.7); /* Safari */
-        transform: scale(0.7);
-    }
-    
-    .message {
-        position: relative;
-        margin: 25px auto 0;
-        color: #fff;
-        font-size: 30px;
-        text-align: center;
-        font-family: 'Varela Round', sans-serif;
-    }
-    
-    .logo {
-        margin: 50px auto 0;
-        color: #fff;
-        font-size: 100px;
-        text-align: center;
-        font-family: 'Raleway', sans-serif;
-    }
-    
-    .sad_icon {
-        display: block;
-        margin: 0 auto;
-        color: #fff;
-        margin: 25px auto;
-        position: relative;
-        width: 22%;
-    }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{style}}">
 </head>
 
 <body>

@@ -106,17 +106,17 @@ def get_command():
 
 @app.route(config['flask_server_idle_address'])
 def idle():
-    return render_template("idle.html", background=config["arius_screen_idle_background"])
+    return render_template("idle.html", background=config["arius_screen_idle_background"], style=url_for('static', filename="css/default_screens.css"))
 
 
 @app.route(config['flask_server_error_address'])
 def error():
-    return render_template("error.html", background=config["arius_screen_error_background"])
+    return render_template("error.html", background=config["arius_screen_error_background"], style=url_for('static', filename="css/default_screens.css"))
 
 
 @app.route(config['flask_server_search_address'])
 def search():
-    return render_template("search.html", background=config["arius_screen_search_background"])
+    return render_template("search.html", background=config["arius_screen_search_background"], style=url_for('static', filename="css/default_screens.css"))
 
 
 @app.route(config['flask_server_black_address'])
