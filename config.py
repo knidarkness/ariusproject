@@ -61,12 +61,12 @@ config = {
     "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
     "voice_command_output": {
-        "CANCEL": "Operation cancelled",
-        "ZOOM_IN": "Enlarging",
-        "ZOOM_OUT": "Zooming out",
-        "SCROLL_DOWN": "Down",
-        "SCROLL_UP": "Up",
-        "SEARCH_BEGAN": "Search request accepted, my lord"
+        "CANCEL": ["Operation cancelled", "See you", "Have a nice day"],
+        "ZOOM_IN": ["Enlarging", "Ok man"],
+        "ZOOM_OUT": ["Zooming out", "Will be done"],
+        "SCROLL_DOWN": ["Down", "Ok, my lord"],
+        "SCROLL_UP": ["Up", "Moving up"],
+        "SEARCH_BEGAN": ["Search request accepted, my lord", "Request accepted", "Searched"]
     },
 
     "elastic_host": "http://localhost:9200",
