@@ -40,7 +40,7 @@ class ESearchClient:
         return result
 
 if __name__ == '__main__':
-    query = 'Innovative Education'
+    query = 'Mylko'
     # query = "ARIUS"
     # query = "html"
     # query = 'Linux'

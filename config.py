@@ -74,6 +74,7 @@ config = {
     "elastic_index": "arius",
     "elastic_type": "doc",
     "elastic_docs_dir": "server/static/local_pages/",
+    #"elastic_docs_dir": "test_data",
     "elastic_index_file_types": [".html", ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".url"],
 
     "marytts_host": "localhost",
