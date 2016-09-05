@@ -20,6 +20,9 @@ class Logger:
     def debug(self, msg, *args, **kwargs):
         self.logger.debug(msg, *args, **kwargs)
 
+    def error(self, msg, *args, **kwargs):
+        self.logger.error(msg, *args, **kwargs)
+
     def setLevel(self, level):
         if level == "info":
             logging.basicConfig(level=logging.INFO)
