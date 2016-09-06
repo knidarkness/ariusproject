@@ -67,14 +67,13 @@ config = {
         "SCROLL_DOWN": ["Down", "Ok, my lord"],
         "SCROLL_UP": ["Up", "Moving up"],
         "SEARCH_BEGAN": ["Search request accepted, my lord", "Request accepted", "Searched"],
-        "DISPLAY_VIDEO":['Displaying', 'Opening video']
+        "DISPLAY_VIDEO": ['Displaying', 'Opening video']
     },
 
     "elastic_host": "http://localhost:9200",
     "elastic_index": "arius",
     "elastic_type": "doc",
     "elastic_docs_dir": "server/static/local_pages/",
-    #"elastic_docs_dir": "test_data",
     "elastic_index_file_types": [".html", ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".url"],
 
     "marytts_host": "localhost",
