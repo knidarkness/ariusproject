@@ -10,4 +10,5 @@ required_packages/
 *.mp4
 *.webm
 server/static/local_pages/*
+server/static/videos/*
 !server/static/local/pages/s

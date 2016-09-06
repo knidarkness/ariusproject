@@ -29,15 +29,23 @@ class Speaker:
 
             # Play the wav file
             pygame.mixer.init()  # Initialise the mixer
-            s = pygame.mixer.Sound("/tmp/output_wav.wav")
-            s.play()
+            self._s = pygame.mixer.Sound("/tmp/output_wav.wav")
+            self._s.play()
             # raise Exception("finish")
 
         else:
             raise Exception(content)
 
     def stop(self):
-        pygame.mixer.stop()
+        self._s.stop()
+
+    def mute(self):
+        self.__prev_volume = self._s.get_volume()
+        self._s.set_volume(0)
+
+    def unmute(self):
+        self._s.set_volume(self.__prev_volume)
+        self.__prev_volume = 0
 
 
 """

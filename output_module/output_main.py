@@ -336,6 +336,11 @@ class OutputInterface:
             elif command[0] == "STOP_SPEAK":
                 self._player.play()
                 self._speak_stop()
+
+            elif command[0] == 'MUTE':
+                self._mute()
+            elif command[0] == 'UNMUTE':
+                self._unmute()
             else:
                 logger.info('command not recognized {}'.format(command))
         else:
@@ -551,6 +556,18 @@ class OutputInterface:
         if self._cur_filetype == 'video':
             script_js = """video=document.getElementById("videoplayer"); video.pause()"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
+
+    def _mute(self):
+        if self._player:
+            self._player.mute()
+        if self._speaker:
+            self._speaker.mute()
+
+    def _unmute(self):
+        if self._player:
+            self._player.unmute()
+        if self._speaker:
+            self._speaker.unmute()
 
 
 if __name__ == "__main__":

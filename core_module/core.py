@@ -98,9 +98,10 @@ class Core(threading.Thread):
                 self._lock.release()
 
                 recognized_command = self._command_recognizer.recognize_command(user_input)
-                if recognized_command == 'CANCEL':
+                if recognized_command == 'CANCEL' or recognized_command == 'MUTE' or recognized_command == 'UNMUTE':
                     self._handle_command(recognized_command)
                     continue
+
                 if self._statemachine.get_state() == 'displaying_data':
                     if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN', 'SCROLL_UP']:
                         self._handle_command(recognized_command)
@@ -168,6 +169,12 @@ class Core(threading.Thread):
             request = {'type': 'OPEN_VIDEO', 'command': arg}
             self._statemachine.handle_message('display')
             self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['DISPLAY_VIDEO'])})
+        elif command == "MUTE":
+            print 'to be muted'
+            request = {'type': 'MUTE', 'command': ''}
+        elif command == "UNMUTE":
+            print 'to be unmuted'
+            request = {'type': 'UNMUTE', 'command': ''}
         self._send_command(request)
 
     def _find_data(self, request, result):

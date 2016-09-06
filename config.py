@@ -44,7 +44,9 @@ config = {
         "PAUSE": ['pause'],
         "PLAY": ['play'],
         "START": ['ok arius', 'what is that', 'what the fuck'],
-        "DETAILED_DATA": ['show more']
+        "DETAILED_DATA": ['show more'],
+        "MUTE": ['mute', 'shut up'],
+        'UNMUTE': ['make it louder', 'turn sound on']
     },
     "core_update_interval": 0.1,
 
@@ -61,13 +63,13 @@ config = {
     "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
     "voice_command_output": {
-        "CANCEL": ["Operation cancelled", "See you", "Have a nice day"],
-        "ZOOM_IN": ["Enlarging", "Ok man"],
-        "ZOOM_OUT": ["Zooming out", "Will be done"],
-        "SCROLL_DOWN": ["Down", "Ok, my lord"],
-        "SCROLL_UP": ["Up", "Moving up"],
-        "SEARCH_BEGAN": ["Search request accepted, my lord", "Request accepted", "Searched"],
-        "DISPLAY_VIDEO": ['Displaying', 'Opening video']
+        "CANCEL": ["Operation cancelled.", "See you.", "Have a nice day.", "See you soon."],
+        "ZOOM_IN": ["Enlarging.", "Ok man."],
+        "ZOOM_OUT": ["Zooming out.", "Will be done."],
+        "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok man."],
+        "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
+        "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
+        "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.']
     },
 
     "elastic_host": "http://localhost:9200",
@@ -79,10 +81,10 @@ config = {
     "marytts_host": "localhost",
     "marytts_port": "59125",
 
-    "default_voice": "marytts_voice1",
+    "default_voice": "marytts_voice2",
     "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
     "marytts_voice1_volume": 1.0,
-    "marytts_voice2": "empty",
+    "marytts_voice2": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", "effect_F0Add_selected": "on", "effect_F0Add_parameters": "f0Add:35.0;"},
     "marytts_voice2_volume": 1.0,
     "marytts_voice3": "empty",
     "marytts_voice3_volume": 1.0,

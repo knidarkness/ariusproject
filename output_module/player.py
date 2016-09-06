@@ -34,3 +34,9 @@ class Player:
         Stop music completely
         """
         pygame.mixer.music.stop()
+
+    def mute(self):
+        pygame.mixer.music.pause()
+
+    def unmute(self):
+        pygame.mixer.music.unpause()
