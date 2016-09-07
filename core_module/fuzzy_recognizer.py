@@ -1,8 +1,11 @@
 from fuzzywuzzy import fuzz
 import sys
+from difflib import SequenceMatcher as SM
 sys.path.append("../")
-from logger import Logger 
+from logger import Logger
 logger = Logger("Fuzzy_recognizer")
+
+
 class FuzzyRecognizer:
     """
     This class is used to provide fuzzy input and uses
@@ -41,7 +44,7 @@ class FuzzyRecognizer:
 
     """
 
-    def __init__(self, commands, min_confidence=.9):
+    def __init__(self, commands, min_confidence=.9, fuzzy=True):
         if type(commands) != dict:
             print 'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands))
             raise ValueError(
@@ -49,8 +52,16 @@ class FuzzyRecognizer:
         if min_confidence > 1 or min_confidence < 0:
             print 'Too low or too high value of minimal confidence. It should be between 0 and 1'
             raise ValueError('Too low or too high value of minimal confidence')
+        if type(fuzzy) != bool:
+            print 'Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(commands))
+            raise ValueError('Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(fuzzy)))
         self._min_confidence = min_confidence * 100
         self._commands = commands
+        self.__fuzzy = fuzzy
+        if self.__fuzzy:
+            logger.debug('Created recognizer. Using fuzzy-wuzzy')
+        else:
+            logger.debug('Created recognizer. Using difflib')
 
     def recognize_command(self, input, target_command=None):
         """
@@ -88,7 +99,7 @@ class FuzzyRecognizer:
                 logger.debug('Given wrong command: there`s no such command in the dictionary. Exiting')
                 raise ValueError('Wrong command')
             for command in self._commands[target_command]:
-                probability = fuzz.partial_ratio(command, input)
+                probability = self.__get_confidence_of_match(command, input)
                 logger.debug('Probability of command {} for command case {} is {}'.format(target_command, command, probability))
                 if probability >= self._min_confidence:
                     logger.debug('Matching command found.')
@@ -103,7 +114,7 @@ class FuzzyRecognizer:
             for command_key in self._commands.keys():
                 for command in self._commands[command_key]:
 
-                    c_probability = fuzz.partial_ratio(command, input)
+                    c_probability = self.__get_confidence_of_match(command, input)
 
                     if c_probability > command_probability[command_key]:
                         command_probability[command_key] = c_probability
@@ -116,7 +127,7 @@ class FuzzyRecognizer:
             logger.debug('The list of found matching commands (better if there`s only one item) is: {}'.format(result))
 
             if result:
-                logger.info('Recognized command is {}'.format(result[0]))
+                logger.info('Recognized command is {} and confidence for it is {}'.format(result[0], command_probability[result[0]]))
                 logger.debug('COMMAND RECOGNIZING FINISHED')
                 return result[0]
             logger.info('Command was not recognized')
@@ -156,8 +167,9 @@ class FuzzyRecognizer:
                      for i in xrange(len(pre_grams) - N)]
 
             for gram in grams:
-                if fuzz.partial_ratio(gram, case) >= self._min_confidence:
-                    logger.debug('Confidence for {} is {}'.format(gram, fuzz.partial_ratio(gram, string)))
+                confidence = self.__get_confidence_of_match(case, gram)
+                if confidence >= self._min_confidence:
+                    logger.debug('Confidence for {} is {}'.format(gram, confidence))
                     string = string.replace(gram, '')
                     string = string.strip()
                     logger.debug('String is "{}"'.format(string))
@@ -174,7 +186,40 @@ class FuzzyRecognizer:
         # splitting.
         return ' '.join(string.split())
 
+    def __get_confidence_of_match(self, command, string):
+        """
+        This function returns the confidence that strings (command, string) are
+        equal in grade from 0 to 100.
+        """
+        if self.__fuzzy:
+            # fuzzy-wuzzy already returns value from 0 to 100, so
+            # we make no changes to it
+            return fuzz.ratio(command, string)
+        else:
+            # difflib returns value from 0.0 to 1.0,
+            # so we multiply it with 100 to get value from 0 to 100.
+            return SM(None, command, string).ratio() * 100
+
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action='store_true', dest='en_debug',
+                        help='Enables debug mode and extra messages'
+                        ' - detailed ouput of received commands, proceeding and sent messages.')
+    parser.add_argument('-v', '--verbose', action='store_true', dest='en_verbose',
+                        help='Enables verbose mode - shows basic info: states of statemachine,'
+                        ' received messages and sent commands.')
+    parser.add_argument('-nf', '--nofuzzy', action='store_true', dest='no_fuzzy', default=False,
+                        help='If this flag is selected fuzzywuzzy library won`t be used. '
+                        'Instead, this module will use standart lib "difflib" which is almost equivalently effective')
+    args = parser.parse_args()
+
+    if args.en_verbose:
+        logger.setLevel("info")
+    elif args.en_debug:
+        logger.setLevel("debug")
+    else:
+        logger.setLevel("critical")
     commands = {
         "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
         "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
@@ -183,8 +228,15 @@ if __name__ == "__main__":
         "SCROLL_UP": ['page up', 'scroll up'],
         "CANCEL": ['cancel', 'bye', 'thanks'],
         "WAIT": ['wait'],
-        'START': ['ok arius', 'what the fuck']
+        "PAUSE": ['pause'],
+        "PLAY": ['play'],
+        "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
+        "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn up the volume', 'reduce the volume'],
+        "START": ['ok arius', 'what is that', 'what the fuck'],
+        "DETAILED_DATA": ['show more'],
+        "MUTE": ['mute', 'shut up'],
+        'UNMUTE': ['unmute', 'make it louder', 'turn sound on']
     }
-    rec = FuzzyRecognizer(commands, min_confidence=.7, debug=True)
-    rec.recognize_command('ok aruis could you tell me about enlarging the GDP')
-    rec.remove_command('ok aruis could you tell me about enlarging the GDP', 'START')
+    rec = FuzzyRecognizer(commands, min_confidence=.7, fuzzy=not args.no_fuzzy)
+    rec.recognize_command('dcrs volumee')
+    rec.remove_command('o could you tell me about enlarging the GDP', 'START')

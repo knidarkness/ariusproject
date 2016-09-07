@@ -44,11 +44,11 @@ config = {
         "PAUSE": ['pause'],
         "PLAY": ['play'],
         "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
-        "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn up the volume', 'reduce the volume'],
+        "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn the volume down', 'reduce the volume'],
         "START": ['ok arius', 'what is that', 'what the fuck'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
-        'UNMUTE': ['make it louder', 'turn sound on']
+        'UNMUTE': ['unmute', 'make it louder', 'turn sound on']
     },
     "core_update_interval": 0.1,
 

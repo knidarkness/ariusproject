@@ -2,8 +2,10 @@ import itertools
 
 import sys
 sys.path.append("../")
-from logger import Logger 
+from logger import Logger
 logger = Logger("FSM")
+
+
 class FSM(object):
     """
     This class represents a finite states machine in Python 3.
@@ -38,7 +40,7 @@ class FSM(object):
         if message in self.__message_list:
             self.__current_message = message
             self.update()
-            logger.info('State was changed from {} to {}'.format( self.get_prev_state(), self.get_state()))
+            logger.info('State was changed from {} to {}'.format(self.get_prev_state(), self.get_state()))
             return 0
         else:
             raise ValueError('This message is not in allowed messages')
