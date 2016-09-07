@@ -43,6 +43,8 @@ config = {
         "WAIT": ['wait'],
         "PAUSE": ['pause'],
         "PLAY": ['play'],
+        "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
+        "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn up the volume', 'reduce the volume'],
         "START": ['ok arius', 'what is that', 'what the fuck'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],

@@ -107,7 +107,7 @@ class Core(threading.Thread):
                         self._handle_command(recognized_command)
                         continue
                 if self._statemachine.get_state() == 'displaying_video':
-                    if recognized_command in ['PAUSE', 'PLAY']:
+                    if recognized_command in ['PAUSE', 'PLAY', 'VOLUME_UP', 'VOLUME_DOWN']:
                         self._handle_command(recognized_command)
                         continue
 
@@ -162,6 +162,10 @@ class Core(threading.Thread):
             request = {'type': 'PLAY', 'command': ''}
         elif command == "PAUSE":
             request = {'type': 'PAUSE', 'command': ''}
+        elif command == "VOLUME_UP":
+            request = {'type': 'VOLUME_UP', 'command': ''}
+        elif command == "VOLUME_DOWN":
+            request = {'type': 'VOLUME_DOWN', 'command': ''}    
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
