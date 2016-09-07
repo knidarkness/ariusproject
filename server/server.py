@@ -163,4 +163,4 @@ if __name__ == '__main__':
     else:
         logger.setLevel("critical")
     print 'Starting server'
-    app.run(host=config['flask_server_address'], port=int(config['flask_server_port']))
+    app.run(host=config['flask_server_address'], port=int(config['flask_server_port']), threaded=True)

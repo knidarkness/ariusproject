@@ -319,7 +319,7 @@ class OutputInterface:
             # name of the video file should be given.
 
             elif command[0] == 'PLAY':
-                self._player.play()
+                self._player.stop()
                 self._video_play()
             elif command[0] == 'PAUSE':
                 self._player.play()

@@ -36,7 +36,7 @@ class Player:
         pygame.mixer.music.stop()
 
     def mute(self):
-        pygame.mixer.music.pause()
+        pygame.mixer.music.set_volume(0)
 
     def unmute(self):
-        pygame.mixer.music.unpause()
+        pygame.mixer.music.set_volume(config["background_music_volume"])

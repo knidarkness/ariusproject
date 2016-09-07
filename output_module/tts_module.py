@@ -10,6 +10,7 @@ class Speaker:
         self.host = mary_host
         self.port = mary_port
         self.session = None
+        self.muted = False
 
     def speak(self, input_text):
         self.query_hash["INPUT_TEXT"] = input_text
@@ -30,6 +31,8 @@ class Speaker:
             # Play the wav file
             pygame.mixer.init()  # Initialise the mixer
             self._s = pygame.mixer.Sound("/tmp/output_wav.wav")
+            if self.muted:
+                self._s.set_volume(0)
             self._s.play()
             # raise Exception("finish")
 
@@ -40,12 +43,19 @@ class Speaker:
         self._s.stop()
 
     def mute(self):
-        self.__prev_volume = self._s.get_volume()
-        self._s.set_volume(0)
+        if self.muted:
+            pass
+        else:
+            self._s.set_volume(0)
+            self.muted = True
 
     def unmute(self):
-        self._s.set_volume(self.__prev_volume)
-        self.__prev_volume = 0
+        if not self.muted:
+            pass
+        else:
+            self._s.set_volume(1)
+            self.muted = False
+
 
 
 """
