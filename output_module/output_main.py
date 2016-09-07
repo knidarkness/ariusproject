@@ -319,11 +319,19 @@ class OutputInterface:
             # name of the video file should be given.
 
             elif command[0] == 'PLAY':
-                self._player.play()
+                self._player.stop()
                 self._video_play()
             elif command[0] == 'PAUSE':
                 self._player.play()
                 self._video_pause()
+
+            # These two commands are used for increasing or
+            # decreasing video volume.
+
+            elif command[0] == 'VOLUME_UP':
+                self._volume_up()
+            elif command[0] == 'VOLUME_DOWN':
+                self._volume_down()
 
             # and these two are for text-to-speech
             # The 'command' body should be a text you
@@ -555,6 +563,26 @@ class OutputInterface:
         logger.debug('Video paused')
         if self._cur_filetype == 'video':
             script_js = """video=document.getElementById("videoplayer"); video.pause()"""
+            self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
+
+    def _volume_up(self):
+        """
+        This method is used to increase volume.
+        It should be run only if current content type is 'video'.
+        """
+        logger.debug('Increasing volume')
+        if self._cur_filetype == 'video':
+            script_js = """video=document.getElementById("videoplayer"); video.volume+=0.2;"""
+            self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
+
+    def _volume_down(self):
+        """
+        This method is used to decrease volume.
+        It should be run only if current content type is 'video'.
+        """
+        logger.debug('Decreasing volume')
+        if self._cur_filetype == 'video':
+            script_js = """video=document.getElementById("videoplayer"); video.volume-=0.2;"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
     def _mute(self):
