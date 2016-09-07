@@ -27,6 +27,7 @@ class QAConnector:
     IMPORTANT: upper- and lowercase difference in each single letter is
     really important here. (e.g. 'softserve' != 'SoftServe' != 'Softserve')
     """
+
     def __init__(self):
         self._sparql = SPARQLWrapper("http://dbpedia.org/sparql")
         self._dbpedia = quepy.install("dbpedia")
@@ -42,11 +43,13 @@ class QAConnector:
             metadata = None
 
         if query is None:
+            print 'no query'
             return None
 
         if target.startswith("?"):
             target = target[1:]
         if query:
+            print query
             self._sparql.setQuery(query)
             self._sparql.setReturnFormat(JSON)
             results = self._sparql.query().convert()
@@ -167,4 +170,4 @@ class QAConnector:
 
 if __name__ == '__main__':
     c = QAConnector()
-    print c.get_abstract('who is Bill Gates')
+    print c.get_abstract('What is a "Heckler & Koch G36"?')

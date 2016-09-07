@@ -96,7 +96,7 @@ class LanguageOf(FixedRelation):
 
 
 class PopulationOf(FixedRelation):
-    relation = "dbpprop:populationCensus"
+    relation = "dbo:populationTotal"
     reverse = True
 
 
