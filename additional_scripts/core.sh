@@ -1,4 +1,4 @@
 #!/bin/sh
 cd ../core_module
-../env/bin/python core.py
+../env/bin/python core.py --debug
 

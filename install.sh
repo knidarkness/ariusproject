@@ -14,11 +14,13 @@ tar -xvzf sip.tar.gz
 tar -xvzf pyqt.tar.gz
 cd sip-4.18.1
 python configure.py
+cd ../
 wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
 wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
 unzip marytts-5.1.2.zip
 cd marytts-5.1.2/bin
 ./marytts-component-installer
+chmod 555 marytts-server
 cd ../../
 chmod +x qt-opensource-linux-x64-5.7.0.run
 ./qt-opensource-linux-x64-5.7.0.run
@@ -33,6 +35,7 @@ curl -L -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/d
 tar -xvf elasticsearch-2.3.5.tar.gz
 cd elasticsearch-2.3.5
 sudo bin/plugin install mapper-attachments
+chmod 555 bin/elasticsearch
 cd ../../
 sudo apt-get install libqt5webkit5-dev
 sudo apt-get install python-pyqt5.qtsvg
@@ -40,5 +43,10 @@ sudo apt-get install python-pyqt5.qtwebkit
 cd env/lib/python2.7/site-packages
 echo ../../../../ >> config.pth
 cd ../../../../
+cd additional_scripts
+chmod 555 core.sh
+chmod 555 input.sh
+chmod 555 server.sh
+chmod 555 output.sh
 
 

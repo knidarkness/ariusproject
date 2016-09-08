@@ -1,3 +1,3 @@
 #!/bin/sh
 cd ../
-env/bin/python server/server.py
+env/bin/python server/server.py --debug
