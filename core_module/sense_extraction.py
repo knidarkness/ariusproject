@@ -24,5 +24,5 @@ class SenseExtractor:
         return result
 
 
-# extr = SenseExtractor('/home/sdubovyk/Projects/flask_test/hello_worl/stop.txt')
-# print extr.get_context('Hello, could you tell me about SoftServe`s projects in agriculture')
+extr = SenseExtractor('stop.txt')
+print extr.get_keywords('Hello, could you tell me about SoftServe\'s projects in agriculture')
