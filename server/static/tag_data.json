@@ -1,0 +1,14 @@
+{
+    "_default": {},
+    "synonyms":
+        {
+            "1": {"equal": ["r&d director", "r&d", "mylko"], "key": "mylko"},
+            "2": {"equal": ["kytsmey", "taras kytsmey", "CEO"], "key": "CEO"}
+        },
+    "tag_data":
+        {
+            "1": {"tags": ["mylko", "iot", "cloud"], "name": "mylko_good_thing.webm"},
+            "2": {"tags": ["mylko", "iot", "cloud", "data science"], "name": "mylko_bad_thing.webm"},
+            "3": {"tags": ["CEO"], "name": "kytsmey_sucks.webm"}
+        }
+}

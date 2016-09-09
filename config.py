@@ -111,3 +111,4 @@ config = {
 
 config["flask_server_home"] = 'http://' + config['flask_server_address'] + \
     ':' + config['flask_server_port']
+config["database_file"] = config["root_dir"] + "server/static/tag_data.json"
