@@ -7,8 +7,8 @@
         },
     "tag_data":
         {
-            "1": {"tags": ["mylko", "iot", "cloud"], "name": "mylko_good_thing.webm"},
-            "2": {"tags": ["mylko", "iot", "cloud", "data science"], "name": "mylko_bad_thing.webm"},
-            "3": {"tags": ["CEO"], "name": "kytsmey_sucks.webm"}
+            "1": {"tags": ["mylko", "iot", "cloud"], "name": "mylko_good_thing.webm", "prority": 1},
+            "2": {"tags": ["mylko", "iot", "cloud", "data science"], "name": "mylko_bad_thing.webm", "prority": 2},
+            "3": {"tags": ["CEO"], "name": "kytsmey_sucks.webm", "prority": 1}
         }
 }
