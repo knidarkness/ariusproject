@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import threading
 import sys
 import time
@@ -52,34 +51,21 @@ class Core(threading.Thread):
         self._sense_extractor = SenseExtractor('stop.txt')
         self._command_recognizer = FuzzyRecognizer(config['core_commands'],
                                                    min_confidence=config['core_command_recog_confidence'])
-        self._video_recognizer = FuzzyRecognizer(config['predefined_videos'],
-                                                 min_confidence=config['core_command_recog_confidence'])
         states_dict = {}
         states_dict['idle'] = [('cancel', None, 'idle'),
-                               ('request', None, 'searching_video')]
+                               ('request', None, 'searching_data')]
 
         states_dict['searching_data'] = [('cancel', None, 'idle'),
-                                         ('request', None, 'searching_video'),
+                                         ('request', None, 'searching_data'),
                                          ('display', None, 'displaying_data'),
                                          ('not_found', None, 'search_data_failed')]
 
         states_dict['search_data_failed'] = [('cancel', None, 'idle'),
-                                             ('request', None, 'searching_video')]
+                                             ('request', None, 'searching_data')]
 
         states_dict['displaying_data'] = [('cancel', None, 'idle'),
                                           ('command', None, 'displaying_data'),
-                                          ('request', None, 'searching_video'),
-                                          ('more_info', None, 'searching_data')]
-
-        states_dict['searching_video'] = [('cancel', None, 'idle'),
-                                          ('display', None, 'displaying_video'),
-                                          ('request', None, 'searching_video'),
-                                          ('not_found', None, 'searching_data')]
-
-        states_dict['displaying_video'] = [('cancel', None, 'idle'),
-                                           ('command', None, 'displaying_video'),
-                                           ('request', None, 'searching_video'),
-                                           ('more_info', None, 'searching_data')]
+                                          ('request', None, 'searching_data')]
 
         self._statemachine = FSM('idle', states_dict, 'idle')
         self._history = []
@@ -87,7 +73,6 @@ class Core(threading.Thread):
 
     def run(self):
         self._updater.start()
-        # initially, open idle screen
         self._send_command({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
         while True:
             if self._updater.input_speech:
@@ -103,41 +88,32 @@ class Core(threading.Thread):
                     continue
 
                 if self._statemachine.get_state() == 'displaying_data':
-                    if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN', 'SCROLL_UP']:
-                        self._handle_command(recognized_command)
-                        continue
-                if self._statemachine.get_state() == 'displaying_video':
-                    if recognized_command in ['PAUSE', 'PLAY', 'VOLUME_UP', 'VOLUME_DOWN']:
+                    if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN',
+                                              'SCROLL_UP', 'PAUSE', 'PLAY',
+                                              'VOLUME_UP', 'VOLUME_DOWN']:
                         self._handle_command(recognized_command)
                         continue
 
-                if (self._statemachine.get_state() in ['displaying_video', 'displaying_data'] and recognized_command == 'DETAILED_DATA'):
-                    logger.info('Trying to find more info...')
-                    self._statemachine.handle_message('more_info')
-                    print 'PREVIOUS QUERY\n', self._prev_query
-                    query = ' '.join(self._sense_extractor.get_keywords(self._prev_query))
-                    logger.info('Proceeding search query %s', query)
-                    self._do_work(self._find_data, query)
-                    continue
+                if self._statemachine.get_state() in ['displaying_video', 'displaying_data']:
+                    if recognized_command == 'DETAILED_DATA':
+                        logger.info('Trying to find more info...')
+                        logger.debug('PREVIOUS QUERY %s', self._prev_query)
+                        user_input = self._prev_query
 
                 if (self._statemachine.get_state() == 'idle' and recognized_command == 'START') \
                         or self._statemachine.get_state() != 'idle':
+                    logger.debug("History:\n{}".format("\n".join(self._history)))
+
                     self._statemachine.handle_message('request')
-                    logger.debug("=============\nHistory:\n{}".format("\n".join(self._history)))
                     user_input = self._command_recognizer.remove_command(user_input, 'START')
-                    recognized_video = self._video_recognizer.recognize_command(user_input)
-                    query = ' '.join(self._sense_extractor.get_keywords(user_input))
-                    if recognized_video and recognized_video not in self._history:
-                        self._handle_command('OPEN_VIDEO', recognized_video)
+                    query = self._sense_extractor.get_keywords(user_input)
+                    if query:
                         self._prev_query = user_input
-                        self._history.append(recognized_video)
-                    elif query:
-                        self._statemachine.handle_message('not_found')
-                        self._prev_query = user_input
-                        logger.info('Proceeding search query %s', query)
+                        logger.info('Proceeding search query {}'.format(query))
                         self._do_work(self._find_data, query)
                     else:
                         logger.info('Search query is empty')
+
             time.sleep(config['core_update_interval'])
 
     def _handle_command(self, command, arg=None):
@@ -165,14 +141,10 @@ class Core(threading.Thread):
         elif command == "VOLUME_UP":
             request = {'type': 'VOLUME_UP', 'command': ''}
         elif command == "VOLUME_DOWN":
-            request = {'type': 'VOLUME_DOWN', 'command': ''}    
+            request = {'type': 'VOLUME_DOWN', 'command': ''}
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
             self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
-        elif command == "OPEN_VIDEO":
-            request = {'type': 'OPEN_VIDEO', 'command': arg}
-            self._statemachine.handle_message('display')
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['DISPLAY_VIDEO'])})
         elif command == "MUTE":
             print 'to be muted'
             request = {'type': 'MUTE', 'command': ''}
@@ -209,6 +181,9 @@ class Core(threading.Thread):
             elif file_ext == '.url':
                 link = open(fname).read()
                 data = {'type': 'OPEN_URL', 'command': link}
+            elif file_ext == '.webm':
+                data = {'type': 'OPEN_VIDEO', 'command': fname}
+
             self._statemachine.handle_message('display')
         else:
             data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}

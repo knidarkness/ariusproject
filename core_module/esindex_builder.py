@@ -69,9 +69,9 @@ class ESIndexBuilder:
     def _get_content(self, content):
         """Extracts text from main section of webpage."""
         soup = BeautifulSoup(content, 'html.parser')
-        if len(soup.find_all("article", {'class': 'blog_item'})) != 0:
-            return ""
-        
+        for div in soup.find_all("article", {'class': 'blog_item'}):
+            div.decompose()
+
         if len(soup.find_all("article", {'class': 'articles-grid'})) != 0:
             return ""
         for _id in ['main_page', 'main-wrapper']:
