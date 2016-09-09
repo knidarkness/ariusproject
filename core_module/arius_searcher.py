@@ -26,7 +26,7 @@ class ESearchClient:
                             "match": {
                                 "file.content": queryItem
                             }
-                        } for queryItem in query.split()
+                        } for queryItem in query
                     ],
                     "minimum_number_should_match": "2<75%"
                 }
