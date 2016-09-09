@@ -1,6 +1,7 @@
 sudo apt-get update
 sudo apt-get install default-jre
 sudo apt-get install default-jdk
+sudo apt-get install tmux
 sudo apt install python-pip
 pip install virtualenv
 virtualenv --system-site-packages env
@@ -28,7 +29,7 @@ sudo apt-get install build-essential
 sudo apt-get install libfontconfig1
 cd PyQt5_gpl-5.7
 python configure.py
-make
+make -j4
 make install
 cd ../
 curl -L -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.5/elasticsearch-2.3.5.tar.gz
