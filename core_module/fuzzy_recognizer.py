@@ -231,12 +231,12 @@ if __name__ == "__main__":
         "PAUSE": ['pause'],
         "PLAY": ['play'],
         "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
-        "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn up the volume', 'reduce the volume'],
+        "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn down the volume', 'reduce the volume'],
         "START": ['ok arius', 'what is that', 'what the fuck'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
         'UNMUTE': ['unmute', 'make it louder', 'turn sound on']
     }
     rec = FuzzyRecognizer(commands, min_confidence=.7, fuzzy=not args.no_fuzzy)
-    rec.recognize_command('dcrs volumee')
-    rec.remove_command('o could you tell me about enlarging the GDP', 'START')
+    print rec.recognize_command('please turn up volume please')
+    print rec.remove_command('please volume turn the up', 'VOLUME_UP')
