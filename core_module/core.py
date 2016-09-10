@@ -7,6 +7,7 @@ from fsm import FSM
 from fuzzy_recognizer import FuzzyRecognizer
 from sense_extraction import SenseExtractor
 from arius_searcher import ESearchClient
+from tag_searcher import TagSearcher
 sys.path.append("../")
 from client import RESTClient
 from config import config
@@ -50,6 +51,7 @@ class Core(threading.Thread):
                                          config["core_server_output_url"])
 
         self._ESclient = ESearchClient()
+        self._tag_searcher = TagSearcher(config['database_file'])
         self._sense_extractor = SenseExtractor('stop.txt')
         self._command_recognizer = FuzzyRecognizer(config['core_commands'],
                                                    min_confidence=config['core_command_recog_confidence'])
@@ -169,6 +171,8 @@ class Core(threading.Thread):
 
         logger.info('Searching data...')
         data = self._ESclient.search(request)
+        #data = self._tag_searcher.find_tags(request)
+
         logger.debug(data)
         if data:
             fname = None

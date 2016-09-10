@@ -17,12 +17,11 @@ class TagSearcher:
         result = []
         file_info = Query()
         searched_ids = self.find_all_synonyms(tags)
-        print searched_ids
         result = self.__tags.search(file_info.tags.any(searched_ids))
         if result:
-            result = sorted([[r['name'], r['prority']]
-                             for r in result], key=lambda s: s[1])
-        return result
+            result = sorted([[r['name'], r['prority']] for r in result], key=lambda s: s[1])
+            return result
+        return None
 
     def find_all_synonyms(self, tags):
         result = [self.find_synonyms(tag)
@@ -43,4 +42,4 @@ if __name__ == '__main__':
     a = TagSearcher(config['database_file'])
     print(a.find_synonyms('CEO'))
     print(a.find_all_synonyms(['r&d', 'kytsmey', 'r&d director']))
-    print(a.find_tags(['r&d']))
+    print(a.find_tags(['blabla']))

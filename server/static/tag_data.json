@@ -1,14 +1,1 @@
-{
-    "_default": {},
-    "synonyms":
-        {
-            "1": {"equal": ["r&d director", "r&d", "mylko"], "key": "mylko"},
-            "2": {"equal": ["kytsmey", "taras kytsmey", "CEO"], "key": "CEO"}
-        },
-    "tag_data":
-        {
-            "1": {"tags": ["mylko", "iot", "cloud"], "name": "mylko_good_thing.webm", "prority": 1},
-            "2": {"tags": ["mylko", "iot", "cloud", "data science"], "name": "mylko_bad_thing.webm", "prority": 2},
-            "3": {"tags": ["CEO"], "name": "kytsmey_sucks.webm", "prority": 1}
-        }
-}
+{"synonyms": {"1": {"equal": ["r&d director", "r&d", "mylko"], "key": "mylko"}, "2": {"equal": ["kytsmey", "taras kytsmey", "CEO"], "key": "CEO"}}, "_default": {}, "tag_data": {"1": {"prority": 1, "name": "mylko_good_thing.webm", "tags": ["mylko", "iot", "cloud"]}, "3": {"prority": 1, "name": "kytsmey_sucks.webm", "tags": ["CEO"]}, "2": {"prority": 2, "name": "mylko_bad_thing.webm", "tags": ["mylko", "iot", "cloud", "data science"]}}}

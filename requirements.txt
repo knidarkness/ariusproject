@@ -9,3 +9,4 @@ argparse
 bs4
 nltk
 quepy
+tinydb
