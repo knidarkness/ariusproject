@@ -2,6 +2,7 @@ import argparse
 import json
 import time
 import sys
+import os
 sys.path.append("../")
 from client import RESTClient
 from config import config
@@ -31,5 +32,8 @@ while True:
     print "Write phrase: "
     speech_text_manual = raw_input()
     data = {'speech_text': speech_text_manual}
+
+    if speech_text_manual == "exit":
+        os.system("tmux kill-session -t Arius")
     response = input_client.send_data_in_POST(data, True, 0)
     print response

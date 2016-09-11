@@ -4,7 +4,7 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script run all parts of arius in debug/verbose/silent mode
+This script run all parts of Arius in debug/verbose/silent mode
 
 OPTIONS:
    -h      Show this message
@@ -13,151 +13,9 @@ OPTIONS:
 EOF
 }
 
-
-SESSION_NAME="arius"
-
-
-debug_mode()
-{
-	tmux new-session -s ${SESSION_NAME} -n server -d
-	tmux send-keys -t ${SESSION_NAME} 'cd additional_scripts; ./server.sh -m debug' C-m
-
-	tmux new-window -n marytts -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:1 'cd required_packages/marytts-5.1.2/bin/; ./marytts-server' C-m
-
-	tmux new-window -n elasticsearch -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:2 'cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch' C-m
-
-	sleep 10
-
-	tmux new-window -n core -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:3 'cd additional_scripts; ./core.sh -m debug' C-m
-
-	tmux new-window -n output -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:4 'cd additional_scripts; ./output.sh -m debug' C-m
-
-	tmux new-window -n input -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:5 'cd additional_scripts; ./input.sh' C-m
-}
-
-verbose_mode()
-{
-	tmux new-session -s ${SESSION_NAME} -n server -d
-	tmux send-keys -t ${SESSION_NAME} 'cd additional_scripts; ./server.sh -m verbose' C-m
-
-	tmux new-window -n marytts -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:1 'cd required_packages/marytts-5.1.2/bin/; ./marytts-server' C-m
-
-	tmux new-window -n elasticsearch -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:2 'cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch' C-m
-
-	sleep 10
-
-	tmux new-window -n core -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:3 'cd additional_scripts; ./core.sh -m verbose' C-m
-
-	tmux new-window -n output -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:4 'cd additional_scripts; ./output.sh -m verbose' C-m
-
-	tmux new-window -n input -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:5 'cd additional_scripts; ./input.sh' C-m
-}
-
-silent_mode()
-{
-	tmux new-session -s ${SESSION_NAME} -n server -d
-	tmux send-keys -t ${SESSION_NAME} 'cd additional_scripts; ./server.sh -m silent' C-m
-
-	tmux new-window -n marytts -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:1 'cd required_packages/marytts-5.1.2/bin/; ./marytts-server' C-m
-
-	tmux new-window -n elasticsearch -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:2 'cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch' C-m
-
-	sleep 10
-
-	tmux new-window -n core -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:3 'cd additional_scripts; ./core.sh -m silent' C-m
-
-	tmux new-window -n output -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:4 'cd additional_scripts; ./output.sh -m silent' C-m
-
-	tmux new-window -n input -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:5 'cd additional_scripts; ./input.sh' C-m
-}
-
-debug_mode_window()
-{
-	tmux new-session -s ${SESSION_NAME} -n server -d
-	tmux send-keys -t ${SESSION_NAME} 'cd additional_scripts; ./server.sh -m debug' C-m
-
-	tmux new-window -n marytts -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:1 'cd required_packages/marytts-5.1.2/bin/; ./marytts-server' C-m
-
-	tmux new-window -n elasticsearch -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:2 'cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch' C-m
-
-	sleep 10
-
-	tmux new-window -n core -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:3 'cd additional_scripts; ./core.sh -m debug' C-m
-
-	tmux new-window -n output -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:4 'cd additional_scripts; ./output.sh -m debug -s '"$SIZE" C-m
-
-	tmux new-window -n input -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:5 'cd additional_scripts; ./input.sh' C-m
-}
-
-verbose_mode_window()
-{
-	tmux new-session -s ${SESSION_NAME} -n server -d
-	tmux send-keys -t ${SESSION_NAME} 'cd additional_scripts; ./server.sh -m verbose' C-m
-
-	tmux new-window -n marytts -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:1 'cd required_packages/marytts-5.1.2/bin/; ./marytts-server' C-m
-
-	tmux new-window -n elasticsearch -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:2 'cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch' C-m
-
-	sleep 10
-
-	tmux new-window -n core -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:3 'cd additional_scripts; ./core.sh -m verbose' C-m
-
-	tmux new-window -n output -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:4 'cd additional_scripts; ./output.sh -m verbose -s '"$SIZE" C-m
-
-	tmux new-window -n input -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:5 'cd additional_scripts; ./input.sh' C-m
-}
-
-silent_mode_window()
-{
-	tmux new-session -s ${SESSION_NAME} -n server -d
-	tmux send-keys -t ${SESSION_NAME} 'cd additional_scripts; ./server.sh -m silent' C-m
-
-	tmux new-window -n marytts -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:1 'cd required_packages/marytts-5.1.2/bin/; ./marytts-server' C-m
-
-	tmux new-window -n elasticsearch -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:2 'cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch' C-m
-
-	sleep 10
-
-	tmux new-window -n core -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:3 'cd additional_scripts; ./core.sh -m silent' C-m
-
-	tmux new-window -n output -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:4 'cd additional_scripts; ./output.sh -m silent -s '"$SIZE" C-m
-
-	tmux new-window -n input -t ${SESSION_NAME}
-	tmux send-keys -t ${SESSION_NAME}:5 'cd additional_scripts; ./input.sh' C-m
-}
-
-
 MODE=
 SIZE=
+SLIENT=false
 while getopts “hm:s:” OPTION
 do
      case $OPTION in
@@ -182,28 +40,45 @@ if [ -z "$MODE" ];
 then
      usage
      exit 1
-elif [ -z "$SIZE" ];
-then
-		if [ "$MODE" = "debug" ];
-			then
-				debug_mode
-		
-		elif [ "$MODE" = "verbose" ];
-			then
-				verbose_mode
-		elif [ "$MODE" = "silent" ];
-			then
-				silent_mode
-			fi
 else
 	if [ "$MODE" = "debug" ];
-			then
-				debug_mode_window
-	elif [ "$MODE" = "verbose" ];
-			then
-				verbose_mode_window
-	elif [ "$MODE" = "silent" ];
 		then
-			silent_mode_window
-		fi
+			MODE="-d"
+
+	elif [ "$MODE" = "verbose" ];
+		then
+			MODE="-v"
+	elif [ "$MODE" = "slient" ];
+		then
+			MODE=" "
+			SLIENT=true
+	fi
+fi
+if [ -n "$SIZE" ];
+then
+	SIZE="-s ${SIZE}"
+fi
+
+
+tmux new-session  -s Arius -d
+tmux split-window -d -t 0 -v
+tmux split-window -d -t 0 -h
+tmux split-window -d -t 0 -v
+tmux split-window -d -t 2 -v 
+tmux split-window -d -t 4 -h 
+
+tmux send-keys -t 0 "cd server; python server.py ${MODE} ; cd ../" C-m
+tmux send-keys -t 3 "cd required_packages/marytts-5.1.2/bin/; ./marytts-server" C-m
+tmux send-keys -t 4 "cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch" C-m
+sleep 8
+tmux send-keys -t 5 "cd core_module; python core.py ${MODE} ; cd ../" C-m
+tmux send-keys -t 1 "cd output_module; python output_main.py ${MODE} ${SIZE} ; cd ../" C-m
+
+if [ "$SLIENT" = false ] ;
+then
+	tmux send-keys -t 2 "cd server;  python input_sim.py; cd ../" C-m
+	tmux attach-session 
+else
+	cd server
+	python input_sim.py
 fi
