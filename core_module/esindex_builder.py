@@ -11,6 +11,7 @@ logger = Logger("ES Builder")
 
 
 class ESIndexBuilder:
+
     def __init__(self):
         self._host = config["elastic_host"]
         self._index = config["elastic_index"]
@@ -35,7 +36,8 @@ class ESIndexBuilder:
             data = urllib.urlopen(url).read()
         else:
             # read local file
-            data = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
+            data = codecs.open(path, "r", encoding='utf-8',
+                               errors='ignore').read()
             if extension.lower() == '.html':
                 data = self._get_content(data)
         try:
@@ -46,8 +48,10 @@ class ESIndexBuilder:
             self._counter_error += 1
 
             return
-        rel_path = os.path.relpath(path, config['root_dir'] + config['elastic_docs_dir'])
-        self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" + str(self._counter_success), body={'file': data, 'title': rel_path})
+        rel_path = os.path.relpath(
+            path, config['root_dir'] + config['elastic_docs_dir'])
+        self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" +
+                       str(self._counter_success), body={'file': data, 'title': rel_path})
         self._counter_success += 1
 
     def index_dir(self, dir):
@@ -103,7 +107,8 @@ class ESIndexBuilder:
                 }
             }
         }
-        self._es.indices.put_mapping(index=self._index, doc_type=self._type, body=type_mapping)
+        self._es.indices.put_mapping(
+            index=self._index, doc_type=self._type, body=type_mapping)
 
 if __name__ == '__main__':
     import argparse
@@ -120,4 +125,5 @@ if __name__ == '__main__':
     builder = ESIndexBuilder()
     builder.rebuild_index()
     builder.index_dir(config['root_dir'] + config['elastic_docs_dir'])
-    logger.info('{} files were successfully added to index. {} Errors'.format(builder._counter_success, builder._counter_error))
+    logger.info('{} files were successfully added to index. {} Errors'.format(
+        builder._counter_success, builder._counter_error))

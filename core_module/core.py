@@ -15,6 +15,7 @@ logger = Logger("Core")
 
 
 class Updater(threading.Thread):
+
     def __init__(self, lock, debug=False):
         threading.Thread.__init__(self)
         self._lock = lock
@@ -38,6 +39,7 @@ class Updater(threading.Thread):
 
 
 class Core(threading.Thread):
+
     def __init__(self):
         threading.Thread.__init__(self)
         self._lock = threading.RLock()
@@ -82,7 +84,8 @@ class Core(threading.Thread):
                 self._updater.input_speech = None
                 self._lock.release()
 
-                recognized_command = self._command_recognizer.recognize_command(user_input)
+                recognized_command = self._command_recognizer.recognize_command(
+                    user_input)
                 if recognized_command == 'CANCEL' or recognized_command == 'MUTE' or recognized_command == 'UNMUTE':
                     self._handle_command(recognized_command)
                     continue
@@ -102,10 +105,12 @@ class Core(threading.Thread):
 
                 if (self._statemachine.get_state() == 'idle' and recognized_command == 'START') \
                         or self._statemachine.get_state() != 'idle':
-                    logger.debug("History:\n{}".format("\n".join(self._history)))
+                    logger.debug("History:\n{}".format(
+                        "\n".join(self._history)))
 
                     self._statemachine.handle_message('request')
-                    user_input = self._command_recognizer.remove_command(user_input, 'START')
+                    user_input = self._command_recognizer.remove_command(
+                        user_input, 'START')
                     query = self._sense_extractor.get_keywords(user_input)
                     if query:
                         self._prev_query = user_input
@@ -120,20 +125,25 @@ class Core(threading.Thread):
         if command == "CANCEL":
             self._statemachine.handle_message('cancel')
             request = {'type': 'OPEN_SCREEN', 'command': 'IDLE'}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['CANCEL'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['CANCEL'])})
             self._history = []
         elif command == "ZOOM_IN":
             request = {'type': 'ZOOM_IN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['ZOOM_IN'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['ZOOM_IN'])})
         elif command == "ZOOM_OUT":
             request = {'type': 'ZOOM_OUT', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['ZOOM_OUT'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['ZOOM_OUT'])})
         elif command == "SCROLL_DOWN":
             request = {'type': 'SCROLL_DOWN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SCROLL_DOWN'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['SCROLL_DOWN'])})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SCROLL_UP'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['SCROLL_UP'])})
         elif command == "PLAY":
             request = {'type': 'PLAY', 'command': ''}
         elif command == "PAUSE":
@@ -144,7 +154,8 @@ class Core(threading.Thread):
             request = {'type': 'VOLUME_DOWN', 'command': ''}
         elif command == "SEARCH":
             request = {'type': 'OPEN_SCREEN', 'command': 'SEARCH'}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['SEARCH_BEGAN'])})
         elif command == "MUTE":
             print 'to be muted'
             request = {'type': 'MUTE', 'command': ''}

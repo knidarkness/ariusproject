@@ -7,6 +7,7 @@ from logger import Logger
 
 
 class TagSearcher:
+
     def __init__(self, database):
         self.__db = TinyDB(database)
         self.__tags = self.__db.table('tag_data')
@@ -19,11 +20,13 @@ class TagSearcher:
         print searched_ids
         result = self.__tags.search(file_info.tags.any(searched_ids))
         if result:
-            result = sorted([[r['name'], r['prority']] for r in result], key=lambda s: s[1])
+            result = sorted([[r['name'], r['prority']]
+                             for r in result], key=lambda s: s[1])
         return result
 
     def find_all_synonyms(self, tags):
-        result = [self.find_synonyms(tag) for tag in tags if self.find_synonyms(tag)]
+        result = [self.find_synonyms(tag)
+                  for tag in tags if self.find_synonyms(tag)]
         return list(set(result))
 
     def find_synonyms(self, keyword):

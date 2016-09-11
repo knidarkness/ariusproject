@@ -5,6 +5,7 @@ import pygame
 
 
 class Speaker:
+
     def __init__(self, voice_hash, mary_host="localhost", mary_port="59125"):
         self.query_hash = voice_hash
         self.host = mary_host
@@ -55,7 +56,6 @@ class Speaker:
         else:
             self._s.set_volume(1)
             self.muted = False
-
 
 
 """

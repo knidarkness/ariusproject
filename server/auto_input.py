@@ -12,14 +12,17 @@ port = config['flask_server_port']
 input_url = config['flask_server_input_client']
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--filename', default='none', help="Send first phrases from file")
+parser.add_argument('-f', '--filename', default='none',
+                    help="Send first phrases from file")
 args = parser.parse_args()
 
 input_client = RESTClient(host, port, input_url)
 
 activation = ['ok arius']
-search_request = ['what is abiliton', 'data science', 'mylko', 'iot', 'softserve']
-commands = ['zoom in', 'enlagre bitch', 'zoom out', 'scroll down now!', 'could you please scroll up']
+search_request = ['what is abiliton',
+                  'data science', 'mylko', 'iot', 'softserve']
+commands = ['zoom in', 'enlagre bitch', 'zoom out',
+            'scroll down now!', 'could you please scroll up']
 cancel = ['bye', 'thanks']
 
 activated = False

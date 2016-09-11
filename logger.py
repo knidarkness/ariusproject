@@ -5,6 +5,7 @@ logging.getLogger("elasticsearch.trace").setLevel(logging.CRITICAL)
 
 
 class Logger:
+
     def __init__(self, name):
         self.logger = logging.getLogger(name)
         self.logger.propagate = False

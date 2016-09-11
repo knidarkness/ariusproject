@@ -135,7 +135,8 @@ def video(video_id):
     if video_id in video_data:
         return render_template("videoplayer.html", video_path="/static/videos/" + video_data[video_id]["video_name"],
                                title=video_data[video_id]["title"],
-                               support_text=video_data[video_id]["support_text"],
+                               support_text=video_data[
+                                   video_id]["support_text"],
                                style=url_for('static', filename='css/' + video_data[video_id]["style"] + '.css'))
     else:
         return render_template("error.html")
@@ -163,4 +164,5 @@ if __name__ == '__main__':
     else:
         logger.setLevel("critical")
     print 'Starting server'
-    app.run(host=config['flask_server_address'], port=int(config['flask_server_port']), threaded=True)
+    app.run(host=config['flask_server_address'], port=int(
+        config['flask_server_port']), threaded=True)

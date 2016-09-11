@@ -33,12 +33,14 @@ class FakeBrowser(QtWebKitWidgets.QWebPage):
 
 
 class Command:
+
     def __init__(self, c_type, c_body):
         self.c_type = c_type
         self.c_body = c_body
 
 
 class OutputUpdater(threading.Thread):
+
     def __init__(self, lock):
         """
         This is a constructor method for an updater
@@ -83,7 +85,8 @@ class OutputUpdater(threading.Thread):
                 logger.debug('Received data {}'.format(data))
                 self._lock.acquire()
                 try:
-                    self._command_queue.append(Command(data['type'], data['command']))
+                    self._command_queue.append(
+                        Command(data['type'], data['command']))
                     logger.info('Command received: {} : {}'.format(
                         data['type'], data['command']))
                 finally:
@@ -112,6 +115,7 @@ class OutputUpdater(threading.Thread):
 
 
 class OutputInterface:
+
     def __init__(self, fullscreen=False, sizes=None):
         """
         This constructor function initializes a layout of the Arius output
