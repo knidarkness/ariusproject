@@ -25,22 +25,23 @@ After this preparing Arius is ready for start.
 You can run Arius in three different ways.
 We use tmux to make debugging easy and comfortable.
 
-- Debug mode with all information just run './run.sh -m debug'
-- Less informative verbose mode './run.sh -m verbose'
-- Silent work (without visible terminals at all) 'run.sh -m silent'
+- Debug mode with all information just run '''./run.sh -m debug'''
+- Less informative verbose mode '''./run.sh -m verbose'''
+- Silent work (without visible terminals at all) '''run.sh -m silent'''
 
-To make your output size specific use flag '-s widthxheight' (e.g. './run.sh -m debug -s 500x600', './run.sh -m silent -s 100x400', ...).
+To make your output size specific use flag '''-s widthxheight''' (e.g. '''./run.sh -m debug -s 500x600''', '''./run.sh -m silent -s 100x400''', ...).
 Otherwise output in fullscreen mode.
 
 ##To run specific parts of Arius
 ###In the folder additional_scripts
--  Core module './core.sh -h' to see needed flags of this script
--  Server module './server.sh -h' to see help
--  Output module './output.sh -h' to get know how to use
--  Input module './input.sh'
+-  Core module '''./core.sh -h''' to see needed flags of this script
+-  Server module '''./server.sh -h''' to see help
+-  Output module '''./output.sh -h''' to get know how to use
+-  Input module '''./input.sh'''
+
 ###In the folder required packages
--  Text to speech server './marytts-5.1.2/bin/marytts-server'
--  Search engine server './elasticsearch-2.3.5/bin/elasticsearch'
+-  Text to speech server '''./marytts-5.1.2/bin/marytts-server'''
+-  Search engine server '''./elasticsearch-2.3.5/bin/elasticsearch'''
 
 
 
