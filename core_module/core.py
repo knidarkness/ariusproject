@@ -95,7 +95,8 @@ class Core(threading.Thread):
                 if self._statemachine.get_state() == 'displaying_data':
                     if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN',
                                               'SCROLL_UP', 'PAUSE', 'PLAY',
-                                              'VOLUME_UP', 'VOLUME_DOWN']:
+                                              'VOLUME_UP', 'VOLUME_DOWN', 'STOP_SCROLL',
+                                              'CONTINIUS_SCROLL_UP', 'CONTINIUS_SCROLL_DOWN']:
                         self._handle_command(recognized_command)
                         continue
 
@@ -144,6 +145,18 @@ class Core(threading.Thread):
                 config['voice_command_output']['SCROLL_DOWN'])})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['SCROLL_UP'])})
+        elif command == "CONTINIUS_SCROLL_DOWN":
+            request = {'type': 'CONTINIUS_SCROLL_DOWN', 'command': ''}
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['SCROLL_DOWN'])})
+        elif command == "STOP_SCROLL":
+            request = {'type': 'STOP_SCROLL', 'command': ''}
+            self._send_command({'type': 'SPEAK', 'command': random.choice(
+                config['voice_command_output']['STOP_SCROLL'])})
+        elif command == "CONTINIUS_SCROLL_UP":
+            request = {'type': 'CONTINIUS_SCROLL_UP', 'command': ''}
             self._send_command({'type': 'SPEAK', 'command': random.choice(
                 config['voice_command_output']['SCROLL_UP'])})
         elif command == "PLAY":

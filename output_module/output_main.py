@@ -113,6 +113,16 @@ class OutputUpdater(threading.Thread):
         data = self._command_queue.pop(0)
         return data.c_type, data.c_body
 
+    def _is_command(self):
+        """
+        Return True if there is command which output 
+        have to execue
+        """
+        if self._command_queue:
+            return True
+        else:
+            return False
+
 
 class OutputInterface:
 
@@ -313,10 +323,22 @@ class OutputInterface:
 
             elif command[0] == 'SCROLL_DOWN':
                 self._player.play()
-                self._main_browser_scroll_down()
+                self._main_browser_scroll(300, 1000)
             elif command[0] == 'SCROLL_UP':
                 self._player.play()
-                self._main_browser_scroll_up()
+                self._main_browser_scroll(-300, 1000)
+            elif command[0] == 'CONTINIUS_SCROLL_UP':
+                self._player.play()
+                while not self._updater._is_command():
+                    self._main_browser_scroll(-300, 1000)
+                    time.sleep(1)
+            elif command[0] == 'CONTINIUS_SCROLL_DOWN':
+                self._player.play()
+                while not self._updater._is_command():
+                    self._main_browser_scroll(300, 1000)
+                    time.sleep(1)   
+            elif command[0] == 'STOP_SCROLL':
+                self._player.play()
 
             # Following two commands are responsible for playing
             # video and pausing it. As a second part of the command
@@ -464,37 +486,22 @@ class OutputInterface:
         logger.info('Loading {} to the bottom content view.'.format(url))
         self._bottom_browser.load(QUrl(url))
 
-    def _main_browser_scroll_down(self):
+    def _main_browser_scroll(self, px_length, ms_time):
         """
-        This method is called to smoothly scroll the page down. In
-        dependence of the current content type if provides different
+        This method is called to smoothly scroll the page.
+        It scrolls on px_length in the ms_time.
+        In dependence of the current content type if provides different
         implementations of scroll, but generally it gives the same result.
         """
         logger.debug('Scrolling main content view down')
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
-            self._main_browser.page().mainFrame().evaluateJavaScript(
-                "smooth_scroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
+            string_js = ','.join(['smooth_scroll_by(PDFViewerApplication.pdfViewer.container', str(px_length), str(ms_time)+');'])
+            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
         elif self._cur_filetype == "webpage":
-            self._main_browser.page().mainFrame().evaluateJavaScript(
-                "smooth_scroll_by(document.body, 300, 1000);")
-
-    def _main_browser_scroll_up(self):
-        """
-        This method is called to smoothly scroll the page up. In
-        dependence of the current content type if provides different
-        implementations of scroll, but generally it gives the same result.
-        """
-        logger.debug('Scrolling main content view down')
-        scroll_js = open("scroll.js", "r").read()
-        self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
-        if self._cur_filetype == "pdf":
-            self._main_browser.page().mainFrame().evaluateJavaScript(
-                "smooth_scroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")
-        elif self._cur_filetype == "webpage":
-            self._main_browser.page().mainFrame().evaluateJavaScript(
-                "smooth_scroll_by(document.body, -300, 1000);")
+            string_js = ','.join(['smooth_scroll_by(document.body', str(px_length), str(ms_time)+');'])
+            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
 
     def _main_browser_zoom_in(self):
         """

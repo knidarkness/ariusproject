@@ -48,7 +48,10 @@ config = {
         "START": ['ok arius', 'what is that', 'what the fuck'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
-        'UNMUTE': ['unmute', 'make it louder', 'turn sound on']
+        "UNMUTE": ['unmute', 'make it louder', 'turn sound on'],
+        "CONTINIUS_SCROLL_DOWN" : ['start scrolling down'],
+        "CONTINIUS_SCROLL_UP": ['start scrolling up'],
+        "STOP_SCROLL" : ['stop scrolling']
     },
     "core_update_interval": 0.1,
 
@@ -71,7 +74,8 @@ config = {
         "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok man."],
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
-        "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.']
+        "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
+        "STOP_SCROLL" : ['Done.', 'I am designed to serve you.', 'Ok man.']
     },
 
     "elastic_host": "http://localhost:9200",

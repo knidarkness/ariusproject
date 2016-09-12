@@ -44,6 +44,7 @@ sudo apt-get install python-pyqt5.qtwebkit
 cd env/lib/python2.7/site-packages
 echo ../../../../ >> config.pth
 cd ../../../../
+mkdir logs
 cd additional_scripts
 chmod 555 core.sh
 chmod 555 input.sh
