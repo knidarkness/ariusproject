@@ -85,8 +85,7 @@ class OutputUpdater(threading.Thread):
                 logger.debug('Received data {}'.format(data))
                 self._lock.acquire()
                 try:
-                    self._command_queue.append(
-                        Command(data['type'], data['command']))
+                    self._command_queue.append(Command(data['type'], data['command']))
                     logger.info('Command received: {} : {}'.format(
                         data['type'], data['command']))
                 finally:

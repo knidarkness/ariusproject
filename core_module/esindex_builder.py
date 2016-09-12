@@ -36,8 +36,7 @@ class ESIndexBuilder:
             data = urllib.urlopen(url).read()
         else:
             # read local file
-            data = codecs.open(path, "r", encoding='utf-8',
-                               errors='ignore').read()
+            data = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
             if extension.lower() == '.html':
                 data = self._get_content(data)
         try:
@@ -50,8 +49,9 @@ class ESIndexBuilder:
             return
         rel_path = os.path.relpath(
             path, config['root_dir'] + config['elastic_docs_dir'])
-        self._es.index(index=self._index, doc_type=self._type, id=base + "_id_" +
-                       str(self._counter_success), body={'file': data, 'title': rel_path})
+        self._es.index(index=self._index, doc_type=self._type,
+                       id=base + "_id_" + str(self._counter_success),
+                       body={'file': data, 'title': rel_path})
         self._counter_success += 1
 
     def index_dir(self, dir):
@@ -107,8 +107,7 @@ class ESIndexBuilder:
                 }
             }
         }
-        self._es.indices.put_mapping(
-            index=self._index, doc_type=self._type, body=type_mapping)
+        self._es.indices.put_mapping(index=self._index, doc_type=self._type, body=type_mapping)
 
 if __name__ == '__main__':
     import argparse

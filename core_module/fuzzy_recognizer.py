@@ -54,8 +54,8 @@ class FuzzyRecognizer:
             raise ValueError('Too low or too high value of minimal confidence')
         if type(fuzzy) != bool:
             print 'Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(commands))
-            raise ValueError(
-                'Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(fuzzy)))
+            raise ValueError('Type of fuzzy usage flag should be "bool" '
+                             'and not a {}. Surprise!'.format(type(fuzzy)))
         self._min_confidence = min_confidence * 100
         self._commands = commands
         self.__fuzzy = fuzzy
@@ -97,8 +97,7 @@ class FuzzyRecognizer:
 
         if target_command:
             if target_command not in self._commands.keys():
-                logger.debug(
-                    'Given wrong command: there`s no such command in the dictionary. Exiting')
+                logger.debug('Given wrong command: there`s no such command in the dictionary. Exiting')
                 raise ValueError('Wrong command')
             for command in self._commands[target_command]:
                 probability = self.__get_confidence_of_match(command, input)
@@ -117,8 +116,7 @@ class FuzzyRecognizer:
             for command_key in self._commands.keys():
                 for command in self._commands[command_key]:
 
-                    c_probability = self.__get_confidence_of_match(
-                        command, input)
+                    c_probability = self.__get_confidence_of_match(command, input)
 
                     if c_probability > command_probability[command_key]:
                         command_probability[command_key] = c_probability
@@ -126,16 +124,14 @@ class FuzzyRecognizer:
             result = [key for key in command_probability.keys() if command_probability[key] == max(
                 command_probability.values()) and command_probability[key] > self._min_confidence]
 
-            logger.debug('The list of all available commands is: {}'.format(
-                self._commands.keys()))
-            logger.debug('The list of probabilities of each command is: {}'.format(
-                command_probability))
-            logger.debug(
-                'The list of found matching commands (better if there`s only one item) is: {}'.format(result))
+            logger.debug('The list of all available commands is: {}'.format(self._commands.keys()))
+            logger.debug('The list of probabilities of each command is: {}'.format(command_probability))
+            logger.debug('The list of found matching commands '
+                         '(better if there`s only one item) is: {}'.format(result))
 
             if result:
-                logger.info('Recognized command is {} and confidence for it is {}'.format(
-                    result[0], command_probability[result[0]]))
+                logger.info('Recognized command is {} and confidence for it is {}'
+                            .format(result[0], command_probability[result[0]]))
                 logger.debug('COMMAND RECOGNIZING FINISHED')
                 return result[0]
             logger.info('Command was not recognized')
