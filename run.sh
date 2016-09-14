@@ -68,7 +68,7 @@ tmux split-window -d -t 2 -v
 tmux split-window -d -t 4 -h 
 
 tmux send-keys -t 0 "cd server; python server.py ${MODE} ; cd ../" C-m
-tmux send-keys -t 3 "cd required_packages/marytts-5.1.2/bin/; ./marytts-server" C-m
+tmux send-keys -t 3 "cd required_packages/marytts-5.1.1/bin/; ./marytts-server" C-m
 tmux send-keys -t 4 "cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch" C-m
 sleep 8
 tmux send-keys -t 5 "cd core_module; python core.py ${MODE} ; cd ../" C-m
