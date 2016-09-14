@@ -119,6 +119,11 @@ def search():
     return render_template("search.html", background=config["arius_screen_search_background"], style=url_for('static', filename="css/default_screens.css"))
 
 
+@app.route(config['flask_server_speaking_address'])
+def speaking():
+    return render_template("speaking.html", background=config["arius_screen_speaking_background"], style=url_for('static', filename="css/default_screens.css"))
+
+
 @app.route(config['flask_server_black_address'])
 def black():
     return render_template("black.html")

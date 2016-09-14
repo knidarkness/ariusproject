@@ -326,16 +326,17 @@ class OutputInterface:
             elif command[0] == 'SCROLL_UP':
                 self._player.play()
                 self._main_browser_scroll(-300, 1000)
-            elif command[0] == 'CONTINIUS_SCROLL_UP':
+            elif command[0] == 'CONTINIOUS_SCROLL_UP':
                 self._player.play()
                 while not self._updater._is_command():
-                    self._main_browser_scroll(-300, 1000)
-                    time.sleep(1)
-            elif command[0] == 'CONTINIUS_SCROLL_DOWN':
+                    self._main_browser_scroll(-5, 100)
+                    time.sleep(5)
+            elif command[0] == 'CONTINIOUS_SCROLL_DOWN':
                 self._player.play()
                 while not self._updater._is_command():
-                    self._main_browser_scroll(300, 1000)
-                    time.sleep(1)   
+                    logger.debug("CONTINIOUS_SCROLL_DOWN")
+                    self._main_browser_scroll(5, 100)
+                    time.sleep(5)
             elif command[0] == 'STOP_SCROLL':
                 self._player.play()
 
@@ -397,6 +398,8 @@ class OutputInterface:
             url = url + config['flask_server_error_address']
         elif screen_type == 'SEARCH':
             url = url + config['flask_server_search_address']
+        elif screen_type == 'SPEAKING':
+            url = url + config['flask_server_speaking_address']
         else:  # and if the target screen wasn`t recognized we can also handle it
             logger.info('WRONG SCREEN TYPE: {}'.format(screen_type))
         logger.debug(
@@ -496,10 +499,10 @@ class OutputInterface:
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
-            string_js = ','.join(['smooth_scroll_by(PDFViewerApplication.pdfViewer.container', str(px_length), str(ms_time)+');'])
+            string_js = ','.join(['smooth_scroll_by(PDFViewerApplication.pdfViewer.container', str(px_length), str(ms_time) + ');'])
             self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
         elif self._cur_filetype == "webpage":
-            string_js = ','.join(['smooth_scroll_by(document.body', str(px_length), str(ms_time)+');'])
+            string_js = ','.join(['smooth_scroll_by(document.body', str(px_length), str(ms_time) + ');'])
             self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
 
     def _main_browser_zoom_in(self):
