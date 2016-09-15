@@ -8,6 +8,7 @@ from fuzzy_recognizer import FuzzyRecognizer
 from sense_extraction import SenseExtractor
 from arius_searcher import ESearchClient
 from tag_searcher import TagSearcher
+from qa_module import QAConnector
 sys.path.append("../")
 from client import RESTClient
 from config import config
@@ -52,6 +53,8 @@ class Core(threading.Thread):
 
         self._ESclient = ESearchClient()
         self._tag_searcher = TagSearcher(config['database_file'])
+        self._QA_connector = QAConnector()
+
         self._sense_extractor = SenseExtractor('stop.txt')
         self._command_recognizer = FuzzyRecognizer(config['core_commands'],
                                                    min_confidence=config['core_command_recog_confidence'])
@@ -98,7 +101,7 @@ class Core(threading.Thread):
                     if recognized_command in ['ZOOM_IN', 'ZOOM_OUT', 'SCROLL_DOWN',
                                               'SCROLL_UP', 'PAUSE', 'PLAY',
                                               'VOLUME_UP', 'VOLUME_DOWN', 'STOP_SCROLL',
-                                              'CONTINIUS_SCROLL_UP', 'CONTINIUS_SCROLL_DOWN']:
+                                              'CONTINIOUS_SCROLL_UP', 'CONTINIOUS_SCROLL_DOWN']:
                         self._handle_command(recognized_command)
                         continue
 
@@ -116,13 +119,18 @@ class Core(threading.Thread):
                     self._statemachine.handle_message('request')
                     user_input = self._command_recognizer.remove_command(
                         user_input, 'START')
-                    query = self._sense_extractor.get_keywords(user_input)
-                    if query:
-                        self._prev_query = user_input
-                        logger.info('Proceeding search query {}'.format(query))
-                        self._do_work(self._find_data, query)
+                    data = self._QA_connector.get_abstract(user_input)
+                    if data is not None:
+                        #self._send_command({'type': 'OPEN_SCREEN', 'command': 'SPEAKING'})
+                        self._send_command({'type': 'SPEAK', 'command': data})
                     else:
-                        logger.info('Search query is empty')
+                        query = self._sense_extractor.get_keywords(user_input)
+                        if query:
+                            self._prev_query = user_input
+                            logger.info('Proceeding search query {}'.format(query))
+                            self._do_work(self._find_data, query)
+                        else:
+                            logger.info('Search query is empty')
 
             time.sleep(config['core_update_interval'])
 
@@ -147,21 +155,21 @@ class Core(threading.Thread):
                                 'command': random.choice(config['voice_command_output']['SCROLL_DOWN'])})
         elif command == "SCROLL_UP":
             request = {'type': 'SCROLL_UP', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(
-                config['voice_command_output']['SCROLL_UP'])})
-        elif command == "CONTINIUS_SCROLL_DOWN":
-            request = {'type': 'CONTINIUS_SCROLL_DOWN', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(
-                config['voice_command_output']['SCROLL_DOWN'])})
+            self._send_command({'type': 'SPEAK',
+                                'command': random.choice(config['voice_command_output']['SCROLL_UP'])})
+        elif command == "CONTINIOUS_SCROLL_DOWN":
+            request = {'type': 'CONTINIOUS_SCROLL_DOWN', 'command': ''}
+            self._send_command({'type': 'SPEAK',
+                                'command': random.choice(config['voice_command_output']['SCROLL_DOWN'])})
         elif command == "STOP_SCROLL":
             request = {'type': 'STOP_SCROLL', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(
-                config['voice_command_output']['STOP_SCROLL'])})
-        elif command == "CONTINIUS_SCROLL_UP":
-            request = {'type': 'CONTINIUS_SCROLL_UP', 'command': ''}
-            self._send_command({'type': 'SPEAK', 'command': random.choice(
-                config['voice_command_output']['SCROLL_UP'])})
-            self._send_command({'type': 'SPEAK','command': random.choice(config['voice_command_output']['SCROLL_UP'])})
+            self._send_command({'type': 'SPEAK',
+                                'command': random.choice(config['voice_command_output']['STOP_SCROLL'])})
+        elif command == "CONTINIOUS_SCROLL_UP":
+            request = {'type': 'CONTINIOUS_SCROLL_UP', 'command': ''}
+            self._send_command({'type': 'SPEAK',
+                                'command': random.choice(config['voice_command_output']['SCROLL_UP'])})
+            self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['SCROLL_UP'])})
         elif command == "PLAY":
             request = {'type': 'PLAY', 'command': ''}
         elif command == "PAUSE":
@@ -186,9 +194,9 @@ class Core(threading.Thread):
         self._handle_command('SEARCH')
 
         logger.info('Searching data...')
-        data = self._ESclient.search(request)
-        #data = self._tag_searcher.find_tags(request)
-
+        data = self._tag_searcher.find_tags(request)
+        if data is None:
+            data = self._ESclient.search(request)
         logger.debug(data)
         if data:
             fname = None

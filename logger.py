@@ -1,5 +1,6 @@
 import logging
 from config import config
+logging.getLogger("quepy").setLevel(logging.CRITICAL)
 logging.getLogger("urllib3").setLevel(logging.CRITICAL)
 logging.getLogger("elasticsearch").setLevel(logging.CRITICAL)
 logging.getLogger("elasticsearch.trace").setLevel(logging.CRITICAL)

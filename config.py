@@ -14,6 +14,7 @@ config = {
     "flask_server_idle_address": "/screens/idle",
     "flask_server_error_address": "/screens/error",
     "flask_server_search_address": "/screens/search",
+    "flask_server_speaking_address": "/screens/speaking",
     "flask_server_black_address": "/screens/black",
     "flask_server_video_addr": "/video/<string:video_id>",
     "flask_server_video_addr_client": "/video/",
@@ -49,8 +50,8 @@ config = {
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
         "UNMUTE": ['unmute', 'make it louder', 'turn sound on'],
-        "CONTINIUS_SCROLL_DOWN" : ['start scrolling down'],
-        "CONTINIUS_SCROLL_UP": ['start scrolling up'],
+        "CONTINIOUS_SCROLL_DOWN" : ['start scrolling down'],
+        "CONTINIOUS_SCROLL_UP": ['start scrolling up'],
         "STOP_SCROLL" : ['stop scrolling']
     },
     "core_update_interval": 0.1,
