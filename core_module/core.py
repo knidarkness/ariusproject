@@ -212,7 +212,9 @@ class Core(threading.Thread):
             self._history.append(fname)
             base, file_ext = os.path.splitext(fname)
             logger.info('File extension: %s', file_ext)
-
+            rel_path = os.path.relpath(config['root_dir'] + config['elastic_docs_dir'] + fname,
+                                       config['root_dir'] + config['output_server_home'])
+            logger.info('path to pdf %s', rel_path)
             if file_ext == '.pdf':
                 data = {'type': 'OPEN_PDF', 'command': fname}
             elif file_ext == '.html':
