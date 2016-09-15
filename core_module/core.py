@@ -195,15 +195,19 @@ class Core(threading.Thread):
 
         logger.info('Searching data...')
         data = self._tag_searcher.find_tags(request)
+        dataES = self._ESclient.search(request)
         if data is None:
-            data = self._ESclient.search(request)
+            data = dataES
+        else:
+            if dataES is not None:
+                data += dataES
         logger.debug('Data {}'.format(data))
-        if data is not None:
+        if not data:
             _id = 0
             fname = data[_id]
             while fname in self._history:
                 _id += 1
-                if _id == len(data):
+                if _id >= len(data):
                     data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}
                     self._statemachine.handle_message('not_found')
                     result.append(data)
@@ -215,8 +219,6 @@ class Core(threading.Thread):
 
             rel_path = os.path.relpath(config['root_dir'] + config['elastic_docs_dir'] + fname,
                                        config['root_dir'] + config['output_server_home'])
-            logger.info('rel path %s', fname)
-            logger.info('path from pdf %s', rel_path)
             if file_ext == '.pdf':
                 fname = "pdf.js/web/viewer.html?file=" + rel_path
                 data = {'type': 'OPEN_PDF', 'command': fname}

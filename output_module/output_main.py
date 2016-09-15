@@ -191,7 +191,8 @@ class OutputInterface:
 
         self._top_browser.page().mainFrame().setScrollBarPolicy(
             QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)  # remove the scroll bars
-        # self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+        self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+        self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Horizontal, QtCore.Qt.ScrollBarAlwaysOff)
         self._bottom_browser.page().mainFrame().setScrollBarPolicy(
             QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
 
