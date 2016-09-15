@@ -112,15 +112,6 @@ class FuzzyRecognizer:
 
         else:
             command_probability = {key: 0 for key in self._commands.keys()}
-            '''
-            for command_key in self._commands.keys():
-                for command in self._commands[command_key]:
-
-                    c_probability = self.__get_confidence_of_match(command, input)
-
-                    if c_probability > command_probability[command_key]:
-                        command_probability[command_key] = c_probability
-            '''
 
             for command_key in self._commands.keys():
                 for case in self._commands[command_key]:
@@ -128,7 +119,7 @@ class FuzzyRecognizer:
 
                     pre_grams = user_input.split()
                     grams = [' '.join(pre_grams[i:i + N])
-                             for i in range(len(pre_grams) - N)]
+                             for i in range(len(pre_grams) - N + 1)]
 
                     for gram in grams:
                         confidence = self.__get_confidence_of_match(case, gram)
@@ -213,6 +204,9 @@ class FuzzyRecognizer:
         This function returns the confidence that strings (command, string) are
         equal in grade from 0 to 100.
         """
+        command = command.lower()
+        string = string.lower()
+
         if self.__fuzzy:
             # fuzzy-wuzzy already returns value from 0 to 100, so
             # we make no changes to it
@@ -254,11 +248,11 @@ if __name__ == "__main__":
         "PLAY": ['play'],
         "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
         "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn down the volume', 'reduce the volume'],
-        "START": ['ok arius', 'what is that', 'what the fuck'],
+        "START": ['ok arius', 'what is that', 'what the fuck', 'start'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
         'UNMUTE': ['unmute', 'make it louder', 'turn sound on']
     }
     rec = FuzzyRecognizer(commands, min_confidence=.7, fuzzy=not args.no_fuzzy)
-    print(rec.recognize_command('ok arius softserve dasfm kasklafls lkanmfln lanlkfml'))
-    print(rec.remove_command('please volume turn the up', 'VOLUME_UP'))
+    print(rec.recognize_command('ok arius as fa bg'))
+    print(rec.remove_command('ok arius', 'START'))

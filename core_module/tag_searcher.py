@@ -5,6 +5,12 @@ sys.path.append("../")
 from config import config
 from logger import Logger
 
+class Entry:
+    def __init__(self, name, path, priority, confidence):
+        self.name = name
+        self.path = path
+        self.confidence = confidence
+        self.priority = priority
 
 class TagSearcher:
 
@@ -17,11 +23,28 @@ class TagSearcher:
         result = []
         file_info = Query()
         searched_ids = self.find_all_synonyms(tags)
-        result = self.__tags.search(file_info.tags.any(searched_ids))
+        data = self.__tags.all()
+        for d in data:
+            t = self.get_tags(d)
+            conf = self.get_confidence(tags, d)
+            if conf > 0:
+                result.append(Entry(d['name'], d['path'], float(d['priority']), conf))
         if result:
-            result = sorted([[r['name'], r['prority']] for r in result], key=lambda s: s[1])
-            return result
+            result = sorted(result, key=lambda s: (s.confidence, - s.priority), reverse=True)
+            return [r.path for r in result]
+            # return [(r.path, r.priority, r.confidence) for r in result]
         return None
+
+    def get_tags(self, data_entry):
+        res = [t[0] for t in data_entry['tags']]
+        return res
+
+    def get_confidence(self, tags, tag_entry):
+        res = 0
+        for t in tag_entry['tags']:
+            if t[0] in tags:
+                res += float(t[1])
+        return res
 
     def find_all_synonyms(self, tags):
         result = [self.find_synonyms(tag)
@@ -42,4 +65,4 @@ if __name__ == '__main__':
     a = TagSearcher(config['database_file'])
     print(a.find_synonyms('CEO'))
     print(a.find_all_synonyms(['r&d', 'kytsmey', 'r&d director']))
-    print(a.find_tags(['blabla']))
+    print(a.find_tags(['data']))
