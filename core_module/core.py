@@ -202,9 +202,10 @@ class Core(threading.Thread):
             if dataES is not None:
                 data += dataES
         logger.debug('Data {}'.format(data))
-        if not data:
+        if data is not None and len(data) != 0:
             _id = 0
             fname = data[_id]
+            logger.info('HEEEEEEEEEEEEEEEEEEEEEEY')
             while fname in self._history:
                 _id += 1
                 if _id >= len(data):
