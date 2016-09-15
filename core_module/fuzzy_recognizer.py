@@ -44,27 +44,27 @@ class FuzzyRecognizer:
 
     """
 
-    def __init__(self, commands, min_confidence=.9, fuzzy=True):
+    def __init__(self, commands_dict, min_confidence=.9, fuzzy=True):
         if type(commands) != dict:
-            print 'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands))
+            print('Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
             raise ValueError(
                 'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
         if min_confidence > 1 or min_confidence < 0:
-            print 'Too low or too high value of minimal confidence. It should be between 0 and 1'
+            print('Too low or too high value of minimal confidence. It should be between 0 and 1')
             raise ValueError('Too low or too high value of minimal confidence')
         if type(fuzzy) != bool:
-            print 'Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(commands))
+            print('Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(commands)))
             raise ValueError('Type of fuzzy usage flag should be "bool" '
                              'and not a {}. Surprise!'.format(type(fuzzy)))
         self._min_confidence = min_confidence * 100
-        self._commands = commands
+        self._commands = commands_dict
         self.__fuzzy = fuzzy
         if self.__fuzzy:
             logger.debug('Created recognizer. Using fuzzy-wuzzy')
         else:
             logger.debug('Created recognizer. Using difflib')
 
-    def recognize_command(self, input, target_command=None):
+    def recognize_command(self, user_input, target_command=None):
         """
         This function is used to recognize commands in given text.
         It has two modes:
@@ -100,7 +100,7 @@ class FuzzyRecognizer:
                 logger.debug('Given wrong command: there`s no such command in the dictionary. Exiting')
                 raise ValueError('Wrong command')
             for command in self._commands[target_command]:
-                probability = self.__get_confidence_of_match(command, input)
+                probability = self.__get_confidence_of_match(command, user_input)
                 logger.debug('Probability of command {} for command case {} is {}'.format(
                     target_command, command, probability))
                 if probability >= self._min_confidence:
@@ -112,7 +112,7 @@ class FuzzyRecognizer:
 
         else:
             command_probability = {key: 0 for key in self._commands.keys()}
-
+            '''
             for command_key in self._commands.keys():
                 for command in self._commands[command_key]:
 
@@ -120,6 +120,20 @@ class FuzzyRecognizer:
 
                     if c_probability > command_probability[command_key]:
                         command_probability[command_key] = c_probability
+            '''
+
+            for command_key in self._commands.keys():
+                for case in self._commands[command_key]:
+                    N = len(case.split())
+
+                    pre_grams = user_input.split()
+                    grams = [' '.join(pre_grams[i:i + N])
+                             for i in range(len(pre_grams) - N)]
+
+                    for gram in grams:
+                        confidence = self.__get_confidence_of_match(case, gram)
+                        if confidence >= command_probability[command_key]:
+                            command_probability[command_key] = confidence
 
             result = [key for key in command_probability.keys() if command_probability[key] == max(
                 command_probability.values()) and command_probability[key] > self._min_confidence]
@@ -170,7 +184,7 @@ class FuzzyRecognizer:
 
             pre_grams = string.split()
             grams = [' '.join(pre_grams[i:i + N])
-                     for i in xrange(len(pre_grams) - N)]
+                     for i in range(len(pre_grams) - N)]
 
             for gram in grams:
                 confidence = self.__get_confidence_of_match(case, gram)
@@ -246,5 +260,5 @@ if __name__ == "__main__":
         'UNMUTE': ['unmute', 'make it louder', 'turn sound on']
     }
     rec = FuzzyRecognizer(commands, min_confidence=.7, fuzzy=not args.no_fuzzy)
-    print rec.recognize_command('please turn up volume please')
-    print rec.remove_command('please volume turn the up', 'VOLUME_UP')
+    print(rec.recognize_command('ok arius softserve dasfm kasklafls lkanmfln lanlkfml'))
+    print(rec.remove_command('please volume turn the up', 'VOLUME_UP'))
