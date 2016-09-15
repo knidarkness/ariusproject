@@ -565,7 +565,7 @@ class OutputInterface:
         """
         logger.debug('Playing video')
         if self._cur_filetype == 'video':
-            script_js = """video=document.getElementById("videoplayer"); video.play()"""
+            script_js = """video=document.getElementById("arius_videoplayer"); video.play()"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
     def _video_pause(self):
@@ -575,7 +575,7 @@ class OutputInterface:
         """
         logger.debug('Video paused')
         if self._cur_filetype == 'video':
-            script_js = """video=document.getElementById("videoplayer"); video.pause()"""
+            script_js = """video=document.getElementById("arius_videoplayer"); video.pause()"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
     def _volume_up(self):
@@ -585,7 +585,7 @@ class OutputInterface:
         """
         logger.debug('Increasing volume')
         if self._cur_filetype == 'video':
-            script_js = """video=document.getElementById("videoplayer"); video.volume+=0.2;"""
+            script_js = """video=document.getElementById("arius_videoplayer"); video.volume+=0.2;"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
     def _volume_down(self):
@@ -595,7 +595,7 @@ class OutputInterface:
         """
         logger.debug('Decreasing volume')
         if self._cur_filetype == 'video':
-            script_js = """video=document.getElementById("videoplayer"); video.volume-=0.2;"""
+            script_js = """video=document.getElementById("arius_videoplayer"); video.volume-=0.2;"""
             self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
     def _mute(self):

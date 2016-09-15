@@ -13,7 +13,7 @@ body {
         margin: 0px;
 }
 
-#videoplayer {
+#arius_videoplayer {
         border: 2px solid black;
         margin-left: 2px;
         margin-right: 2px;
@@ -58,7 +58,7 @@ body {
     top: 0;
 }
 
-.mylko {
+.video_banners {
     width: 100%;
     margin: 0;
 }
