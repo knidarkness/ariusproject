@@ -36,13 +36,13 @@ class TagSearcher:
         return None
 
     def get_tags(self, data_entry):
-        res = [t[0] for t in data_entry['tags']]
+        res = [t[0].lower() for t in data_entry['tags']]
         return res
 
     def get_confidence(self, tags, tag_entry):
         res = 0
         for t in tag_entry['tags']:
-            if t[0] in tags:
+            if t[0].lower() in [tag.lower() for tag in tags]:
                 res += float(t[1])
         return res
 
@@ -65,4 +65,4 @@ if __name__ == '__main__':
     a = TagSearcher(config['database_file'])
     print(a.find_synonyms('CEO'))
     print(a.find_all_synonyms(['r&d', 'kytsmey', 'r&d director']))
-    print(a.find_tags(['data']))
+    print(a.find_tags(['aws']))
