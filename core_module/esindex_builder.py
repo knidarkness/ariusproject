@@ -40,10 +40,9 @@ class ESIndexBuilder:
                 data = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
                 data = self._get_content(data)
             else:
-                data = open(path, "r").read()
+                data = open(path, "rb").read()
 
         try:
-            data = data.encode('utf-8')
             data = data.encode("base64")
         except Exception as e:
             logger.error('ERROR - Bad file encoding: {}' .format(e))
@@ -64,7 +63,7 @@ class ESIndexBuilder:
 
         for path, dirs, files in os.walk(dir):
 
-            if any([True for _ in [".png", ".jpg", "getattachment"] if _ in path]):
+            if any([True for _ in [".png", ".jpg", "getattachment", "pdf.js"] if _ in path]):
                 continue
 
             for file in files:
