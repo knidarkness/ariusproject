@@ -99,6 +99,9 @@ config = {
     "background_music": "organ_background.wav",
     "background_music_volume": 0.2,
 
+    "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', 
+                        '7.gif', '8.gif', '9.gif', '10.gif', '11.gif'],
+    
     "predefined_videos": {
         "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],
         "barista_coffe": ["coffe", "smart home"],
@@ -108,10 +111,8 @@ config = {
         "mylko_cool_thing": ["internet of things", "take the cloud to the ground", "iot"],
         "SaaS_offer_ss": ["software as a service", "software service", "SaaS"],
         "security_ss": ["security", "information privacy"],
-        "tc_ss": ["techical communication", "documentation"]
+        "lol": ["techical communication", "documentation"]
     }
-
-
 }
 
 config["flask_server_home"] = 'http://' + config['flask_server_address'] + \

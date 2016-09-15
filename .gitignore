@@ -12,4 +12,6 @@ logs/
 *.webm
 server/static/local_pages/*
 server/static/videos/*
+server/static/preview/*
+!server/static/preview/mylko.gif
 !server/static/local/pages/s

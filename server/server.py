@@ -15,6 +15,7 @@ sys.path.append("../")
 from config import config
 from logger import Logger
 import logging
+from random import shuffle
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 logger = Logger("SERVER")
 
@@ -134,6 +135,8 @@ def video(video_id):
     """
     We get string which indetifies which predefined video we show
     """
+    animated_images = [url_for('static', filename='preview/'+image) for image in config["animated_images"]]
+    shuffle(animated_images)
     with app.open_resource('static/video_data.json') as f:
         video_data = json.load(f)
 
@@ -141,7 +144,8 @@ def video(video_id):
         return render_template("videoplayer.html", video_path="/static/videos/" + video_data[video_id]["video_name"],
                                title=video_data[video_id]["title"],
                                support_text=video_data[video_id]["support_text"],
-                               style=url_for('static', filename='css/' + video_data[video_id]["style"] + '.css'))
+                               style=url_for('static', filename='css/' + video_data[video_id]["style"] + '.css'),
+                               banners=animated_images)
     else:
         return render_template("error.html")
 
@@ -152,6 +156,7 @@ def page(page_path):
     We get relative path to the page in static directory and return the page
     """
     return app.send_static_file('local_pages/' + page_path)
+
 
 if __name__ == '__main__':
     import argparse
