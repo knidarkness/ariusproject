@@ -37,7 +37,7 @@ class ESearchClient:
                                    body=queryBody, size=50, from_=0)
         result = []
         for doc in response['hits']['hits']:
-            result.append((doc['_source']['title'], doc['_score']))
+            result.append(doc['_source']['title'])
         return result
 
 if __name__ == '__main__':

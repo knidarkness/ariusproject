@@ -438,9 +438,9 @@ class OutputInterface:
         elif content_type == 'local_pdf':
             # to render PDF`s we use PDF.js, so we open its page and send it a
             # path for the target file.
-            source = "file://" + \
-                config['root_dir'] + \
-                config['output_data_pdf_viewer'] + "?file=" + content
+            source = config['flask_server_home'] + \
+                config['flask_server_local_page_client'] + \
+                content
             self._cur_filetype = "pdf"
         elif content_type == 'local_video':
             # in case of opening local videos we need to modify the path to the video in the source code of

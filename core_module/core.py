@@ -197,25 +197,28 @@ class Core(threading.Thread):
         data = self._tag_searcher.find_tags(request)
         if data is None:
             data = self._ESclient.search(request)
-        logger.debug(data)
-        if data:
-            fname = None
+        logger.debug('Data {}'.format(data))
+        if data is not None:
             _id = 0
-            while fname in self._history or fname is None:
+            fname = data[_id]
+            while fname in self._history:
                 _id += 1
                 if _id == len(data):
                     data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}
                     self._statemachine.handle_message('not_found')
                     result.append(data)
                     return None
-                fname = data[_id][0]
+                fname = data[_id]
             self._history.append(fname)
             base, file_ext = os.path.splitext(fname)
             logger.info('File extension: %s', file_ext)
+
             rel_path = os.path.relpath(config['root_dir'] + config['elastic_docs_dir'] + fname,
                                        config['root_dir'] + config['output_server_home'])
-            logger.info('path to pdf %s', rel_path)
+            logger.info('rel path %s', fname)
+            logger.info('path from pdf %s', rel_path)
             if file_ext == '.pdf':
+                fname = "pdf.js/web/viewer.html?file=" + rel_path
                 data = {'type': 'OPEN_PDF', 'command': fname}
             elif file_ext == '.html':
                 data = {'type': 'OPEN_LOCAL_PAGE', 'command': fname}
