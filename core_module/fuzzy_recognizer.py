@@ -45,15 +45,15 @@ class FuzzyRecognizer:
     """
 
     def __init__(self, commands_dict, min_confidence=.9, fuzzy=True):
-        if type(commands) != dict:
-            print('Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
+        if type(commands_dict) != dict:
+            print('Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands_dict)))
             raise ValueError(
-                'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands)))
+                'Type of command dictionary must be a dictionary and not a {}. Surprise!'.format(type(commands_dict)))
         if min_confidence > 1 or min_confidence < 0:
             print('Too low or too high value of minimal confidence. It should be between 0 and 1')
             raise ValueError('Too low or too high value of minimal confidence')
         if type(fuzzy) != bool:
-            print('Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(commands)))
+            print('Type of fuzzy usage flag should be "bool" and not a {}. Surprise!'.format(type(commands_dict)))
             raise ValueError('Type of fuzzy usage flag should be "bool" '
                              'and not a {}. Surprise!'.format(type(fuzzy)))
         self._min_confidence = min_confidence * 100
