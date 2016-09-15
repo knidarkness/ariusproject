@@ -36,9 +36,12 @@ class ESIndexBuilder:
             data = urllib.urlopen(url).read()
         else:
             # read local file
-            data = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
             if extension.lower() == '.html':
+                data = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
                 data = self._get_content(data)
+            else:
+                data = open(path, "r").read()
+
         try:
             data = data.encode('utf-8')
             data = data.encode("base64")
