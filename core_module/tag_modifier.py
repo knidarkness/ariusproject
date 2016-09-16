@@ -46,15 +46,15 @@ class Modifyier:
 if __name__ == '__main__':
     mod = Modifyier(config['database_file'])
     while True:
-        operation = input('Enter operation you want to do[insert, modify, delete, get]')
-        table = input('what table you want to modify[synonyms, tag_data')
+        operation = raw_input('Enter operation you want to do[insert, modify, delete, get]')
+        table = raw_input('what table you want to modify[synonyms, tag_data')
         if operation == 'insert':
             value_dict = None
             if table == 'tag_data':
-                name = str(input('Enter entry name'))
-                path = str(input('Enter relative path'))
-                priority = str(input('Enter priority of the file'))
-                tags = str(input('Enter tags in following format: "tag name 1, priority1'))
+                name = str(raw_input('Enter entry name'))
+                path = str(raw_input('Enter relative path'))
+                priority = str(raw_input('Enter priority of the file'))
+                tags = str(raw_input('Enter tags in following format: "tag name 1, priority1'))
                 t = tags.split(',')
                 tag_list = []
                 print(tags)
@@ -64,14 +64,14 @@ if __name__ == '__main__':
                 print(tag_list)
                 value_dict = {'name': name, 'path':path, 'priority':priority, 'tags': tag_list}
             elif table == 'synonyms':
-                name = input('Enter key-word')
-                syns = input('Enter synonyms with comas as separators')
+                name = raw_input('Enter key-word')
+                syns = raw_input('Enter synonyms with comas as separators')
                 s = syns.split(',')
-                value_dict = {'key': name, 'equal': syns}
+                value_dict = {'key': name, 'equal': s}
             if value_dict:
                 mod.insert(table, value_dict)
         elif operation == 'get':
-            query = input('Do you want to get full output[Yes/leave empty]')
+            query = raw_input('Do you want to get full output[Yes/leave empty]')
             res = mod.get(table, not query)
             for i in res:
                 print(i)

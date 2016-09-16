@@ -76,7 +76,8 @@ config = {
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
         "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
-        "STOP_SCROLL" : ['Done.', 'I am designed to serve you.', 'Ok man.']
+        "STOP_SCROLL" : ['Done.', 'I am designed to serve you.', 'Ok man.'],
+        "START" : ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!']
     },
 
     "elastic_host": "http://localhost:9200",
@@ -100,8 +101,8 @@ config = {
                         "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
     "marytts_voice3_volume": 1.0,
 
-    "background_music": "organ_background.wav",
-    "background_music_volume": 0.4,
+    "background_music": "organ_background.ogg",
+    "background_music_volume": 1.0,
 
     "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', 
                         '7.gif', '8.gif', '9.gif', '10.gif', '11.gif'],

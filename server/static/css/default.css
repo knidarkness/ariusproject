@@ -9,7 +9,7 @@
 
 
 body {
-        background-color: rgb(244, 244, 244);
+        background-color: black;
         margin: 0px;
 }
 
@@ -23,6 +23,7 @@ body {
     }
 
 #support_content {
+    background-color: rgb(244, 244, 244);
     width: 100%;
     height: auto;
     position: relative;
@@ -33,12 +34,14 @@ body {
 #support_title {
         margin-top: 0;
         text-align: center;
+        font-size: 4%;
         font-family: 'Raleway', sans-serif;
 }
 
 #support_text {
         text-align: justify;
         font-family: 'Raleway', sans-serif;
+        font-size: 2%;
         width: 58%;
         margin: auto;
 }
