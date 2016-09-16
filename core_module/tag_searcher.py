@@ -5,12 +5,14 @@ sys.path.append("../")
 from config import config
 from logger import Logger
 
+
 class Entry:
     def __init__(self, name, path, priority, confidence):
         self.name = name
         self.path = path
         self.confidence = confidence
         self.priority = priority
+
 
 class TagSearcher:
 
@@ -19,14 +21,14 @@ class TagSearcher:
         self.__tags = self.__db.table('tag_data')
         self.__synonyms = self.__db.table('synonyms')
 
-    def find_tags(self, tags):
+    def find_tags(self, keywords):
         result = []
-        file_info = Query()
-        searched_ids = self.find_all_synonyms(tags)
+        # replace synonyms by keys
+        keywords = self.get_keys_by_synonyms(keywords)
         data = self.__tags.all()
         for d in data:
-            t = self.get_tags(d)
-            conf = self.get_confidence(tags, d)
+            entry_tags = self.get_tags(d)
+            conf = self.get_confidence(entry_tags, keywords)
             if conf > 0:
                 result.append(Entry(d['name'], d['path'], float(d['priority']), conf))
         if result:
@@ -36,33 +38,35 @@ class TagSearcher:
         return None
 
     def get_tags(self, data_entry):
-        res = [t[0].lower() for t in data_entry['tags']]
+        res = [(t[0].lower(), t[1]) for t in data_entry['tags']]
         return res
 
-    def get_confidence(self, tags, tag_entry):
+    def get_confidence(self, entry_tags, keywords):
         res = 0
-        for t in tag_entry['tags']:
-            if t[0].lower() in [tag.lower() for tag in tags]:
-                res += float(t[1])
+        for keyword in keywords:
+            if keyword in [tag[0].lower() for tag in entry_tags]:
+                res += float(tag[1])
         return res
 
-    def find_all_synonyms(self, tags):
-        result = [self.find_synonyms(tag)
-                  for tag in tags if self.find_synonyms(tag)]
-        return list(set(result))
+    def get_keys_by_synonyms(self, tags):
+        keys = []
+        for tag in tags:
+            keys += self.get_keys_by_synonym(tag)
+        return list(set(keys))
 
-    def find_synonyms(self, keyword):
+    def get_keys_by_synonym(self, keyword):
         def is_in(tag_list, tag):
             return tag in tag_list
         tag_id = None
         tag = Query()
         tag_id = self.__synonyms.search(tag.equal.test(is_in, keyword))
-        if tag_id:
-            tag_id = tag_id[0]["key"]
-        return tag_id
+        keys = []
+        for i in range(len(tag_id)):
+            keys.append(tag_id[i]["key"])
+        return keys
 
 if __name__ == '__main__':
     a = TagSearcher(config['database_file'])
-    print(a.find_synonyms('CEO'))
-    print(a.find_all_synonyms(['r&d', 'kytsmey', 'r&d director']))
-    print(a.find_tags(['aws']))
+    print(a.get_keys_by_synonym('mylko'))
+    print(a.get_keys_by_synonyms(['r&d', 'kytsmey', 'r&d director']))
+    print(a.find_tags(['funny', 'mylko']))
