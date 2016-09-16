@@ -39,6 +39,7 @@ class ESIndexBuilder:
             if extension.lower() == '.html':
                 data = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
                 data = self._get_content(data)
+                data = data.encode("utf-8")
             else:
                 data = open(path, "rb").read()
 

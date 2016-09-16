@@ -17,9 +17,9 @@ cd sip-4.18.1
 python configure.py
 cd ../
 wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
-wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
-unzip marytts-5.1.2.zip
-cd marytts-5.1.2/bin
+wget hhttps://github.com/marytts/marytts/releases/download/v5.1.1/marytts-5.1.1.zip
+unzip marytts-5.1.1.zip
+cd marytts-5.1.1/bin
 ./marytts-component-installer
 chmod 555 marytts-server
 cd ../../

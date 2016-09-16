@@ -24,7 +24,7 @@
     "_default": {},
     "tag_data": {
         "11": {
-            "prority": 2,
+            "priority": 2,
             "path": "CVA_8.pdf",
             "name": "Commonality Analysis of Abiliton Dashboard",
             "tags": [
@@ -34,7 +34,7 @@
             ]
         },
         "10": {
-            "prority": 2,
+            "priority": 2,
             "path": "Context Identification research.pdf",
             "name": "Context Identification research",
             "tags": [
@@ -44,7 +44,7 @@
             ]
         },
         "13": {
-            "prority": 2,
+            "priority": 2,
             "path": "eBR solution Case Study.pdf",
             "name": "Electronic Batch Record Solution",
             "tags": [
@@ -55,7 +55,7 @@
             ]
         },
         "12": {
-            "prority": 2,
+            "priority": 2,
             "path": "DATA acquisition.pdf",
             "name": "Recording emotions",
             "tags": [
@@ -64,7 +64,7 @@
             ]
         },
         "14": {
-            "prority": 2,
+            "priority": 2,
             "path": "innovationsvmylko.pdf",
             "name": "Innovations Vasyl Mylko.pdf",
             "tags": [
@@ -73,7 +73,7 @@
             ]
         },
         "1": {
-            "prority": 2,
+            "priority": 2,
             "path": "AB - Usability Test Report.pdf",
             "name": "AB - Usability Test Report",
             "tags": [
@@ -84,7 +84,7 @@
             ]
         },
         "3": {
-            "prority": 2,
+            "priority": 2,
             "path": "AWS Machine Learning Analysis.pdf",
             "name": "AWS Machine Learning Analysis",
             "tags": [
@@ -97,7 +97,7 @@
             ]
         },
         "2": {
-            "prority": 2,
+            "priority": 2,
             "path": "Affective Computing.pdf",
             "name": "Affective Computing",
             "tags": [
@@ -111,7 +111,7 @@
             ]
         },
         "5": {
-            "prority": 2,
+            "priority": 2,
             "path": "Barista_design.pdf",
             "name": "Barista Design",
             "tags": [
@@ -120,7 +120,7 @@
             ]
         },
         "4": {
-            "prority": 2,
+            "priority": 2,
             "path": "AWS Readines Case Studies.pdf",
             "name": "AWS Readines Case Studies",
             "tags": [
@@ -129,7 +129,7 @@
             ]
         },
         "7": {
-            "prority": 2,
+            "priority": 2,
             "path": "Biolock Feasibility Study.pdf",
             "name": "Biolock Feasibility Study",
             "tags": [
@@ -138,7 +138,7 @@
             ]
         },
         "6": {
-            "prority": 2,
+            "priority": 2,
             "path": "Batch.pdf",
             "name": "mEBR Design",
             "tags": [
@@ -148,7 +148,7 @@
             ]
         },
         "9": {
-            "prority": 2,
+            "priority": 2,
             "path": "AB - Usability Test Report.pdf",
             "name": "Conceptualization of mEBR System",
             "tags": [
@@ -159,7 +159,7 @@
             ]
         },
         "8": {
-            "prority": 2,
+            "priority": 2,
             "path": "Bio-processor SDK.pdf",
             "name": "Bio-processor SDK Research",
             "tags": [

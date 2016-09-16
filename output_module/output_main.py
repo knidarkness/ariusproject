@@ -191,7 +191,8 @@ class OutputInterface:
 
         self._top_browser.page().mainFrame().setScrollBarPolicy(
             QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)  # remove the scroll bars
-        # self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+        self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
+        self._main_browser.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Horizontal, QtCore.Qt.ScrollBarAlwaysOff)
         self._bottom_browser.page().mainFrame().setScrollBarPolicy(
             QtCore.Qt.Vertical, QtCore.Qt.ScrollBarAlwaysOff)
 
@@ -285,17 +286,16 @@ class OutputInterface:
             # Commands for opening all types of content are handled by
             # calling of _load_content method with specified content type.
 
+            # start music play if it was stopped
+            self._player.play()
+
             if command[0] == 'OPEN_PDF':
-                self._player.play()
                 self._load_content('local_pdf', command[1])
             elif command[0] == 'OPEN_URL':
-                self._player.play()
                 self._load_content('external_url', command[1])
             elif command[0] == 'OPEN_LOCAL_PAGE':
-                self._player.play()
                 self._load_content('local_url', command[1])
             elif command[0] == 'OPEN_VIDEO':
-                self._player.stop()
                 self._load_content('local_video', command[1])
 
             # Command to open a system scren (e.g. {'type': 'OPEN_SCREEN', 'command':'OPEN_IDLE'})
@@ -303,43 +303,29 @@ class OutputInterface:
             # work.
 
             elif command[0] == 'OPEN_SCREEN':
-                self._player.play()
                 self._load_screen(command[1])
 
             # Zoom commands are handled each with its own method.
 
             elif command[0] == 'ZOOM_IN':
-                self._player.play()
                 self._main_browser_zoom_in()
             elif command[0] == 'ZOOM_OUT':
-                self._player.play()
                 self._main_browser_zoom_out()
             elif command[0] == 'ZOOM_NONE':
-                self._player.play()
                 self._main_browser_reset_zoom()
 
             # as well as scroll.
 
             elif command[0] == 'SCROLL_DOWN':
-                self._player.play()
                 self._main_browser_scroll(300, 1000)
             elif command[0] == 'SCROLL_UP':
-                self._player.play()
                 self._main_browser_scroll(-300, 1000)
             elif command[0] == 'CONTINIOUS_SCROLL_UP':
-                self._player.play()
-                while not self._updater._is_command():
-                    self._main_browser_scroll(-5, 100)
-                    time.sleep(5)
+                pass
             elif command[0] == 'CONTINIOUS_SCROLL_DOWN':
-                self._player.play()
-                while not self._updater._is_command():
-                    logger.debug("CONTINIOUS_SCROLL_DOWN")
-                    self._main_browser_scroll(5, 100)
-                    time.sleep(5)
+                pass
             elif command[0] == 'STOP_SCROLL':
-                self._player.play()
-
+                pass
             # Following two commands are responsible for playing
             # video and pausing it. As a second part of the command
             # name of the video file should be given.
@@ -348,7 +334,6 @@ class OutputInterface:
                 self._player.stop()
                 self._video_play()
             elif command[0] == 'PAUSE':
-                self._player.play()
                 self._video_pause()
 
             # These two commands are used for increasing or
@@ -438,9 +423,9 @@ class OutputInterface:
         elif content_type == 'local_pdf':
             # to render PDF`s we use PDF.js, so we open its page and send it a
             # path for the target file.
-            source = "file://" + \
-                config['root_dir'] + \
-                config['output_data_pdf_viewer'] + "?file=" + content
+            source = config['flask_server_home'] + \
+                config['flask_server_local_page_client'] + \
+                content
             self._cur_filetype = "pdf"
         elif content_type == 'local_video':
             # in case of opening local videos we need to modify the path to the video in the source code of
