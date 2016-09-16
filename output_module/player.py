@@ -19,7 +19,7 @@ class Player:
         muted_channel.play(music, loops=-1)
         muted_channel.set_volume(0)
         self.channel.play(music, loops=-1, fade_ms=300)
-        self.channel.set_volume(config["background_music_volume"])
+        self.channel.set_volume(0)
         self.channel.pause()
 
     def play(self):

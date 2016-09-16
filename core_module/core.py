@@ -81,9 +81,8 @@ class Core(threading.Thread):
     def run(self):
         self._updater.start()
         self._send_command({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
-        time.sleep(3)
-        self._send_command({'type': 'UNMUTE', 'command': 'start_play'})
-        time.sleep(3)
+        time.sleep(5)
+        self._send_command({'type': 'UNMUTE', 'command': 'start_play'}) 
         self._send_command({'type': 'SPEAK', 'command': random.choice(config['voice_command_output']['START'])})
         
         while True:
