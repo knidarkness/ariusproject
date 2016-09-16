@@ -120,9 +120,7 @@ class Core(threading.Thread):
                     logger.debug("History:\n{}".format(
                         "\n".join(self._history)))
 
-                    self._statemachine.handle_message('request')
-                    user_input = self._command_recognizer.remove_command(
-                        user_input, 'START')
+                    user_input = self._command_recognizer.remove_command(user_input, 'START')
                     data = self._QA_connector.get_abstract(user_input)
                     if data is not None:
                         #self._send_command({'type': 'OPEN_SCREEN', 'command': 'SPEAKING'})
@@ -132,6 +130,7 @@ class Core(threading.Thread):
                         if query:
                             self._prev_query = user_input
                             logger.info('Proceeding search query {}'.format(query))
+                            self._statemachine.handle_message('request')
                             self._do_work(self._find_data, query)
                         else:
                             logger.info('Search query is empty')
