@@ -102,7 +102,7 @@ config = {
     "marytts_voice3_volume": 1.0,
 
     "background_music": "organ_background.ogg",
-    "background_music_volume": 1.0,
+    "background_music_volume": 0.2,
 
     "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', 
                         '7.gif', '8.gif', '9.gif', '10.gif', '11.gif'],

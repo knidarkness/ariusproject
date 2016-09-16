@@ -1,1 +1,381 @@
-{"synonyms": {"1": {"equal": ["r&d director", "mylko", "vasyl mylko"], "key": "mylko"}, "2": {"equal": ["kytsmey", "taras kytsmey", "CEO"], "key": "CEO"}, "3": {"equal": ["Amazon Web Services", "AWS"], "key": "AWS"}, "4": {"equal": ["EBR", "mEBR", "mEBR system", "EBR system", "Electronic Batch Record"], "key": "EBR"}, "5": {"equal": ["mEBR Design", "EBR Design", "mEBR system Design"], "key": "EBR Design"}, "6": {"equal": ["funny", "joke", "1st april", "joyfull", "laughing", "laugh", "humor", "death"], "key": "funny"}, "7": {"equal": ["internet of things", "take the cloud to the ground", "iot", "cool thing", "mylko"], "key": "iot"}}, "_default": {}, "tag_data": {"11": {"priority": 2, "path": "CVA_8.pdf", "name": "Commonality Analysis of Abiliton Dashboard", "tags": [["Commonality Analysis", 1], ["Variability Analysis", 0.8], ["Abiliton Dashboard", 0.8]]}, "10": {"priority": 2, "path": "Context Identification research.pdf", "name": "Context Identification research", "tags": [["Context Identification research", 1], ["context classification", 0.8], ["Oleksandr Sukholyester", 0.6]]}, "13": {"priority": 2, "path": "eBR solution Case Study.pdf", "name": "Electronic Batch Record Solution", "tags": [["Electronic Batch Record Solution", 1], ["EBR", 1], ["EUFETS", 0.4], ["Batch", 0.7]]}, "12": {"priority": 2, "path": "DATA acquisition.pdf", "name": "Recording emotions", "tags": [["Recording emotions", 1], ["emotions", 0.8]]}, "15": {"priority": "1", "path": "1_st _april.mp4.webm", "name": "video_mylko", "tags": [["funny", " 1"]]}, "14": {"priority": 2, "path": "innovationsvmylko.pdf", "name": "Innovations Vasyl Mylko.pdf", "tags": [["Innovations", 1], ["mylko", 0.8]]}, "16": {"priority": "1", "path": "mylko_cool_thing.webm", "name": "mylko_cool_thing", "tags": [["iot", " 1"]]}, "1": {"priority": 2, "path": "AB - Usability Test Report.pdf", "name": "AB - Usability Test Report", "tags": [["Abiliton Dashboard", 1], ["color scheme", 0.8], ["usability test", 1], ["a/b", 0.8]]}, "3": {"priority": 2, "path": "AWS Machine Learning Analysis.pdf", "name": "AWS Machine Learning Analysis", "tags": [["AWS Machine Learning Analysis", 1], ["AWS", 0.9], ["Machine Learning", 0.8], ["Cognitive Computing", 0.6], ["Amazon Machine Learning", 0.9], ["Elastic Map Reduce", 0.7]]}, "2": {"priority": 2, "path": "Affective Computing.pdf", "name": "Affective Computing", "tags": [["Affective Computing", 1], ["trend overview", 0.3], ["Empatica", 0.8], ["BodyMedia", 0.8], ["Jawbone", 0.8], ["Scanadu", 0.8], ["Moodmetric", 0.8]]}, "5": {"priority": 2, "path": "Barista_design.pdf", "name": "Barista Design", "tags": [["Barista Design", 1], ["Barista", 0.7]]}, "4": {"priority": 2, "path": "AWS Readines Case Studies.pdf", "name": "AWS Readines Case Studies", "tags": [["AWS Readines Case Studies", 1], ["AWS", 1]]}, "7": {"priority": 2, "path": "Biolock Feasibility Study.pdf", "name": "Biolock Feasibility Study", "tags": [["Biolock", 0.7], ["Biolock Feasibility Study", 1]]}, "6": {"priority": 2, "path": "Batch.pdf", "name": "mEBR Design", "tags": [["EUFETS", 0.5], ["EBR Design", 1], ["EBR", 0.7]]}, "9": {"priority": 2, "path": "AB - Usability Test Report.pdf", "name": "Conceptualization of mEBR System", "tags": [["EUFETS", 0.4], ["EBR", 1], ["Conceptualization of mEBR System", 1], ["Batch", 0.7]]}, "8": {"priority": 2, "path": "Bio-processor SDK.pdf", "name": "Bio-processor SDK Research", "tags": [["Bio-processor SDK Research", 1], ["Bio-processor SDK", 1], ["Oleksandr Sukholyester", 0.6]]}}}
+{
+   "synonyms":{
+      "1":{
+         "equal":[
+            "r&d director",
+            "mylko",
+            "vasyl mylko"
+         ],
+         "key":"mylko"
+      },
+      "2":{
+         "equal":[
+            "kytsmey",
+            "taras kytsmey",
+            "CEO"
+         ],
+         "key":"CEO"
+      },
+      "3":{
+         "equal":[
+            "Amazon Web Services",
+            "AWS"
+         ],
+         "key":"AWS"
+      },
+      "4":{
+         "equal":[
+            "EBR",
+            "mEBR",
+            "mEBR system",
+            "EBR system",
+            "Electronic Batch Record"
+         ],
+         "key":"EBR"
+      },
+      "5":{
+         "equal":[
+            "mEBR Design",
+            "EBR Design",
+            "mEBR system Design"
+         ],
+         "key":"EBR Design"
+      },
+      "6":{
+         "equal":[
+            "funny",
+            "joke",
+            "1st april",
+            "joyfull",
+            "laughing",
+            "laugh",
+            "humor",
+            "death"
+         ],
+         "key":"funny"
+      },
+      "7":{
+         "equal":[
+            "internet of things",
+            "take the cloud to the ground",
+            "iot",
+            "cool thing",
+            "mylko"
+         ],
+         "key":"iot"
+      }
+   },
+   "_default":{
+
+   },
+   "tag_data":{
+      "11":{
+         "priority":2,
+         "path":"CVA_8.pdf",
+         "name":"Commonality Analysis of Abiliton Dashboard",
+         "tags":[
+            [
+               "Commonality Analysis",
+               1
+            ],
+            [
+               "Variability Analysis",
+               0.8
+            ],
+            [
+               "Abiliton Dashboard",
+               0.8
+            ]
+         ]
+      },
+      "10":{
+         "priority":2,
+         "path":"Context Identification research.pdf",
+         "name":"Context Identification research",
+         "tags":[
+            [
+               "Context Identification research",
+               1
+            ],
+            [
+               "context classification",
+               0.8
+            ],
+            [
+               "Oleksandr Sukholyester",
+               0.6
+            ]
+         ]
+      },
+      "13":{
+         "priority":2,
+         "path":"eBR solution Case Study.pdf",
+         "name":"Electronic Batch Record Solution",
+         "tags":[
+            [
+               "Electronic Batch Record Solution",
+               1
+            ],
+            [
+               "EBR",
+               1
+            ],
+            [
+               "EUFETS",
+               0.4
+            ],
+            [
+               "Batch",
+               0.7
+            ]
+         ]
+      },
+      "12":{
+         "priority":2,
+         "path":"DATA acquisition.pdf",
+         "name":"Recording emotions",
+         "tags":[
+            [
+               "Recording emotions",
+               1
+            ],
+            [
+               "emotions",
+               0.8
+            ]
+         ]
+      },
+      "15":{
+         "priority":"1",
+         "path":"1_st _april.mp4.webm",
+         "name":"video_mylko",
+         "tags":[
+            [
+               "funny",
+               " 1"
+            ]
+         ]
+      },
+      "14":{
+         "priority":2,
+         "path":"innovationsvmylko.pdf",
+         "name":"Innovations Vasyl Mylko.pdf",
+         "tags":[
+            [
+               "Innovations",
+               1
+            ],
+            [
+               "mylko",
+               0.8
+            ]
+         ]
+      },
+      "16":{
+         "priority":"1",
+         "path":"mylko_cool_thing.webm",
+         "name":"mylko_cool_thing",
+         "tags":[
+            [
+               "iot",
+               " 1"
+            ]
+         ]
+      },
+      "1":{
+         "priority":2,
+         "path":"AB - Usability Test Report.pdf",
+         "name":"AB - Usability Test Report",
+         "tags":[
+            [
+               "Abiliton Dashboard",
+               1
+            ],
+            [
+               "color scheme",
+               0.8
+            ],
+            [
+               "usability test",
+               1
+            ],
+            [
+               "a/b",
+               0.8
+            ]
+         ]
+      },
+      "3":{
+         "priority":2,
+         "path":"AWS Machine Learning Analysis.pdf",
+         "name":"AWS Machine Learning Analysis",
+         "tags":[
+            [
+               "AWS Machine Learning Analysis",
+               1
+            ],
+            [
+               "AWS",
+               0.9
+            ],
+            [
+               "Machine Learning",
+               0.8
+            ],
+            [
+               "Cognitive Computing",
+               0.6
+            ],
+            [
+               "Amazon Machine Learning",
+               0.9
+            ],
+            [
+               "Elastic Map Reduce",
+               0.7
+            ]
+         ]
+      },
+      "2":{
+         "priority":2,
+         "path":"Affective Computing.pdf",
+         "name":"Affective Computing",
+         "tags":[
+            [
+               "Affective Computing",
+               1
+            ],
+            [
+               "trend overview",
+               0.3
+            ],
+            [
+               "Empatica",
+               0.8
+            ],
+            [
+               "BodyMedia",
+               0.8
+            ],
+            [
+               "Jawbone",
+               0.8
+            ],
+            [
+               "Scanadu",
+               0.8
+            ],
+            [
+               "Moodmetric",
+               0.8
+            ]
+         ]
+      },
+      "5":{
+         "priority":2,
+         "path":"Barista_design.pdf",
+         "name":"Barista Design",
+         "tags":[
+            [
+               "Barista Design",
+               1
+            ],
+            [
+               "Barista",
+               0.7
+            ]
+         ]
+      },
+      "4":{
+         "priority":2,
+         "path":"AWS Readines Case Studies.pdf",
+         "name":"AWS Readines Case Studies",
+         "tags":[
+            [
+               "AWS Readines Case Studies",
+               1
+            ],
+            [
+               "AWS",
+               1
+            ]
+         ]
+      },
+      "7":{
+         "priority":2,
+         "path":"Biolock Feasibility Study.pdf",
+         "name":"Biolock Feasibility Study",
+         "tags":[
+            [
+               "Biolock",
+               0.7
+            ],
+            [
+               "Biolock Feasibility Study",
+               1
+            ]
+         ]
+      },
+      "6":{
+         "priority":2,
+         "path":"Batch.pdf",
+         "name":"mEBR Design",
+         "tags":[
+            [
+               "EUFETS",
+               0.5
+            ],
+            [
+               "EBR Design",
+               1
+            ],
+            [
+               "EBR",
+               0.7
+            ]
+         ]
+      },
+      "9":{
+         "priority":2,
+         "path":"AB - Usability Test Report.pdf",
+         "name":"Conceptualization of mEBR System",
+         "tags":[
+            [
+               "EUFETS",
+               0.4
+            ],
+            [
+               "EBR",
+               1
+            ],
+            [
+               "Conceptualization of mEBR System",
+               1
+            ],
+            [
+               "Batch",
+               0.7
+            ]
+         ]
+      },
+      "8":{
+         "priority":2,
+         "path":"Bio-processor SDK.pdf",
+         "name":"Bio-processor SDK Research",
+         "tags":[
+            [
+               "Bio-processor SDK Research",
+               1
+            ],
+            [
+               "Bio-processor SDK",
+               1
+            ],
+            [
+               "Oleksandr Sukholyester",
+               0.6
+            ]
+         ]
+      }
+   }
+}
