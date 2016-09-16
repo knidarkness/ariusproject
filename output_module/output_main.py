@@ -296,6 +296,7 @@ class OutputInterface:
             elif command[0] == 'OPEN_LOCAL_PAGE':
                 self._load_content('local_url', command[1])
             elif command[0] == 'OPEN_VIDEO':
+                self._player.stop()
                 self._load_content('local_video', command[1])
 
             # Command to open a system scren (e.g. {'type': 'OPEN_SCREEN', 'command':'OPEN_IDLE'})
