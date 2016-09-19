@@ -1,6 +1,7 @@
 from AbstractQueryGenerator import AbstractQueryGenerator
 import RAKE
 
+
 class KeywordsQueryGenerator:
 
     def __init__(self, stopList):

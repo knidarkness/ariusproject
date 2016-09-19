@@ -1,5 +1,10 @@
 from AbstractDictCommandRecognizerBehavior import AbstractDictCommandRecognizerBehavior
 
+import sys
+sys.path.append("../")
+from logger import Logger
+logger = Logger("Core")
+
 
 class DifflibDictCommandRecognizerBehavior(AbstractDictCommandRecognizerBehavior):
     def proceedInput(self, command):
@@ -104,14 +109,12 @@ class DifflibDictCommandRecognizerBehavior(AbstractDictCommandRecognizerBehavior
         if command is None:
             return string
         if command not in self._commands.keys():
-            logger.info(
-                'Given wrong command: there`s no such command in the dictionary. Exiting')
+            logger.info('Given wrong command: there`s no such command in the dictionary. Exiting')
             raise ValueError('Wrong command')
         # indicator if smth was changed. Used for debug purposes only.
         replaced = False
         for case in self._commands[command]:
-            logger.debug(
-                'Clearing for {} and string is "{}"'.format(case, string))
+            logger.debug('Clearing for {} and string is "{}"'.format(case, string))
             N = len(case.split())
 
             pre_grams = string.split()
@@ -121,16 +124,14 @@ class DifflibDictCommandRecognizerBehavior(AbstractDictCommandRecognizerBehavior
             for gram in grams:
                 confidence = self.__get_confidence_of_match(case, gram)
                 if confidence >= self._min_confidence:
-                    logger.debug(
-                        'Confidence for {} is {}'.format(gram, confidence))
+                    logger.debug('Confidence for {} is {}'.format(gram, confidence))
                     string = string.replace(gram, '')
                     string = string.strip()
                     logger.debug('String is "{}"'.format(string))
                     replaced = True
         if not replaced:
             logger.info('Nothing to replace')
-            logger.info(
-                'String with removed command phrase is: "{}"'.format(string))
+            logger.info('String with removed command phrase is: "{}"'.format(string))
             logger.debug('FINISHED CLEARING INPUT')
         # as we can have a string like 'test   test word' lets replace
         # all multiple whitespaces with one. The easiest way to achive

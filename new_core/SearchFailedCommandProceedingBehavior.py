@@ -2,6 +2,7 @@ from DictBasedCommandRecognizer import DictBasedCommandRecognizer
 from DiffMatchFinder import DiffMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
 from SearchCommandProceedingBehaviorSingleton import SearchCommandProceedingBehaviorSingleton
+from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
 import random
 import sys
@@ -11,7 +12,7 @@ from logger import Logger
 logger = Logger("Core")
 
 
-class SearchFailedCommandProceedingBehavior:
+class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
 
     def __init__(self, recog):
         super(SearchFailedCommandProceedingBehavior, self).__init__(recog)

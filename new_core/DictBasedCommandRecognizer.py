@@ -1,5 +1,10 @@
 from AbstractCommandRecognizer import AbstractCommandRecognizer
 
+import sys
+sys.path.append("../")
+from logger import Logger
+logger = Logger("Core")
+
 
 class DictBasedCommandRecognizer(AbstractCommandRecognizer):
     def __init__(self, commands, finder):
@@ -125,8 +130,7 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
         # indicator if smth was changed. Used for debug purposes only.
         replaced = False
         for case in self._commands[command]:
-            logger.debug(
-                'Clearing for {} and string is "{}"'.format(case, input_str))
+            logger.debug('Clearing for {} and string is "{}"'.format(case, input_str))
             N = len(case.split())
 
             pre_grams = input_str.split()
@@ -136,16 +140,14 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
             for gram in grams:
                 confidence = self.__get_confidence_of_match(case, gram)
                 if confidence >= self._min_confidence:
-                    logger.debug(
-                        'Confidence for {} is {}'.format(gram, confidence))
+                    logger.debug('Confidence for {} is {}'.format(gram, confidence))
                     input_str = input_str.replace(gram, '')
                     input_str = input_str.strip()
                     logger.debug('String is "{}"'.format(string))
                     replaced = True
         if not replaced:
             logger.info('Nothing to replace')
-            logger.info(
-                'String with removed command phrase is: "{}"'.format(string))
+            logger.info('String with removed command phrase is: "{}"'.format(string))
             logger.debug('FINISHED CLEARING INPUT')
         # as we can have a string like 'test   test word' lets replace
         # all multiple whitespaces with one. The easiest way to achive

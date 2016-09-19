@@ -3,6 +3,7 @@ from DiffMatchFinder import DiffMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
 from SearchCommandProceedingBehaviorSingleton import SearchCommandProceedingBehaviorSingleton
 from CommandConfigLoader import CommandConfigLoader
+from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 import random
 import sys
 sys.path.append("../")
@@ -11,7 +12,7 @@ from logger import Logger
 logger = Logger("Core")
 
 
-class IdleCommandProceedingBehavior:
+class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
 
     def __init__(self, recog):
         super(IdleCommandProceedingBehavior, self).__init__(recog)

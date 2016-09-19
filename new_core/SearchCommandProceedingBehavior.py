@@ -5,6 +5,7 @@ from CommandConfigLoader import CommandConfigLoader
 from IdleCommandProceedingBehaviorSingleton import IdleCommandProceedingBehaviorSingleton
 from DisplayingDataCommandProceedingBehaviorSingleton import DisplayingDataCommandProceedingBehaviorSingleton
 from SearchFailedCommandProceedingBehaviorSingleton import SearchFailedCommandProceedingBehaviorSingleton
+from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 from DataInterface import DataInterface
 from ESearchDataFinder import ESearchDataFinder
 from QPyDataFinder import QPyDataFinder
@@ -22,7 +23,7 @@ from logger import Logger
 logger = Logger("Core")
 
 
-class SearchCommandProceedingBehavior:
+class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
 
     def __init__(self, recog):
         super(SearchCommandProceedingBehavior, self).__init__(recog)
@@ -63,26 +64,29 @@ class SearchCommandProceedingBehavior:
         if data is not None and len(data) != 0:
             _id = 0
             result = data[_id]
-            while result.body in self._history and result.type != "speech":
+            if result.type == "speech":
+                _id += 1
+                result = data[_id]
+            while result.body in self._history:
                 _id += 1
                 if _id >= len(data):
                     result.append({'type': 'OPEN_SCREEN', 'command': 'ERROR'})
                     return None
-                result_body = data[_id]
-            self._history.append(result_body)
+                result = data[_id]
+            self._history.append(result.body)
 
             if result.type == '.pdf':
-                rel_path = os.path.relpath(config['root_dir'] + config['elastic_docs_dir'] + result_body,
+                rel_path = os.path.relpath(config['root_dir'] + config['elastic_docs_dir'] + result.body,
                                            config['root_dir'] + config['output_server_home'])
                 fname = "pdf.js/web/viewer.html?file=" + rel_path
                 data = {'type': 'OPEN_PDF', 'command': fname}
             elif result.type == '.html':
-                data = {'type': 'OPEN_LOCAL_PAGE', 'command': result_body}
+                data = {'type': 'OPEN_LOCAL_PAGE', 'command': result.body}
             elif result.type == '.url':
-                link = open(result_body).read()
+                link = open(result.body).read()
                 data = {'type': 'OPEN_URL', 'command': link}
             elif result.type == '.webm':
-                data = {'type': 'OPEN_VIDEO', 'command': result_body}
+                data = {'type': 'OPEN_VIDEO', 'command': result.body}
             self._parent.setProceedingBehavior(DisplayingDataCommandProceedingBehaviorSingleton.getInstance())
         else:
             data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}
