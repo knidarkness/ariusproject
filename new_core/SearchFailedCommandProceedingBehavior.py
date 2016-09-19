@@ -4,6 +4,7 @@ from CoreOutputSingleton import CoreOutputSingleton
 from SearchCommandProceedingBehaviorSingleton import SearchCommandProceedingBehaviorSingleton
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
+from singleton import singleton
 import random
 import sys
 sys.path.append("../")
@@ -12,6 +13,7 @@ from logger import Logger
 logger = Logger("Core")
 
 
+@singleton
 class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
 
     def __init__(self, recog):

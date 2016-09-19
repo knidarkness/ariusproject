@@ -3,12 +3,13 @@ from PlainHTTPClient import PlainHTTPClient
 import sys
 import time
 import threading
+from singleton import singleton
 sys.path.append("../")
 from config import config
 from logger import Logger
 logger = Logger("Core")
 
-
+@singleton
 class HTTPCoreUpdater(AbstractCoreUpdater, threading.Thread):
     def __init__(self, lock, debug=False):
         threading.Thread.__init__(self)

@@ -12,6 +12,7 @@ from QPyDataFinder import QPyDataFinder
 from TaggedDataFinder import TaggedDataFinder
 from KeywordsQueryGenerator import KeywordsQueryGenerator
 from NoModifyingQueryGenerator import NoModifyingQueryGenerator
+from singleton import singleton
 
 import random
 import sys
@@ -23,6 +24,7 @@ from logger import Logger
 logger = Logger("Core")
 
 
+@singleton
 class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
 
     def __init__(self, recog):
