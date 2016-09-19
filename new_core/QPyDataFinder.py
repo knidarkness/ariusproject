@@ -8,7 +8,8 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 
 
 class QPyDataFinder(AbstractDataFinder):
-    def __init__(self):
+    def __init__(self, query_generator):
+        super(QPyDataFinder, self).__init__(query_generator)
         self._sparql = SPARQLWrapper("http://dbpedia.org/sparql")
         self._dbpedia = quepy.install("dbpedia")
 

@@ -7,7 +7,8 @@ from config import config
 
 
 class ESearchDataFinder(AbstractDataFinder):
-    def __init__(self):
+    def __init__(self, query_generator):
+        super(ESearchDataFinder, self).__init__(query_generator)
         self._host = config["elastic_host"]
         self._index = config["elastic_index"]
         self._type = config["elastic_type"]
