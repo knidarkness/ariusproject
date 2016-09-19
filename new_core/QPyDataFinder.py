@@ -1,69 +1,16 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-"""
-This is a question answering module for Arius. It uses
-QuePy package and dbpedia database as its back-end.
-"""
 import time
 import random
 import datetime
+from AbstractDataFinder import AbstractDataFinder
 
 import quepy
 from SPARQLWrapper import SPARQLWrapper, JSON
 
 
-class QAConnector:
-    """
-    This is the main class of the module.
-
-    To get an abstract for the request you have use
-    following syntax:
-
-    con = QAConnector()
-    con.get_abstract(your_query),
-    where your_query is a query in natural form (e.g. 'what is Softserve').
-
-    IMPORTANT: upper- and lowercase difference in each single letter is
-    really important here. (e.g. 'softserve' != 'SoftServe' != 'Softserve')
-    """
-
+class QPyDataFinder(AbstractDataFinder):
     def __init__(self):
         self._sparql = SPARQLWrapper("http://dbpedia.org/sparql")
         self._dbpedia = quepy.install("dbpedia")
-
-    def get_abstract(self, question):
-        target, query, metadata = self._dbpedia.get_query(question)
-
-        if isinstance(metadata, tuple):
-            query_type = metadata[0]
-            metadata = metadata[1]
-        else:
-            query_type = metadata
-            metadata = None
-
-        if query is None:
-            print 'no query'
-            return None
-
-        if target.startswith("?"):
-            target = target[1:]
-        if query:
-            print query
-            self._sparql.setQuery(query)
-            self._sparql.setReturnFormat(JSON)
-            results = self._sparql.query().convert()
-
-            if not results["results"]["bindings"]:
-                return None
-            get_handlers = {
-                "define": self._get_define,
-                "enum": self._get_enum,
-                "time": self._get_time,
-                "literal": self._get_literal,
-                "age": self._get_age,
-            }
-            return get_handlers[query_type](results, target, metadata)
 
     def _get_define(self, results, target, metadata=None):
         for result in results["results"]["bindings"]:
@@ -168,6 +115,35 @@ class QAConnector:
         else:
             return results["results"]["bindings"][0]["url"]["value"]
 
-if __name__ == '__main__':
-    c = QAConnector()
-    print c.get_abstract('What is a "Heckler & Koch G36"?')
+    def getResult(self, question):
+        target, query, metadata = self._dbpedia.get_query(question)
+
+        if isinstance(metadata, tuple):
+            query_type = metadata[0]
+            metadata = metadata[1]
+        else:
+            query_type = metadata
+            metadata = None
+
+        if query is None:
+            print 'no query'
+            return None
+
+        if target.startswith("?"):
+            target = target[1:]
+        if query:
+            print query
+            self._sparql.setQuery(query)
+            self._sparql.setReturnFormat(JSON)
+            results = self._sparql.query().convert()
+
+            if not results["results"]["bindings"]:
+                return None
+            get_handlers = {
+                "define": self._get_define,
+                "enum": self._get_enum,
+                "time": self._get_time,
+                "literal": self._get_literal,
+                "age": self._get_age,
+            }
+            return get_handlers[query_type](results, target, metadata)
