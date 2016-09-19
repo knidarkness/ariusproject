@@ -1,9 +1,9 @@
 import time
 import random
 import datetime
-from AbstractDataFinder import AbstractDataFinder
-
 import quepy
+from AbstractDataFinder import AbstractDataFinder
+from Result import Result
 from SPARQLWrapper import SPARQLWrapper, JSON
 
 
@@ -116,7 +116,7 @@ class QPyDataFinder(AbstractDataFinder):
         else:
             return results["results"]["bindings"][0]["url"]["value"]
 
-    def getResult(self, question):
+    def getRawResult(self, question):
         target, query, metadata = self._dbpedia.get_query(question)
 
         if isinstance(metadata, tuple):
@@ -147,4 +147,4 @@ class QPyDataFinder(AbstractDataFinder):
                 "literal": self._get_literal,
                 "age": self._get_age,
             }
-            return get_handlers[query_type](results, target, metadata)
+            return Result(get_handlers[query_type](results, target, metadata), 'speech')
