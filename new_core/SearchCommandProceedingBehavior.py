@@ -22,6 +22,10 @@ logger = Logger("Core[Searching]")
 
 
 class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
+    """
+    This class is implemented as a singleton as it store history of search
+    and required to call the same instance during all program run.
+    """
     instance = None
 
     @staticmethod
