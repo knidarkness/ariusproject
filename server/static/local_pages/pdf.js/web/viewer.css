@@ -433,14 +433,14 @@ html[dir='rtl'] #outerContainer.sidebarOpen > #mainContainer {
 html[dir='ltr'] #sidebarContent {
   left: 0;
   box-shadow: inset -1px 0 0 hsla(0,0%,0%,.25);
-}
+} 
 html[dir='rtl'] #sidebarContent {
   right: 0;
   box-shadow: inset 1px 0 0 hsla(0,0%,0%,.25);
 }
 
 #viewerContainer {
-  overflow: auto;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
   position: absolute;
   top: 0;
@@ -530,7 +530,7 @@ html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
   width: 0%;
   height: 100%;
   background-color: #ddd;
-  overflow: hidden;
+  overflow: auto;
   -webkit-transition: width 200ms;
   transition: width 200ms;
 }
