@@ -1,5 +1,5 @@
 
-class AbstractDataInterface:
+class AbstractDataInterface(object):
     """
     This is an interface for DataInterface object. They are
     used to get access to all available data sources.

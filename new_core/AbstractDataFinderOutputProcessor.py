@@ -1,4 +1,4 @@
-class AbstractDataFinderOutputProcessor:
+class AbstractDataFinderOutputProcessor(object):
     """
     This is an ABC for DataFinderOutputProcessor, which is
     used to proceed DataFinder`s output.

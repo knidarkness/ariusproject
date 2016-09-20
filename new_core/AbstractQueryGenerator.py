@@ -1,4 +1,4 @@
-class AbstractQueryGenerator:
+class AbstractQueryGenerator(object):
     """
     This is an interface for a QueryGenerator class.
     It must implement a get_query method which takes a string and

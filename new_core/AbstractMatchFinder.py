@@ -1,4 +1,4 @@
-class AbstractMatchFinder:
+class AbstractMatchFinder(object):
     """
     This is used to define interface of MatchFinder objects, used for
     string matching in the CommandRecognizer.
