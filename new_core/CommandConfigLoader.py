@@ -3,7 +3,7 @@ sys.path.append("../")
 from config import config
 
 
-class CommandConfigLoader:
+class CommandConfigLoader(object):
     """
     This class is used to load commands from format
     like ["COM1", "COM2"] to a dictionary, with

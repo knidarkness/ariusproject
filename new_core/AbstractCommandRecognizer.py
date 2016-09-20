@@ -1,4 +1,4 @@
-class AbstractCommandRecognizer:
+class AbstractCommandRecognizer(object):
     """
     This is an interface for command recognizing classes.
     It must provide at least a method recognize command, which
