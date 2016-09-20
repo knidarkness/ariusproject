@@ -2,18 +2,20 @@ from AbstractCoreUpdater import AbstractCoreUpdater
 from PlainHTTPClient import PlainHTTPClient
 import sys
 import time
+import threading
+from singleton import singleton
 sys.path.append("../")
 from config import config
 from logger import Logger
 logger = Logger("Core")
 
-
-class HTTPCoreUpdater(AbstractCoreUpdater):
+@singleton
+class HTTPCoreUpdater(AbstractCoreUpdater, threading.Thread):
     def __init__(self, lock, debug=False):
         threading.Thread.__init__(self)
         self._lock = lock
         self._debug = debug
-        self._connection = PlainHTTPClient(1, 1 ,1)
+        self._connection = PlainHTTPClient(1, 1, 1)
         self._input_speech = None
 
     def run(self):
@@ -34,4 +36,3 @@ class HTTPCoreUpdater(AbstractCoreUpdater):
         self._input_speech = None
         self._lock.release()
         return u_input
-

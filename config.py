@@ -34,6 +34,13 @@ config = {
     "core_server_output_url": "/core/output",
 
     "core_command_recog_confidence": 0.7,
+
+    "core_commands_idle": ["CANCEL", "START", "MUTE", "UNMUTE"],
+    "core_commands_search": ["CANCEL", "START", "MUTE", "UNMUTE"],
+    "core_commands_search_failed": ["CANCEL", "START", "MUTE", "UNMUTE"],
+    "core_commands_displaying_data": ["CANCEL", "START", "MUTE", "UNMUTE", "ZOOM_IN", "ZOOM_OUT"
+                                      "NO_ZOOM", "SCROLL_DOWN", "SCROLL_UP", "PAUSE", "PLAY",
+                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA"],
     "core_commands": {
         "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
         "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
@@ -41,7 +48,6 @@ config = {
         "SCROLL_DOWN": ['page down', 'scroll down'],
         "SCROLL_UP": ['page up', 'scroll up'],
         "CANCEL": ['cancel', 'bye', 'thanks'],
-        "WAIT": ['wait'],
         "PAUSE": ['pause'],
         "PLAY": ['play'],
         "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
@@ -49,10 +55,7 @@ config = {
         "START": ['ok arius', 'what is that', 'what the fuck'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
-        "UNMUTE": ['unmute', 'make it louder', 'turn sound on'],
-        "CONTINIOUS_SCROLL_DOWN" : ['start scrolling down'],
-        "CONTINIOUS_SCROLL_UP": ['start scrolling up'],
-        "STOP_SCROLL" : ['stop scrolling']
+        "UNMUTE": ['unmute', 'make it louder', 'turn sound on']
     },
     "core_update_interval": 0.1,
 
@@ -62,7 +65,7 @@ config = {
     "output_server_home": "server/static/local_pages/pdf.js/web/",
     "output_data_pdf_viewer": "server/static/local_pages/pdf.js/web/viewer.html",
     "output_header_height": .05,
-    "output_footer_height": .36 ,
+    "output_footer_height": .36,
     "output_browser_top_page": "/screens/black",
     "output_browser_bottom_page": "/screens/black",
     "output_update_frequency": 200,
@@ -76,8 +79,7 @@ config = {
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
         "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
-        "STOP_SCROLL" : ['Done.', 'I am designed to serve you.', 'Ok man.'],
-        "START" : ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!']
+        "START": ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!']
     },
 
     "elastic_host": "http://localhost:9200",
@@ -90,23 +92,23 @@ config = {
     "marytts_port": "59125",
 
     "default_voice": "marytts_voice1",
-    "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", 
+    "marytts_voice1": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE",
                         "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0",
                         "effect_F0Add_selected": "on", "effect_F0Add_parameters": "f0Add:65.0;"},
     "marytts_voice1_volume": 1.0,
-    "marytts_voice2": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", 
-                        "effect_F0Add_selected": "on", "effect_F0Add_parameters": "f0Add:65.0;"},
+    "marytts_voice2": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE",
+                       "effect_F0Add_selected": "on", "effect_F0Add_parameters": "f0Add:65.0;"},
     "marytts_voice2_volume": 1.0,
-    "marytts_voice3": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE", 
-                        "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
+    "marytts_voice3": {"INPUT_TYPE": "TEXT", "LOCALE": "en_US", "VOICE": "cmu-slt-hsmm", "OUTPUT_TYPE": "AUDIO", "AUDIO": "WAVE",
+                       "effect_FIRFilter_selected": "on", "effect_FIRFilter_parameters": "type:2;fc1:500.0;fc2:2000.0"},
     "marytts_voice3_volume": 1.0,
 
     "background_music": "organ_background.ogg",
     "background_music_volume": 0.2,
 
-    "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', 
+    "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif',
                         '7.gif', '8.gif', '9.gif', '10.gif', '11.gif'],
-    
+
     "predefined_videos": {
         "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],
         "barista_coffe": ["coffe", "smart home"],

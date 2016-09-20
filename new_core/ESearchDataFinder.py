@@ -1,19 +1,21 @@
+import sys
+import os
 from AbstractDataFinder import AbstractDataFinder
 from elasticsearch import Elasticsearch
-
-import sys
+from Result import Result
 sys.path.append("../")
 from config import config
 
 
 class ESearchDataFinder(AbstractDataFinder):
-    def __init__(self):
+    def __init__(self, query_generator):
+        super(ESearchDataFinder, self).__init__(query_generator)
         self._host = config["elastic_host"]
         self._index = config["elastic_index"]
         self._type = config["elastic_type"]
         self._es = Elasticsearch(self._host)
 
-    def getResult(self, query):
+    def getRawResult(self, query):
         """Searches for all documents that are relevant to the query.
         Returns a sorted by relevancy list of results, where every item is a tuple(path_to_file, score)"""
         queryBody = {
@@ -36,4 +38,4 @@ class ESearchDataFinder(AbstractDataFinder):
         result = []
         for doc in response['hits']['hits']:
             result.append(doc['_source']['title'])
-        return result
+        return [Result(r[0], os.path.splitext(r[0])[1]) for r in result]

@@ -1,6 +1,7 @@
+import os
 from AbstractDataFinder import AbstractDataFinder
 from tinydb import TinyDB, Query
-
+from Result import Result
 
 class TaggedDataFinder(AbstractDataFinder):
     def __init__(self, query_generator, database):
@@ -9,7 +10,7 @@ class TaggedDataFinder(AbstractDataFinder):
         self.__tags = self.__db.table('tag_data')
         self.__synonyms = self.__db.table('synonyms')
 
-    def find_tags(self, keywords):
+    def getRawResult(self, keywords):
         result = []
         # replace synonyms by keys
         keywords = self.get_keys_by_synonyms(keywords)
@@ -21,7 +22,7 @@ class TaggedDataFinder(AbstractDataFinder):
                 result.append(Entry(d['name'], d['path'], float(d['priority']), conf))
         if result:
             result = sorted(result, key=lambda s: (s.confidence, - s.priority), reverse=True)
-            return [r.path for r in result]
+            return [Result(r.path, os.path.splitext(r.path)[1]) for r in result]
             # return [(r.path, r.priority, r.confidence) for r in result]
         return None
 
