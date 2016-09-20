@@ -1,6 +1,7 @@
 import os
 from AbstractDataFinder import AbstractDataFinder
 from DifflibMatchFinder import DifflibMatchFinder
+from FuzzyMatchFinder import FuzzyMatchFinder
 from tinydb import TinyDB, Query
 from Result import Result
 import sys
@@ -44,7 +45,8 @@ class TaggedDataFinder(AbstractDataFinder):
         return res
 
     def __is_in(self, string1, string2):
-        if DifflibMatchFinder.getMatch(string1, string2) > config['core_tag_search_min_confidence']:
+        confidence = DifflibMatchFinder.getMatch(string1.lower(), string2.lower())
+        if confidence > config['core_tag_search_min_confidence']:
             return True
         return False
 
@@ -64,15 +66,14 @@ class TaggedDataFinder(AbstractDataFinder):
         return list(set(keys))
 
     def get_keys_by_synonym(self, keyword):
-        def is_in(tag_list, tag):
-            return tag.lower() in [tag_entry.lower() for tag_entry in tag_list]
-        tag_id = None
-        tag = Query()
-        tag_id = self.__synonyms.search(tag.equal.test(is_in, keyword))
-        keys = []
-        for i in range(len(tag_id)):
-            keys.append(tag_id[i]["key"])
-        return keys
+        data = self.__synonyms.all()
+        result = set()
+        for synonym in data:
+            for word in synonym['equal']:
+                if self.__is_in(keyword, word):
+                    result.add(synonym['key'])
+                    break
+        return list(result)
 
 
 class Entry:
@@ -81,3 +82,9 @@ class Entry:
         self.path = path
         self.confidence = confidence
         self.priority = priority
+
+if __name__ == '__main__':
+    from KeywordsQueryGenerator import KeywordsQueryGenerator
+    from NoModifyingDataFinderOutputProcessor import NoModifyingDataFinderOutputProcessor
+    t = TaggedDataFinder(KeywordsQueryGenerator(), NoModifyingDataFinderOutputProcessor(), config['database_file'])
+    print(t.getRawResult(['mylkos']))
