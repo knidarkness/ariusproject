@@ -8,7 +8,7 @@ from CommandConfigLoader import CommandConfigLoader
 sys.path.append("../")
 from config import config
 from logger import Logger
-logger = Logger("Core[Display]")
+logger = Logger("Core[DisplayData]")
 
 
 class DisplayingDataCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
@@ -28,6 +28,7 @@ class DisplayingDataCommandProceedingBehavior(AbstractCoreCommandProceedingBehav
         self._output_connection = CoreOutputSingleton.getInstance()
 
     def proceed(self, user_input, parent):
+        from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
         recognized_command = self._command_recognizer.recognize_command(user_input)
         if recognized_command == "CANCEL":
             self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
@@ -36,16 +37,25 @@ class DisplayingDataCommandProceedingBehavior(AbstractCoreCommandProceedingBehav
             from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
             parent.setProceedingBehavior(IdleCommandProceedingBehavior.getInstance())
             return None
-        elif recognized_command in self.__commands_dict and recognized_command != 'START' and recognized_command != 'DETAILED_DATA':
+        elif recognized_command in self.__commands_dict and recognized_command != 'START' and recognized_command != "DETAILED_DATA":
             self._output_connection.sendPOST({'type': recognized_command, 'command': ''})
             if recognized_command not in ['PLAY', 'PAUSE']:
                 self._output_connection.sendPOST({'type': 'SPEAK',
                                                   'command': random.choice(config['voice_command_output'][recognized_command])})
+        elif recognized_command == 'DETAILED_DATA':
+            logger.info('Trying to find more info...')
+
+            self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'SEARCH'})
+            self._output_connection.sendPOST({'type': 'SPEAK',
+                                              'command': random.choice(config['voice_command_output']['DETAILED_DATA'])})
+            parent.user_input = SearchCommandProceedingBehavior.getInstance().prev_query
+            parent.setProceedingBehavior(SearchCommandProceedingBehavior.getInstance())
+            return None
+
         elif recognized_command == "START":
             self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'SEARCH'})
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
-            from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
             parent.setProceedingBehavior(SearchCommandProceedingBehavior.getInstance())
             return None
 

@@ -28,7 +28,7 @@ class TTSClient(threading.Thread):
         Get text to process and then add result file path to the phrases queue
         """
         while self._is_running:
-            self._process_text(self._get_text_to_process)
+            self._process_text(self._get_text_to_process())
 
     def _get_text_to_process(self):
         """

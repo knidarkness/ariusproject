@@ -39,9 +39,9 @@
 		"description": "It is the advertisment of SoftServe service related to healthcare"
 		},
 	
-	"mylko_byod":{
+	"small_security_ss":{
 		"video_name": "mylko_byod.mp4.webm",
-		"title": "Mylko BYOD",
+		"title": "Secutity",
 		"style": "default",
 		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
 		"description": "Vasyl Mylko about byod"
@@ -55,9 +55,9 @@
 		"description": "Vasyl Mylko about IoT"
 		},
 		
-	"SaaS_offer_ss":{
-		"video_name": "SaaS_offer_ss.mp4.webm",
-		"title": "SaaS",
+	"AbilitonDashboardWearable":{
+		"video_name": "AbilitonDashboardWearable.mp4.webm",
+		"title": "Abilition Dashboard Weareble",
 		"style": "default",
 		"support_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
 		"description": "SaaS offer of SS. Ads."

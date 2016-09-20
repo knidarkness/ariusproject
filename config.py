@@ -79,7 +79,8 @@ config = {
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
         "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
-        "START": ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!']
+        "START": ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!'],
+        "DETAILED_DATA": ["Loading"]
     },
 
     "elastic_host": "http://localhost:9200",
@@ -98,7 +99,7 @@ config = {
     "background_music": "organ_background.wav",
 
     "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif',
-                        '7.gif', '8.gif', '9.gif', '10.gif', '11.gif'],
+                        '7.gif', '8.gif', '9.gif', '10.gif'],
 
     "predefined_videos": {
         "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],

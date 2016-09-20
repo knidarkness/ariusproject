@@ -26,7 +26,6 @@ class CoreController:
         self._updater = HTTPCoreUpdater(self.__lock)
         self._proceeding_behavior.setLock(self.__lock)
         self.user_input = None
-        self.__to_search = False
 
     def run(self):
         self._updater.start()
