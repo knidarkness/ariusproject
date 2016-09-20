@@ -42,6 +42,7 @@ sudo apt-get install libqt5webkit5-dev
 sudo apt-get install python-pyqt5.qtsvg
 sudo apt-get install python-pyqt5.qtwebkit
 sudo apt-get install ffmpeg
+sudo apt-get install portaudio19-dev python-all-dev
 cd env/lib/python2.7/site-packages
 echo ../../../../ >> config.pth
 cd ../../../../
