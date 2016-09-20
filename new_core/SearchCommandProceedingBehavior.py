@@ -49,7 +49,6 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         self._parent = None
 
     def proceed(self, user_input, parent):
-        logger.debug("PROCEEDING USER INPUT", user_input)
         self._parent = parent
         self._parent.user_input = None
         self.prev_query = user_input

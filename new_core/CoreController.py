@@ -1,5 +1,6 @@
 from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
 from HTTPCoreUpdater import HTTPCoreUpdater
+from CoreOutputSingleton import CoreOutputSingleton
 import time
 import threading
 import sys
@@ -19,9 +20,12 @@ class CoreController:
     Also, in this class user can set Updater source, which
     can be useful in case of dynimical env.
     """
+
     def __init__(self):
         self.__lock = threading.RLock()
 
+        self._output_connection = CoreOutputSingleton.getInstance()
+        self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
         self._proceeding_behavior = IdleCommandProceedingBehavior.getInstance()
         self._updater = HTTPCoreUpdater(self.__lock)
         self._proceeding_behavior.setLock(self.__lock)
