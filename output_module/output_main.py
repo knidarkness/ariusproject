@@ -526,9 +526,8 @@ class OutputInterface:
         Voices can be configured through config.py quit easy.
         """
         logger.info('Speaking following text {}'.format(input_text))
-        voice = config["default_voice"]
         if self._speaker is None:  # if there wasn`t no tts requests before, create a TTS client
-            self._speaker = Speaker(config[voice], config[
+            self._speaker = Speaker(config['default_voice'], config[
                                     "marytts_host"], config["marytts_port"])
         # otherwise just stop previous speaking session (if Arius isn`t
         # speaking at the moment, nothing will crash)
