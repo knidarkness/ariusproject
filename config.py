@@ -42,18 +42,18 @@ config = {
                                       "NO_ZOOM", "SCROLL_DOWN", "SCROLL_UP", "PAUSE", "PLAY",
                                       "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA"],
     "core_commands": {
-        "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
+        "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more', 'make it closer'],
         "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
-        "NO_ZOOM": ['normal size', 'zero zoom', 'no zoom', 'zoom reset', 'reset zoom'],
-        "SCROLL_DOWN": ['page down', 'scroll down'],
-        "SCROLL_UP": ['page up', 'scroll up'],
+        "NO_ZOOM": ['normal size', 'zero zoom', 'no zoom', 'zoom reset', 'reset zoom', 'default zoom', 'default size'],
+        "SCROLL_DOWN": ['page down', 'scroll down', 'down'],
+        "SCROLL_UP": ['page up', 'scroll up', 'up'],
         "CANCEL": ['cancel', 'bye', 'thanks'],
-        "PAUSE": ['pause'],
+        "PAUSE": ['pause', 'stop'],
         "PLAY": ['play'],
         "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
         "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn the volume down', 'reduce the volume'],
         "START": ['ok arius', 'what is that', 'what the fuck'],
-        "DETAILED_DATA": ['show more'],
+        "DETAILED_DATA": ['show more', 'give me details'],
         "MUTE": ['mute', 'shut up'],
         "UNMUTE": ['unmute', 'make it louder', 'turn sound on']
     },
@@ -72,12 +72,12 @@ config = {
     "output_user_agent": "Mozilla/5.0 (Linux; U; Android-4.0.3; en-us; Galaxy Nexus Build/IML74K) AppleWebKit/535.7 (KHTML, like Gecko) CrMo/16.0.912.75 Mobile Safari/535.7",
 
     "voice_command_output": {
-        "CANCEL": ["Operation cancelled.", "See you.", "Have a nice day.", "See you soon."],
-        "ZOOM_IN": ["Enlarging.", "Ok man."],
+        "CANCEL": ["Thanks for using me.", "See you.", "Have a nice day.", "See you soon."],
+        "ZOOM_IN": ["Enlarging.", "Will be done"],
         "ZOOM_OUT": ["Zooming out.", "Will be done."],
-        "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok man."],
+        "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok my friend."],
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
-        "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
+        "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir.", "Searching"],
         "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
         "START": ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!'],
         "DETAILED_DATA": ["Loading"]
@@ -100,18 +100,6 @@ config = {
 
     "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif',
                         '7.gif', '8.gif', '9.gif', '10.gif'],
-
-    "predefined_videos": {
-        "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],
-        "barista_coffe": ["coffe", "smart home"],
-        "beer_recognizer": ["computer vision", "object recognition", "beer"],
-        "human_accelerator_ss": ["healthcare", "human accelerator"],
-        "mylko_byod": ["bring your own device", "apple watch", "byod"],
-        "mylko_cool_thing": ["internet of things", "take the cloud to the ground", "iot"],
-        "SaaS_offer_ss": ["software as a service", "software service", "SaaS"],
-        "security_ss": ["security", "information privacy"],
-        "lol": ["techical communication", "documentation"]
-    }
 }
 
 config["flask_server_home"] = 'http://' + config['flask_server_address'] + \
