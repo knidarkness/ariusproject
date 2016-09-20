@@ -114,7 +114,7 @@ class OutputUpdater(threading.Thread):
 
     def _is_command(self):
         """
-        Return True if there is command which output 
+        Return True if there is command which output
         have to execue
         """
         if self._command_queue:
@@ -312,7 +312,7 @@ class OutputInterface:
                 self._main_browser_zoom_in()
             elif command[0] == 'ZOOM_OUT':
                 self._main_browser_zoom_out()
-            elif command[0] == 'ZOOM_NONE':
+            elif command[0] == 'NO_ZOOM':
                 self._main_browser_reset_zoom()
 
             # as well as scroll.
@@ -356,6 +356,10 @@ class OutputInterface:
             elif command[0] == "STOP_SPEAK":
                 self._player.play()
                 self._speak_stop()
+            elif command[0] == 'NEXT_PAGE':
+                self._main_browser_next_page()
+            elif command[0] == 'PREV_PAGE':
+                self._main_browser_prev_page()
 
             elif command[0] == 'MUTE':
                 self._mute()
@@ -497,8 +501,13 @@ class OutputInterface:
         well with all content types.
         """
         logger.debug('Zooming main content view in')
-        self._zoom_factor += .1
-        self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
+        if self._cur_filetype == "pdf":
+            string_js = """PDFViewerApplication.zoomIn();"""
+            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
+        elif self._cur_filetype == "webpage":
+
+            self._zoom_factor += .1
+            self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _main_browser_reset_zoom(self):
         """
@@ -507,17 +516,35 @@ class OutputInterface:
         changes.
         """
         logger.debug('Resetting zoom in the main content view')
-        self._zoom_factor = 1
-        self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
+        if self._cur_filetype == "pdf":
+            string_js = 'PDFViewerApplication.pdfViewer.currentScaleValue = "page-width"'
+            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
+        elif self._cur_filetype == "webpage":
+            self._zoom_factor = 1
+            self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
 
     def _main_browser_zoom_out(self):
         """
         This methoud simply zooms main content view out. It works
         well with all content types.
         """
-        logger.debug('Zooming main content view ouy')
-        self._zoom_factor -= .1
-        self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
+        logger.debug('Zooming main content view out')
+        if self._cur_filetype == "pdf":
+            string_js = """PDFViewerApplication.zoomOut();"""
+            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
+        elif self._cur_filetype == "webpage":
+            self._zoom_factor -= .1
+            self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
+
+    def _main_browser_next_page(self):
+        logger.debug('Next page')
+        script_js = """PDFViewerApplication.page++;"""
+        self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
+
+    def _main_browser_prev_page(self):
+        logger.debug('Previous page')
+        script_js = """PDFViewerApplication.page--;"""
+        self._main_browser.page().mainFrame().evaluateJavaScript(script_js)
 
     def _speak_text(self, input_text):
         """

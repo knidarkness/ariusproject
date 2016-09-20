@@ -40,7 +40,7 @@ config = {
     "core_commands_search_failed": ["CANCEL", "START", "MUTE", "UNMUTE"],
     "core_commands_displaying_data": ["CANCEL", "START", "MUTE", "UNMUTE", "ZOOM_IN", "ZOOM_OUT",
                                       "NO_ZOOM", "SCROLL_DOWN", "SCROLL_UP", "PAUSE", "PLAY",
-                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA"],
+                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA", "NEXT_PAGE", "PREV_PAGE"],
     "core_commands": {
         "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more', 'make it closer'],
         "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
@@ -50,6 +50,8 @@ config = {
         "CANCEL": ['cancel', 'bye', 'thanks'],
         "PAUSE": ['pause', 'stop'],
         "PLAY": ['play'],
+        "NEXT_PAGE": ['next page'],
+        "PREV_PAGE": ['previous page'],
         "VOLUME_UP": ['volume up', 'increase volume', 'turn up the volume'],
         "VOLUME_DOWN": ['volume down', 'decrease volume', 'turn the volume down', 'reduce the volume'],
         "START": ['ok arius', 'what is that', 'what the fuck'],
@@ -77,11 +79,14 @@ config = {
         "ZOOM_IN": ["Enlarging.", "Will be done"],
         "ZOOM_OUT": ["Zooming out.", "Will be done."],
         "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok my friend."],
+        "NO_ZOOM": ["Reset zoom.", "Will be done."],
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir.", "Searching"],
         "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
         "START": ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!'],
-        "DETAILED_DATA": ["Loading"]
+        "DETAILED_DATA": ["Loading."],
+        "NEXT_PAGE": ['Next page.'],
+        "PREV_PAGE": ['Prevoius page.'],
     },
 
     "elastic_host": "http://localhost:9200",
@@ -98,7 +103,7 @@ config = {
                         "effect_F0Add_selected": "on", "effect_F0Add_parameters": "f0Add:65.0;"},
 
     "background_music": "organ_background.wav",
-
+    "background_music_volume": 0.3,
     "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif',
                         '7.gif', '8.gif', '9.gif', '10.gif'],
 }
