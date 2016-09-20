@@ -10,6 +10,15 @@ logger = Logger("Core[CoreController]")
 
 
 class CoreController:
+    """
+    This is a main class of the core module.
+
+    It implements interaction between instance of AbstractCoreUpdater
+    and ProceedingBehavior objects of the Core module.
+
+    Also, in this class user can set Updater source, which
+    can be useful in case of dynimical env.
+    """
     def __init__(self):
         self.__lock = threading.RLock()
 
@@ -17,7 +26,6 @@ class CoreController:
         self._updater = HTTPCoreUpdater(self.__lock)
         self._proceeding_behavior.setLock(self.__lock)
         self.user_input = None
-        self.__to_search = False
 
     def run(self):
         self._updater.start()

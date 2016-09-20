@@ -22,6 +22,10 @@ logger = Logger("Core[Searching]")
 
 
 class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
+    """
+    This class is implemented as a singleton as it store history of search
+    and required to call the same instance during all program run.
+    """
     instance = None
 
     @staticmethod
@@ -41,11 +45,14 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         self._data_interface.registerDataFinder(TaggedDataFinder(KeywordsQueryGenerator(), NoModifyingDataFinderOutputProcessor(), config['database_file']), 2)
         self._data_interface.registerDataFinder(ESearchDataFinder(KeywordsQueryGenerator(), NoModifyingDataFinderOutputProcessor()), 3)
         self._history = []
+        self._prev_query = []
         self._parent = None
 
     def proceed(self, user_input, parent):
+        logger.debug("PROCEEDING USER INPUT", user_input)
         self._parent = parent
         self._parent.user_input = None
+        self.prev_query = user_input
 
         recognized_command = self._command_recognizer.recognize_command(user_input)
         if recognized_command == "CANCEL":
@@ -74,13 +81,15 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         if results is not None and len(results) != 0:
             _id = 0
             result = results[_id]
-            while result in self._history:
+            logger.debug(self._history)
+            while result.body in [history_entry.body for history_entry in self._history]:
                 _id += 1
                 if _id >= len(results):
                     ret_result.append({'type': 'OPEN_SCREEN', 'command': 'ERROR'})
                     return None
                 result = results[_id]
             self._history.append(result)
+
             if result.type == '.pdf':
                 rel_path = os.path.relpath(config['root_dir'] + config['elastic_docs_dir'] + result.body,
                                            config['root_dir'] + config['output_server_home'])

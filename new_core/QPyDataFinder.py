@@ -153,5 +153,5 @@ class QPyDataFinder(AbstractDataFinder):
                 "literal": self._get_literal,
                 "age": self._get_age,
             }
-            print get_handlers[query_type](results)
-            return [Result(get_handlers[query_type](results, target, metadata), 'speech')]
+            r = Result(get_handlers[query_type](results, target, metadata), 'speech')
+            return [r]

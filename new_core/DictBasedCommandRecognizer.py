@@ -8,6 +8,14 @@ logger = Logger("Core[CommandRecognizer]")
 
 
 class DictBasedCommandRecognizer(AbstractCommandRecognizer):
+    """
+    This is a recognizer of commands which works with
+    command dictionaries. It should be inited
+    with a dict like {"COM1": [synonym_list]}.
+
+    It will return on of the keys from
+    the command dictionary.
+    """
     def __init__(self, commands, finder):
         if type(commands) != dict:
             raise ValueError

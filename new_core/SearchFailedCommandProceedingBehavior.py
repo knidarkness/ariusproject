@@ -12,6 +12,10 @@ logger = Logger("Core[SearchFailed]")
 
 
 class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
+    """
+    This class is implemented as a singleton as it is
+    required to call the same instance during all program run.
+    """
     instance = None
 
     @staticmethod
