@@ -3,6 +3,7 @@ from AbstractDataFinder import AbstractDataFinder
 from DifflibMatchFinder import DifflibMatchFinder
 from tinydb import TinyDB, Query
 from Result import Result
+import sys
 sys.path.append("../")
 from config import config
 
