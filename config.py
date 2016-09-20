@@ -98,7 +98,7 @@ config = {
     "background_music": "organ_background.wav",
 
     "animated_images": ['mylko.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif',
-                        '7.gif', '8.gif', '9.gif', '10.gif', '11.gif'],
+                        '7.gif', '8.gif', '9.gif', '10.gif'],
 
     "predefined_videos": {
         "austin_ss_ux_ui": ["austin", "texas", "headquarter", "ux/ui"],

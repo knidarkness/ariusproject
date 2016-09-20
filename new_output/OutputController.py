@@ -272,5 +272,14 @@ class OutputController(threading.Thread):
         # and finally load the result
         self._browser.load_url(source)
 
+    def get_next_speech_phrase(self):
+        """
+        Return path to the next speech phrase file if it exist
+        """
+        if self.tts_phrases_queue:
+            return self.tts_phrases_queue.pop(0)
+        else:
+            return False
+
 
     

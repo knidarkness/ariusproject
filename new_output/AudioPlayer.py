@@ -17,12 +17,13 @@ class AudioPlayer(threading.Thread):
     Class is responsible for playing background music and speech.
     """
 
-    def __init__(self, speech_volume=0, music_volume=0):
+    def __init__(self, speech_volume=0, music_volume=0, controller):
         """
         Volume argument show increasing(decreasing) of original audiofile by dB.
         """
         self._speech_volume = speech_volume
         self._music_volume = music_volume
+        self._controller = controller
         self._is_speaking = False
         self._is_music = False
         self._is_running = True
@@ -39,7 +40,11 @@ class AudioPlayer(threading.Thread):
         while self._is_running:
 
             if not self._speaking_chunks:
-                self._is_speaking = False
+                next_phrase = self._output.get_next_speech_phrase():
+                if not next_phrase:
+                    self._is_speaking = False
+                else:
+                    self.play_speech(next_phrase)
 
             if self._is_music and self._is_speaking:
                 music_chunk = self._music_chunks.pop(0) + self._music_volume

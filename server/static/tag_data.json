@@ -8,14 +8,6 @@
          ],
          "key":"mylko"
       },
-      "2":{
-         "equal":[
-            "kytsmey",
-            "taras kytsmey",
-            "CEO"
-         ],
-         "key":"CEO"
-      },
       "3":{
          "equal":[
             "Amazon Web Services",
@@ -50,7 +42,6 @@
             "laughing",
             "laugh",
             "humor",
-            "death"
          ],
          "key":"funny"
       },
@@ -60,9 +51,83 @@
             "take the cloud to the ground",
             "iot",
             "cool thing",
-            "mylko"
          ],
          "key":"iot"
+      },
+      "8":
+      {
+         "equal":[
+            "beer",
+            "alcohol",
+            "booze",
+         ],
+         "key":"beer"
+      },
+      "9":
+      {
+         "equal":[
+            "Computer Vision",
+            "Machine Vision",
+            "Image processing ",
+            "Pattern recognition",
+         ],
+         "key":"Computer Vision"
+      },
+      "10":
+      {
+         "equal":
+         [
+            "Oleksandr Sukholyester",
+            "Tech lead",
+            "RnD employee",
+         ],
+         "key" : "Oleksandr Sukholyester"
+      },
+      "11":
+      {
+         "equal":
+         [
+            "Oleksandr Sukholyester",
+            "Tech lead",
+            "RnD employee",
+         ],
+         "key" : "Oleksandr Sukholyester"
+      },
+      "12":
+      {
+         "equal":
+         [
+            "Security",
+            "Information Security",
+            "Social Engineering",
+            "Viruses",
+            "Vulnerabilities"
+         ],
+         "key": "Security"
+      },
+      "13":
+      {
+         "equal":
+         [
+            "Project Managament",
+            "Managament",
+            "Teamwork",
+            "Team efficiency",
+            "Team productivity",
+         ],
+         "key": "Project Managament"
+      },
+      "14":
+      {
+         "equal":
+         [
+            "Mobile devices",
+            "Smart watch",
+            "Weareables",
+            "Compact devices",
+            "Weareable devices"
+         ],
+         "key": "Weareable devices"
       }
    },
    "_default":{
@@ -109,7 +174,7 @@
       },
       "13":{
          "priority":2,
-         "path":"eBR solution Case Study.pdf",
+         "path":"eBR solution Case Study.pdf",  
          "name":"Electronic Batch Record Solution",
          "tags":[
             [
@@ -193,7 +258,7 @@
         ]]
       },
 
-            "18":{
+      "18":{
         "priority":"1",
         "path":"austin_ss_ux_ui.webm",
         "name":"austin_ss_ux_ui.mp4",
@@ -205,6 +270,47 @@
             "UX/UI",
             0.5
         ]]
+      },
+      "19":{
+         "priority":"1",
+         "path":"beer_recognizer.mp4.webm",
+         "name": "beer_recognizer",
+         "tags": [
+            ["Computer Vision",
+               0.8],
+            ["Beer",
+               0.8],
+            ["funny",
+               0.7]
+         ]
+      },
+
+      "20":{
+         "priority":"1",
+         "path":"small_security_ss.mp4.webm",
+         "name": "small_security_ss",
+         "tags": [
+            ["Security",
+            1],
+            [
+            "Services",
+            0.7
+            ]
+         ]
+      },
+
+      "21":{
+         "priority":"1",
+         "path":"AbilitonDashboardWearable.mp4.webm",
+         "name": "AbilitonDashboardWearable",
+         "tags": [
+            ["Project Managament",
+            1],
+            [
+            "Weareable device",
+            0.7
+            ]
+         ]
       },
 
       "1":{
