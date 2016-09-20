@@ -1,9 +1,12 @@
-from AbstractQueryGenerator import AbstractQueryGenerator:
+from AbstractQueryGenerator import AbstractQueryGenerator
+
 
 class NoModifyingQueryGenerator(AbstractQueryGenerator):
     """
     This is a QueryGenerator which is used for those DataFinders
     which processes user input without any modifications.
     """
-    def getQuery(self, query):
+
+    def get_query(self, query):
+        print 'query', query
         return query

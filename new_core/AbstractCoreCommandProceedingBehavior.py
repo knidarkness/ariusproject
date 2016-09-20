@@ -8,19 +8,20 @@ class AbstractCoreCommandProceedingBehavior:
     functionality for a method: proceed(user_input), which will implement
     command proceeding, which goes from class` name.
     """
+
     def __init__(self):
         self._out_link = CoreOutputSingleton.getInstance()
-        self.__command_recognizer = None
-        self.__behavior_type = ""
-
-    @property
-    def behavior_type(self):
-        return self.__behavior_type
+        self._command_recognizer = None
+        self.behavior_type = "abstract"
+        self.__lock = None
 
     def setCommandRecognizer(self, recog):
         if isinstance(recog, AbstractCommandRecognizer):
-            self.__command_recognizer = recog
+            self._command_recognizer = recog
         else:
             raise ValueError()
+
+    def setLock(self, lock):
+        self.__lock = lock
 
     def proceed(self, user_input): raise NotImplementedError()

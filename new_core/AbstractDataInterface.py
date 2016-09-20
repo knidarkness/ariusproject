@@ -1,3 +1,4 @@
+
 class AbstractDataInterface:
     """
     This is an interface for DataInterface object. They are
@@ -10,5 +11,7 @@ class AbstractDataInterface:
     To proceed a query use getResults method, with query as a String of user input.
 
     """
+
     def getResults(self, query): raise NotImplementedError()
-    def registerDataFinder(self, data_finder, priority): raise NotImplementedError()
+
+    def registerDataFinder(self, data_finder): raise NotImplementedError()

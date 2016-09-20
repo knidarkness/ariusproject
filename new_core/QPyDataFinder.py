@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import random
 import datetime
@@ -12,8 +13,9 @@ class QPyDataFinder(AbstractDataFinder):
     This data finder gets the text info about the query
     string from the DBPedia.
     """
-    def __init__(self, query_generator):
-        super(QPyDataFinder, self).__init__(query_generator)
+
+    def __init__(self, query_generator, output_processor):
+        super(QPyDataFinder, self).__init__(query_generator, output_processor)
         self._sparql = SPARQLWrapper("http://dbpedia.org/sparql")
         self._dbpedia = quepy.install("dbpedia")
 
@@ -151,4 +153,5 @@ class QPyDataFinder(AbstractDataFinder):
                 "literal": self._get_literal,
                 "age": self._get_age,
             }
-            return Result(get_handlers[query_type](results, target, metadata), 'speech')
+            print get_handlers[query_type](results)
+            return [Result(get_handlers[query_type](results, target, metadata), 'speech')]

@@ -8,5 +8,5 @@ class DifflibMatchFinder(AbstractMatchFinder):
     docs for AbstractMatchFinder.
     """
     @staticmethod
-    def findMatch(string1, string2):
+    def getMatch(string1, string2):
         return SM(None, string1, string2).ratio() * 100

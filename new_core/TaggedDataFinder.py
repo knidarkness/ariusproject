@@ -10,10 +10,11 @@ class TaggedDataFinder(AbstractDataFinder):
     and returns search results from pretagged data.
 
     It returns a list of Result instances with
-    body equal to path, and type qualt to extension.    
+    body equal to path, and type qualt to extension.
     """
-    def __init__(self, query_generator, database):
-        super(TaggedDataFinder, self).__init__(query_generator)
+
+    def __init__(self, query_generator, output_processor, database):
+        super(TaggedDataFinder, self).__init__(query_generator, output_processor)
         self.__db = TinyDB(database)
         self.__tags = self.__db.table('tag_data')
         self.__synonyms = self.__db.table('synonyms')
@@ -41,7 +42,7 @@ class TaggedDataFinder(AbstractDataFinder):
     def get_confidence(self, entry_tags, keywords):
         res = 0
         for keyword in keywords:
-            if keyword in [tag[0].lower() for tag in entry_tags]:
+            if keyword.lower() in [tag[0].lower() for tag in entry_tags]:
                 res += float(tag[1])
         return res
 
@@ -53,7 +54,7 @@ class TaggedDataFinder(AbstractDataFinder):
 
     def get_keys_by_synonym(self, keyword):
         def is_in(tag_list, tag):
-            return tag in tag_list
+            return tag.lower() in [tag_entry.lower() for tag_entry in tag_list]
         tag_id = None
         tag = Query()
         tag_id = self.__synonyms.search(tag.equal.test(is_in, keyword))
