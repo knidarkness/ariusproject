@@ -1,510 +1,510 @@
-{
-   "synonyms":{
-      "1":{
-         "equal":[
+{  
+   "_default":{  
+
+   },
+   "synonyms":{  
+      "24":{  
+         "equal":[  
+            "Austin",
+            "USA",
+            "america",
+            "headquarters"
+         ],
+         "key":"USA"
+      },
+      "25":{  
+         "equal":[  
+            "proposals",
+            "clients",
+            "services",
+            "product"
+         ],
+         "key":"Services"
+      },
+      "26":{  
+         "equal":[  
+            "usability test",
+            "test",
+            "qa",
+            "qc",
+            "quality assurance",
+            "quality control",
+            "bugs"
+         ],
+         "key":"Testing"
+      },
+      "27":{  
+         "equal":[  
+            "Elastic Map Reduce"
+         ],
+         "key":"Elastic Map Reduce"
+      },
+      "20":{  
+         "equal":[  
+            "emotions",
+            "feelings",
+            "mood"
+         ],
+         "key":"Emotions"
+      },
+      "21":{  
+         "equal":[  
+            "innovations",
+            "something new",
+            "creativity"
+         ],
+         "key":"Innovations"
+      },
+      "22":{  
+         "equal":[  
+            "coffe",
+            "Barista",
+            "coffe machine"
+         ],
+         "key":"Barista"
+      },
+      "23":{  
+         "equal":[  
+            "interface design",
+            "user experience",
+            "user interface"
+         ],
+         "key":"UX/UI"
+      },
+      "28":{  
+         "equal":[  
+            "Affective Computing"
+         ],
+         "key":"Affective Computing"
+      },
+      "29":{  
+         "equal":[  
+            "BlockChain",
+            "Virtual Reality",
+            "trend",
+            "Empatica",
+            "BodyMedia",
+            "Jawbone",
+            "Scanadu",
+            "Moodmetric"
+         ],
+         "key":"trends"
+      },
+      "1":{  
+         "equal":[  
             "r&d director",
             "mylko",
-            "vasyl mylko"
+            "vasyl mylko",
+            "rnd director"
          ],
          "key":"mylko"
       },
-      "3":{
-         "equal":[
-            "Amazon Web Services",
-            "AWS"
-         ],
-         "key":"AWS"
-      },
-      "4":{
-         "equal":[
+      "3":{  
+         "equal":[  
             "EBR",
             "mEBR",
             "mEBR system",
-            "EBR system",
             "Electronic Batch Record"
          ],
          "key":"EBR"
       },
-      "5":{
-         "equal":[
-            "mEBR Design",
-            "EBR Design",
-            "mEBR system Design"
+      "2":{  
+         "equal":[  
+            "rnd",
+            "research and development",
+            "r&d"
          ],
-         "key":"EBR Design"
+         "key":"rnd"
       },
-      "6":{
-         "equal":[
+      "5":{  
+         "equal":[  
             "funny",
-            "joke",
-            "1st april",
-            "joyfull",
-            "laughing",
-            "laugh",
             "humor",
+            "joke",
+            "joyfull",
+            "laugh",
+            "laughing"
          ],
          "key":"funny"
       },
-      "7":{
-         "equal":[
-            "internet of things",
-            "take the cloud to the ground",
-            "iot",
-            "cool thing",
+      "4":{  
+         "equal":[  
+            "design",
+            "view",
+            "architecture",
+            "art"
          ],
-         "key":"iot"
+         "key":"Design"
       },
-      "8":
-      {
-         "equal":[
-            "beer",
+      "7":{  
+         "equal":[  
             "alcohol",
-            "booze",
+            "beer",
+            "cider",
+            "drink",
+            " booze"
          ],
          "key":"beer"
       },
-      "9":
-      {
-         "equal":[
-            "Computer Vision",
-            "Machine Vision",
-            "Image processing ",
-            "Pattern recognition",
+      "6":{  
+         "equal":[  
+            "internet of things",
+            "iot",
+            "cloud devices"
          ],
-         "key":"Computer Vision"
+         "key":"iot"
       },
-      "10":
-      {
-         "equal":
-         [
-            "Oleksandr Sukholyester",
-            "Tech lead",
+      "9":{  
+         "equal":[  
+            "Tech Lead",
+            "Oleksandr Sukholeyster",
             "RnD employee",
+            "Techlead"
          ],
-         "key" : "Oleksandr Sukholyester"
+         "key":"Oleksandr Sukholeyster"
       },
-      "11":
-      {
-         "equal":
-         [
-            "Oleksandr Sukholyester",
-            "Tech lead",
-            "RnD employee",
+      "8":{  
+         "equal":[  
+            "computer vision",
+            "machine vision",
+            "pattern recognition",
+            "image processing"
          ],
-         "key" : "Oleksandr Sukholyester"
+         "key":"computer vision"
       },
-      "12":
-      {
-         "equal":
-         [
-            "Security",
-            "Information Security",
-            "Social Engineering",
-            "Viruses",
-            "Vulnerabilities"
+      "11":{  
+         "equal":[  
+            "AWS",
+            "Amazon Web Services"
          ],
-         "key": "Security"
+         "key":"AWS"
       },
-      "13":
-      {
-         "equal":
-         [
-            "Project Managament",
-            "Managament",
-            "Teamwork",
-            "Team efficiency",
-            "Team productivity",
+      "10":{  
+         "equal":[  
+            "security",
+            "information security",
+            "social engineering",
+            "viruses",
+            "malware",
+            "vulnerability"
          ],
-         "key": "Project Managament"
+         "key":"Security"
       },
-      "14":
-      {
-         "equal":
-         [
+      "13":{  
+         "equal":[  
             "Mobile devices",
             "Smart watch",
             "Weareables",
-            "Compact devices",
-            "Weareable devices"
+            "Weareable devices",
+            "Compact devices"
          ],
-         "key": "Weareable devices"
+         "key":"Weareable devices"
+      },
+      "12":{  
+         "equal":[  
+            "Project Management",
+            "Management",
+            "Teamwork",
+            "Team efficiency",
+            "Team productivity",
+            "planning"
+         ],
+         "key":"Project Management"
+      },
+      "15":{  
+         "equal":[  
+            "problem",
+            "solved",
+            "result",
+            "solution"
+         ],
+         "key":"Solution"
+      },
+      "14":{  
+         "equal":[  
+            "machine learning",
+            "cognitive computing",
+            "deep learning",
+            "neural networks"
+         ],
+         "key":"machine learning"
+      },
+      "17":{  
+         "equal":[  
+            "Context identification",
+            "context classification"
+         ],
+         "key":"Context Identification"
+      },
+      "16":{  
+         "equal":[  
+            "research",
+            "publication",
+            "magazine",
+            "article",
+            "analisys"
+         ],
+         "key":"Research"
+      },
+      "19":{  
+         "equal":[  
+            "Bazaarvoice",
+            "Google",
+            "Spredfast",
+            "Henry Schein",
+            "Cloudera"
+         ],
+         "key":"Patners about SS"
+      },
+      "18":{  
+         "equal":[  
+            "abilition",
+            "system board"
+         ],
+         "key":"Abilition Dashboard"
+      },
+      "31":{  
+         "equal":[  
+            "Biolock Feasibility Study"
+         ],
+         "key":"Biolock Feasibility Study"
+      },
+      "30":{  
+         "equal":[  
+            "Biolock",
+            "heartrate",
+            "indetify"
+         ],
+         "key":"Biolock"
+      },
+      "34":{  
+         "equal":[  
+            "interesting articles",
+            "magazines"
+         ],
+         "key":"RND_magazines"
+      },
+      "33":{  
+         "equal":[  
+            "Bio-processor SDK"
+         ],
+         "key":"Bio-processor SDK"
+      },
+      "32":{  
+         "equal":[  
+            "Bio-processor SDK",
+            "biotechnologies",
+            "sensors"
+         ],
+         "key":"biotechnologies"
       }
    },
-   "_default":{
-
-   },
-   "tag_data":{
-      "11":{
-         "priority":2,
+   "tag_data":{  
+      "1":{  
+         "priority":"2",
          "path":"CVA_8.pdf",
-         "name":"Commonality Analysis of Abiliton Dashboard",
-         "tags":[
-            [
-               "Commonality Analysis",
-               1
+         "name":"CVA_8.pdf",
+         "tags":[  
+            [  
+               "Partners about SS",
+               "0.9"
             ],
-            [
-               "Variability Analysis",
-               0.8
+            [  
+               "rnd",
+               "0.5"
             ],
-            [
-               "Abiliton Dashboard",
-               0.8
+            [  
+               "Abilition Dashboard",
+               "0.9"
+            ],
+            [  
+               "Project Management",
+               "0.6"
             ]
          ]
       },
-      "10":{
-         "priority":2,
+      "2":{  
+         "priority":"2",
          "path":"Context Identification research.pdf",
-         "name":"Context Identification research",
-         "tags":[
-            [
-               "Context Identification research",
-               1
+         "name":"Context Identification research.pdf",
+         "tags":[  
+            [  
+               "Context Identification",
+               "1"
             ],
-            [
-               "context classification",
-               0.8
-            ],
-            [
+            [  
                "Oleksandr Sukholyester",
-               0.6
+               "0.5"
+            ],
+            [  
+               "Research",
+               "0.8"
             ]
          ]
       },
-      "13":{
-         "priority":2,
-         "path":"eBR solution Case Study.pdf",  
-         "name":"Electronic Batch Record Solution",
-         "tags":[
-            [
-               "Electronic Batch Record Solution",
-               1
-            ],
-            [
+      "3":{  
+         "priority":"3",
+         "path":"eBR solution Case Study.pdf",
+         "name":"eBR solution Case Study.pdf",
+         "tags":[  
+            [  
                "EBR",
-               1
+               "0.9"
             ],
-            [
-               "EUFETS",
-               0.4
+            [  
+               "Solution",
+               "0.7"
             ],
-            [
-               "Batch",
-               0.7
+            [  
+               "Research",
+               "0.5"
             ]
          ]
       },
-      "12":{
-         "priority":2,
+      "4":{  
+         "priority":"0",
          "path":"DATA acquisition.pdf",
-         "name":"Recording emotions",
-         "tags":[
-            [
-               "Recording emotions",
-               1
+         "name":"DATA acquisition.pdf",
+         "tags":[  
+            [  
+               "Emotions",
+               "1"
             ],
-            [
-               "emotions",
-               0.8
+            [  
+               "machine learning",
+               "1"
+            ],
+            [  
+               "Research",
+               "0.7"
             ]
          ]
       },
-      "15":{
+      "5":{  
          "priority":"1",
          "path":"1_st _april.mp4.webm",
-         "name":"video_mylko",
-         "tags":[
-            [
+         "name":"1_st _april.mp4.webm",
+         "tags":[  
+            [  
                "funny",
-               " 1"
+               "1"
             ]
          ]
       },
-      "14":{
-         "priority":2,
+      "6":{  
+         "priority":"0",
          "path":"innovationsvmylko.pdf",
-         "name":"Innovations Vasyl Mylko.pdf",
-         "tags":[
-            [
+         "name":"innovationsvmylko.pdf",
+         "tags":[  
+            [  
                "Innovations",
-               1
+               "1"
             ],
-            [
+            [  
                "mylko",
-               0.8
+               "0.6"
+            ],
+            [  
+               "Research",
+               "0.6"
             ]
          ]
       },
-      "16":{
+      "7":{  
          "priority":"1",
          "path":"mylko_cool_thing.webm",
-         "name":"mylko_cool_thing",
-         "tags":[
-            [
+         "name":"mylko_cool_thing.webm",
+         "tags":[  
+            [  
                "iot",
-               " 1"
+               "1"
+            ],
+            [  
+               "mylko",
+               "0.6"
             ]
          ]
       },
-      
-      "17":{
-        "priority":"1",
-        "path":"barista_coffe.webm",
-        "name":"barista_coffe",
-        "tags":[[
-            "Barista",
-            1
-        ]]
+      "8":{  
+         "priority":"0",
+         "path":"barista_coffe.webm",
+         "name":"barista_coffe.webm",
+         "tags":[  
+            [  
+               "Barista",
+               "1"
+            ],
+            [  
+               "Weareable devices",
+               "0.6"
+            ]
+         ]
       },
-
-      "18":{
-        "priority":"1",
-        "path":"austin_ss_ux_ui.webm",
-        "name":"austin_ss_ux_ui.mp4",
-        "tags":[[
-            "Austin",
-            0.4
-        ],
-        [
-            "UX/UI",
-            0.5
-        ]]
-      },
-      "19":{
+      "9":{  
          "priority":"1",
+         "path":"austin_ss_ux_ui.webm",
+         "name":"austin_ss_ux_ui.webm",
+         "tags":[  
+            [  
+               "USA",
+               "0.6"
+            ],
+            [  
+               "UX/UI",
+               "0.4"
+            ]
+         ]
+      },
+      "10":{  
+         "priority":"0",
          "path":"beer_recognizer.mp4.webm",
-         "name": "beer_recognizer",
-         "tags": [
-            ["Computer Vision",
-               0.8],
-            ["Beer",
-               0.8],
-            ["funny",
-               0.7]
-         ]
-      },
-
-      "20":{
-         "priority":"1",
-         "path":"small_security_ss.mp4.webm",
-         "name": "small_security_ss",
-         "tags": [
-            ["Security",
-            1],
-            [
-            "Services",
-            0.7
+         "name":"beer_recognizer.mp4.webm",
+         "tags":[  
+            [  
+               "Computer Vision",
+               "1"
+            ],
+            [  
+               "Beer",
+               "1"
+            ],
+            [  
+               "funny",
+               "1"
             ]
          ]
       },
-
-      "21":{
+      "11":{  
+         "priority":"0",
+         "path":"small_security_ss.mp4.webm",
+         "name":"small_security_ss.mp4.webm",
+         "tags":[  
+            [  
+               "Security",
+               "1"
+            ],
+            [  
+               "Services",
+               "0.7"
+            ]
+         ]
+      },
+      "12":{  
          "priority":"1",
          "path":"AbilitonDashboardWearable.mp4.webm",
-         "name": "AbilitonDashboardWearable",
-         "tags": [
-            ["Project Managament",
-            1],
-            [
-            "Weareable device",
-            0.7
-            ]
-         ]
-      },
-
-      "1":{
-         "priority":2,
-         "path":"AB - Usability Test Report.pdf",
-         "name":"AB - Usability Test Report",
-         "tags":[
-            [
-               "Abiliton Dashboard",
-               1
+         "name":"AbilitonDashboardWearable.mp4.webm",
+         "tags":[  
+            [  
+               "Project Managament",
+               "0.9"
             ],
-            [
-               "color scheme",
-               0.8
+            [  
+               "Weareable device",
+               "0.8"
             ],
-            [
-               "usability test",
-               1
-            ],
-            [
-               "a/b",
-               0.8
-            ]
-         ]
-      },
-      "3":{
-         "priority":2,
-         "path":"AWS Machine Learning Analysis.pdf",
-         "name":"AWS Machine Learning Analysis",
-         "tags":[
-            [
-               "AWS Machine Learning Analysis",
-               1
-            ],
-            [
-               "AWS",
-               0.9
-            ],
-            [
-               "Machine Learning",
-               0.8
-            ],
-            [
-               "Cognitive Computing",
-               0.6
-            ],
-            [
-               "Amazon Machine Learning",
-               0.9
-            ],
-            [
-               "Elastic Map Reduce",
-               0.7
-            ]
-         ]
-      },
-      "2":{
-         "priority":2,
-         "path":"Affective Computing.pdf",
-         "name":"Affective Computing",
-         "tags":[
-            [
-               "Affective Computing",
-               1
-            ],
-            [
-               "trend overview",
-               0.3
-            ],
-            [
-               "Empatica",
-               0.8
-            ],
-            [
-               "BodyMedia",
-               0.8
-            ],
-            [
-               "Jawbone",
-               0.8
-            ],
-            [
-               "Scanadu",
-               0.8
-            ],
-            [
-               "Moodmetric",
-               0.8
-            ]
-         ]
-      },
-      "5":{
-         "priority":2,
-         "path":"Barista_design.pdf",
-         "name":"Barista Design",
-         "tags":[
-            [
-               "Barista Design",
-               1
-            ],
-            [
-               "Barista",
-               0.7
-            ]
-         ]
-      },
-      "4":{
-         "priority":2,
-         "path":"AWS Readines Case Studies.pdf",
-         "name":"AWS Readines Case Studies",
-         "tags":[
-            [
-               "AWS Readines Case Studies",
-               1
-            ],
-            [
-               "AWS",
-               1
-            ]
-         ]
-      },
-      "7":{
-         "priority":2,
-         "path":"Biolock Feasibility Study.pdf",
-         "name":"Biolock Feasibility Study",
-         "tags":[
-            [
-               "Biolock",
-               0.7
-            ],
-            [
-               "Biolock Feasibility Study",
-               1
-            ]
-         ]
-      },
-      "6":{
-         "priority":2,
-         "path":"Batch.pdf",
-         "name":"mEBR Design",
-         "tags":[
-            [
-               "EUFETS",
-               0.5
-            ],
-            [
-               "EBR Design",
-               1
-            ],
-            [
-               "EBR",
-               0.7
-            ]
-         ]
-      },
-      "9":{
-         "priority":2,
-         "path":"AB - Usability Test Report.pdf",
-         "name":"Conceptualization of mEBR System",
-         "tags":[
-            [
-               "EUFETS",
-               0.4
-            ],
-            [
-               "EBR",
-               1
-            ],
-            [
-               "Conceptualization of mEBR System",
-               1
-            ],
-            [
-               "Batch",
-               0.7
-            ]
-         ]
-      },
-      "8":{
-         "priority":2,
-         "path":"Bio-processor SDK.pdf",
-         "name":"Bio-processor SDK Research",
-         "tags":[
-            [
-               "Bio-processor SDK Research",
-               1
-            ],
-            [
-               "Bio-processor SDK",
-               1
-            ],
-            [
-               "Oleksandr Sukholyester",
-               0.6
+            [  
+               "Abilition Dashboard",
+               "0.7"
             ]
          ]
       }
