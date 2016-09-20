@@ -1,12 +1,19 @@
+import time
+import sys
 import subprocess
+import threading
+import functools
 from FakePage import FakePage
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QUrl, QTimer
 from PyQt5.QtWidgets import QGridLayout, QWidget
 from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
+from PyQt5 import QtWebKitWidgets
 from PyQt5.QtNetwork import QNetworkRequest
+sys.path.append("../")
 from config import config
+from client import RESTClient
 
 class BrowserClient:
 
@@ -53,7 +60,7 @@ class BrowserClient:
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         self._main_browser = QWebView()
-        main_page = FakeBrowser(self)
+        main_page = FakePage(self)
         self._main_browser.setPage(main_page)
         self._zoom_factor = 1
 
@@ -155,7 +162,6 @@ class BrowserClient:
         or
         file://data/somepage.html
         """
-        logger.info('Loading {} to the top content view.'.format(url))
         self._top_browser.load(QUrl(url))
 
     def _bottom_browser_load_url(self, url):
@@ -166,7 +172,6 @@ class BrowserClient:
         or
         file:
         """
-        logger.info('Loading {} to the bottom content view.'.format(url))
         self._bottom_browser.load(QUrl(url))
 
     def execute_js(self, string_js):
