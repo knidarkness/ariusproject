@@ -3,7 +3,11 @@ import RAKE
 
 
 class KeywordsQueryGenerator:
-
+    """
+    This is a QueryGenerator which is used to create
+    queries for DataFinders.
+    Returns a list of key-phrases.
+    """
     def __init__(self, stopList):
         try:
             self._extractor = RAKE.Rake(stopList)

@@ -8,6 +8,9 @@ from config import config
 
 
 class ESearchDataFinder(AbstractDataFinder):
+    """
+    This is a DataFinder for ElasticSearch.
+    """
     def __init__(self, query_generator):
         super(ESearchDataFinder, self).__init__(query_generator)
         self._host = config["elastic_host"]

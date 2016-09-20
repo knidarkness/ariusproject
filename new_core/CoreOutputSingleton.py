@@ -5,6 +5,11 @@ from config import config
 
 
 class CoreOutputSingleton:
+    """
+    This is a singleton for output connection to server.
+    Used to send data back to server. Used singleton as
+    it is called from all the Behaviors.
+    """
     instance = None
 
     @staticmethod

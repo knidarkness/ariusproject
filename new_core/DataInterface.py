@@ -1,6 +1,11 @@
 from AbstractDataInterface import AbstractDataInterface
 
+
 class DataInterface(AbstractDataInterface):
+    """
+    This class is used to provide centralized interface to data.
+    More info for AbstractDataInterface.
+    """
     def __init__(self):
         self.__data_finders = []
 
