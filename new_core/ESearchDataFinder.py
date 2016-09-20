@@ -11,8 +11,9 @@ class ESearchDataFinder(AbstractDataFinder):
     """
     This is a DataFinder for ElasticSearch.
     """
-    def __init__(self, query_generator):
-        super(ESearchDataFinder, self).__init__(query_generator)
+
+    def __init__(self, query_generator, output_processor):
+        super(ESearchDataFinder, self).__init__(query_generator, output_processor)
         self._host = config["elastic_host"]
         self._index = config["elastic_index"]
         self._type = config["elastic_type"]
@@ -41,4 +42,4 @@ class ESearchDataFinder(AbstractDataFinder):
         result = []
         for doc in response['hits']['hits']:
             result.append(doc['_source']['title'])
-        return [Result(r[0], os.path.splitext(r[0])[1]) for r in result]
+        return [Result(r, os.path.splitext(r)[1]) for r in result]

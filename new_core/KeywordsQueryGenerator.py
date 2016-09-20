@@ -2,13 +2,15 @@ from AbstractQueryGenerator import AbstractQueryGenerator
 import RAKE
 
 
-class KeywordsQueryGenerator:
+class KeywordsQueryGenerator(AbstractQueryGenerator):
     """
     This is a QueryGenerator which is used to create
     queries for DataFinders.
     Returns a list of key-phrases.
     """
-    def __init__(self, stopList):
+
+    def __init__(self):
+        stopList = "stop.txt"
         try:
             self._extractor = RAKE.Rake(stopList)
         except IOError:

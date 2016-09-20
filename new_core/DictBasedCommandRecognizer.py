@@ -3,7 +3,8 @@ from AbstractCommandRecognizer import AbstractCommandRecognizer
 import sys
 sys.path.append("../")
 from logger import Logger
-logger = Logger("Core")
+from config import config
+logger = Logger("Core[CommandRecognizer]")
 
 
 class DictBasedCommandRecognizer(AbstractCommandRecognizer):
@@ -11,12 +12,13 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
         if type(commands) != dict:
             raise ValueError
 
-        self.__commands = commands
+        self._commands = commands
         self.__match_finder = finder
+        self._min_confidence = config['core_command_recog_confidence']
 
     def setCommandsDict(self, commands_dict):
         if type(commands_dict) == dict:
-            self.__commands = commands_dict
+            self._commands = commands_dict
             return
         raise ValueError('Argument must be a dictionary')
 
@@ -26,7 +28,7 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
     def __get_confidence_of_match(self, string1, string2):
         return self.__match_finder.getMatch(string1, string2)
 
-    def recognizeCommand(self, command):
+    def recognize_command(self, command):
         """
         This function is used to recognize commands in given text.
         It has two modes:
@@ -89,7 +91,7 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
         logger.debug('COMMAND RECOGNIZING FINISHED')
         return None
 
-    def checkForCommand(self, data, command):
+    def check_for_command(self, data, command):
         if command not in self._commands.keys():
             logger.debug('Given wrong command: there`s no such command in the dictionary. Exiting')
             raise ValueError('Wrong command')
@@ -104,7 +106,7 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
         logger.debug('COMMAND RECOGNIZING FINISHED')
         return False
 
-    def removeCommand(self, input_str, command):
+    def remove_command(self, input_str, command):
         """
         This method is used to remove command`s keywords from
         given text and return updated input.
@@ -143,11 +145,11 @@ class DictBasedCommandRecognizer(AbstractCommandRecognizer):
                     logger.debug('Confidence for {} is {}'.format(gram, confidence))
                     input_str = input_str.replace(gram, '')
                     input_str = input_str.strip()
-                    logger.debug('String is "{}"'.format(string))
+                    logger.debug('String is "{}"'.format(input_str))
                     replaced = True
         if not replaced:
             logger.info('Nothing to replace')
-            logger.info('String with removed command phrase is: "{}"'.format(string))
+            logger.info('String with removed command phrase is: "{}"'.format(input_str))
             logger.debug('FINISHED CLEARING INPUT')
         # as we can have a string like 'test   test word' lets replace
         # all multiple whitespaces with one. The easiest way to achive

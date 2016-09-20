@@ -5,4 +5,5 @@ class AbstractCommandRecognizer:
     takes a String argument (input text to be recognized) and
     returns a String - recognized command.
     """
+
     def recognizeCommand(self, command): raise NotImplementedError()

@@ -1,26 +1,30 @@
 from DictBasedCommandRecognizer import DictBasedCommandRecognizer
 from DifflibMatchFinder import DifflibMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
-from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
-from singleton import singleton
 import random
 import sys
 sys.path.append("../")
 from config import config
 from logger import Logger
-logger = Logger("Core")
+logger = Logger("Core[SearchFailed]")
 
 
-@singleton
 class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
+    instance = None
 
-    def __init__(self, recog):
-        super(SearchFailedCommandProceedingBehavior, self).__init__(recog)
-        self.__behavior_type = 'search_failed'
+    @staticmethod
+    def getInstance():
+        if not SearchFailedCommandProceedingBehavior.instance:
+            SearchFailedCommandProceedingBehavior.instance = SearchFailedCommandProceedingBehavior()
+        return SearchFailedCommandProceedingBehavior.instance
+
+    def __init__(self):
+        super(SearchFailedCommandProceedingBehavior, self).__init__()
+        self.behavior_type = 'search_failed'
         self.__commands_dict = config['core_commands_search_failed']
-        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DifflibMatchFinder()))
+        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader.load(self.__commands_dict), DifflibMatchFinder))
         self._output_connection = CoreOutputSingleton.getInstance()
 
     def proceed(self, user_input, parent):
@@ -30,11 +34,19 @@ class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavio
             self._output_connection.sendPOST({'type': 'MUTE', 'command': ''})
         elif recognized_command == "UNMUTE":
             self._output_connection.sendPOST({'type': 'UNMUTE', 'command': ''})
+        elif recognized_command == "CANCEL":
+            self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
+            self._output_connection.sendPOST({'type': 'SPEAK',
+                                              'command': random.choice(config['voice_command_output']['CANCEL'])})
+            from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
+            parent.setProceedingBehavior(IdleCommandProceedingBehavior.getInstance())
+            return None
         elif recognized_command == "START":
             self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'SEARCH'})
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
-
-            parent.setProceedingBehavior(SearchCommandProceedingBehavior)
+            from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
+            parent.setProceedingBehavior(SearchCommandProceedingBehavior.getInstance())
             return None
+
         parent.user_input = None

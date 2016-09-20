@@ -1,27 +1,30 @@
 from DictBasedCommandRecognizer import DictBasedCommandRecognizer
 from DifflibMatchFinder import DifflibMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
-from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
-
-from singleton import singleton
 import random
 import sys
 sys.path.append("../")
 from config import config
 from logger import Logger
-logger = Logger("Core")
+logger = Logger("Core[Idle]")
 
 
-@singleton
 class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
+    instance = None
 
-    def __init__(self, recog):
-        super(IdleCommandProceedingBehavior, self).__init__(recog)
-        self.__behavior_type = "idle"
+    @staticmethod
+    def getInstance():
+        if not IdleCommandProceedingBehavior.instance:
+            IdleCommandProceedingBehavior.instance = IdleCommandProceedingBehavior()
+        return IdleCommandProceedingBehavior.instance
+
+    def __init__(self):
+        super(IdleCommandProceedingBehavior, self).__init__()
+        self.behavior_type = "idle"
         self.__commands_dict = config['core_commands_idle']
-        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DifflibMatchFinder()))
+        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader.load(self.__commands_dict), DifflibMatchFinder))
         self._output_connection = CoreOutputSingleton.getInstance()
 
     def proceed(self, user_input, parent):
@@ -36,6 +39,8 @@ class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
 
-            parent.setProceedingBehavior(SearchCommandProceedingBehavior)
+            from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
+            parent.setProceedingBehavior(SearchCommandProceedingBehavior.getInstance())
             return None
+
         parent.user_input = None

@@ -8,4 +8,6 @@ class NonASCIICleanDataFinderOutputProcessor(AbstractDataFinderOutputProcessor):
     which return a data with no ASCII symbols in it.
     """
     def proceedOutput(self, output):
-        return [Result([e for e in entry.body if ord(e) < 128], entry.type) for entry in output]
+        if output:
+            return [Result([e for e in entry.body if ord(e) < 128], entry.type) for entry in output]
+        return output

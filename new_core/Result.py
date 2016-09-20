@@ -23,3 +23,8 @@ class Result:
 
     def add_attribute(self, name, val):
         setattr(self, name, val)
+
+    def __str__(self):
+        return "Result ({}, {})".format(self.__body, self.__type)        
+    def __repr__(self):
+        return "({}, {})".format(self.__body, self.__type)

@@ -8,6 +8,7 @@ class AbstractDataFinder:
     Also, user can set a DataFinderOutputProcessor to modify results.
     To get results, use getResult(self, query)
     """
+
     def __init__(self, query_generator, output_processor):
         self.__query_generator = query_generator
         self.__output_processor = output_processor

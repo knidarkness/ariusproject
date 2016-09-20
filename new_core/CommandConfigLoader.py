@@ -14,4 +14,5 @@ class CommandConfigLoader:
     def load(command_names_list):
         commands_dict = {}
         for command in command_names_list:
-            commands_dict[command] = config[command]
+            commands_dict[command] = config["core_commands"][command]
+        return commands_dict

@@ -33,12 +33,12 @@ config = {
     "core_server_output_port": "5000",
     "core_server_output_url": "/core/output",
 
-    "core_command_recog_confidence": 0.7,
+    "core_command_recog_confidence": 70,
 
     "core_commands_idle": ["CANCEL", "START", "MUTE", "UNMUTE"],
     "core_commands_search": ["CANCEL", "START", "MUTE", "UNMUTE"],
     "core_commands_search_failed": ["CANCEL", "START", "MUTE", "UNMUTE"],
-    "core_commands_displaying_data": ["CANCEL", "START", "MUTE", "UNMUTE", "ZOOM_IN", "ZOOM_OUT"
+    "core_commands_displaying_data": ["CANCEL", "START", "MUTE", "UNMUTE", "ZOOM_IN", "ZOOM_OUT",
                                       "NO_ZOOM", "SCROLL_DOWN", "SCROLL_UP", "PAUSE", "PLAY",
                                       "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA"],
     "core_commands": {

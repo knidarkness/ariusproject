@@ -14,7 +14,15 @@ class DataInterface(AbstractDataInterface):
         self.__data_finders.sort(key=lambda s: s[1])
 
     def getResults(self, query):
+
         result = []
         for finder in self.__data_finders:
-            result += finder.getResult(finder.getQuery(query))
+            r = finder[0].getResult(finder[0].getQuery(query))
+            print finder, r
+            if r and type(r) == list:
+                result += r
+            elif r:
+                if r.body:
+                    result += [r]
+        # print result
         return result
