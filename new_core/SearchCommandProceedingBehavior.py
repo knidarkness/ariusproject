@@ -41,7 +41,7 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader.load(self.__commands_dict), DifflibMatchFinder))
         self._output_connection = CoreOutputSingleton.getInstance()
         self._data_interface = DataInterface()
-        #self._data_interface.registerDataFinder(QPyDataFinder(NoModifyingQueryGenerator(), NonASCIICleanDataFinderOutputProcessor()), 1)
+        self._data_interface.registerDataFinder(QPyDataFinder(NoModifyingQueryGenerator(), NonASCIICleanDataFinderOutputProcessor()), 1)
         self._data_interface.registerDataFinder(TaggedDataFinder(KeywordsQueryGenerator(), NoModifyingDataFinderOutputProcessor(), config['database_file']), 2)
         self._data_interface.registerDataFinder(ESearchDataFinder(KeywordsQueryGenerator(), NoModifyingDataFinderOutputProcessor()), 3)
         self._history = []
