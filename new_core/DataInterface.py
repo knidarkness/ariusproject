@@ -6,6 +6,7 @@ class DataInterface(AbstractDataInterface):
     This class is used to provide centralized interface to data.
     More info for AbstractDataInterface.
     """
+
     def __init__(self):
         self.__data_finders = []
 
@@ -18,11 +19,9 @@ class DataInterface(AbstractDataInterface):
         result = []
         for finder in self.__data_finders:
             r = finder[0].getResult(finder[0].getQuery(query))
-            print finder, r
             if r and type(r) == list:
                 result += r
             elif r:
                 if r.body:
                     result += [r]
-        # print result
         return result
