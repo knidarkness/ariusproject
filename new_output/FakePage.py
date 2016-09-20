@@ -8,7 +8,7 @@ class FakePage(QWebPage):
     """
 
     def __init__(self, parent=None):
-        super(FakeBrowser, self).__init__()
+        super(FakePage, self).__init__()
 
     def userAgentForUrl(self, url):
         return config['output_user_agent']

@@ -222,7 +222,7 @@ class OutputController(threading.Thread):
     	"""
 		return self.audioplayer.get_speech_volume()
 
-   	def _get_speech_volume(self):
+   	def _get_music_volume(self):
     	"""
     	We use AudioPlayer object to get know music volume increment/decrement
     	"""
@@ -234,7 +234,7 @@ class OutputController(threading.Thread):
     	"""
     	self.audioplayer.set_speech_volume(volume)
 
-   	def _set_speech_volume(self, volume):
+   	def _set_music_volume(self, volume):
     	"""
     	We use AudioPlayer object to get know music volume increment/decrement
     	"""
