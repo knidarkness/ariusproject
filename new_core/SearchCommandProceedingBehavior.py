@@ -1,10 +1,10 @@
 from DictBasedCommandRecognizer import DictBasedCommandRecognizer
-from DiffMatchFinder import DiffMatchFinder
+from DifflibMatchFinder import DifflibMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
 from CommandConfigLoader import CommandConfigLoader
-from IdleCommandProceedingBehaviorSingleton import IdleCommandProceedingBehaviorSingleton
-from DisplayingDataCommandProceedingBehaviorSingleton import DisplayingDataCommandProceedingBehaviorSingleton
-from SearchFailedCommandProceedingBehaviorSingleton import SearchFailedCommandProceedingBehaviorSingleton
+from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
+from DisplayingDataCommandProceedingBehavior import DisplayingDataCommandProceedingBehavior
+from SearchFailedCommandProceedingBehavior import SearchFailedCommandProceedingBehavior
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 from DataInterface import DataInterface
 from ESearchDataFinder import ESearchDataFinder
@@ -31,7 +31,7 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         super(SearchCommandProceedingBehavior, self).__init__(recog)
         self.__behavior_type = "search"
         self.__commands_dict = config['core_commands_search']
-        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DiffMatchFinder()))
+        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DifflibMatchFinder()))
         self._output_connection = CoreOutputSingleton.getInstance()
         self._data_interface = DataInterface()
         self._data_interface.registerDataFinder(QPyDataFinder(NoModifyingQueryGenerator()), 1)
@@ -48,7 +48,7 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['CANCEL'])})
 
-            self._parent.setProceedingBehavior(IdleCommandProceedingBehaviorSingleton.getInstance())
+            self._parent.setProceedingBehavior(IdleCommandProceedingBehavior())
             return None
         elif recognized_command == "MUTE":
             self._output_connection.sendPOST({'type': 'MUTE', 'command': ''})
@@ -89,10 +89,10 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
                 data = {'type': 'OPEN_URL', 'command': link}
             elif result.type == '.webm':
                 data = {'type': 'OPEN_VIDEO', 'command': result.body}
-            self._parent.setProceedingBehavior(DisplayingDataCommandProceedingBehaviorSingleton.getInstance())
+            self._parent.setProceedingBehavior(DisplayingDataCommandProceedingBehavior)
         else:
             data = {'type': 'OPEN_SCREEN', 'command': 'ERROR'}
-            self._parent.setProceedingBehavior(SearchFailedCommandProceedingBehaviorSingleton.getInstance())
+            self._parent.setProceedingBehavior(SearchFailedCommandProceedingBehavior)
 
         result.append(data)
         return None

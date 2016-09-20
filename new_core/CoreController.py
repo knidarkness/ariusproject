@@ -1,4 +1,4 @@
-from IdleCommandProceedingBehaviorSingleton import IdleCommandProceedingBehaviorSingleton
+from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
 from HTTPCoreUpdaterSingleton import HTTPCoreUpdaterSingleton
 import time
 import sys
@@ -10,7 +10,7 @@ logger = Logger("Core")
 
 class CoreController:
     def __init__(self):
-        self._processing_behavior = IdleCommandProceedingBehaviorSingleton.getInstance()
+        self._processing_behavior = IdleCommandProceedingBehavior()
         self._updater = HTTPCoreUpdaterSingleton.getInstance()
 
     def run(self):

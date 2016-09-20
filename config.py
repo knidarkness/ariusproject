@@ -40,8 +40,7 @@ config = {
     "core_commands_search_failed": ["CANCEL", "START", "MUTE", "UNMUTE"],
     "core_commands_displaying_data": ["CANCEL", "START", "MUTE", "UNMUTE", "ZOOM_IN", "ZOOM_OUT"
                                       "NO_ZOOM", "SCROLL_DOWN", "SCROLL_UP", "PAUSE", "PLAY",
-                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA", "CONTINIOUS_SCROLL_DOWN",
-                                      "CONTINIOUS_SCROLL_UP", "STOP_SCROLL"],
+                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA"],
     "core_commands": {
         "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more'],
         "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
@@ -56,10 +55,7 @@ config = {
         "START": ['ok arius', 'what is that', 'what the fuck'],
         "DETAILED_DATA": ['show more'],
         "MUTE": ['mute', 'shut up'],
-        "UNMUTE": ['unmute', 'make it louder', 'turn sound on'],
-        "CONTINIOUS_SCROLL_DOWN": ['start scrolling down'],
-        "CONTINIOUS_SCROLL_UP": ['start scrolling up'],
-        "STOP_SCROLL": ['stop scrolling']
+        "UNMUTE": ['unmute', 'make it louder', 'turn sound on']
     },
     "core_update_interval": 0.1,
 
@@ -83,7 +79,6 @@ config = {
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir."],
         "DISPLAY_VIDEO": ['Take a look please.', 'Found a video.', 'Let me show you.'],
-        "STOP_SCROLL": ['Done.', 'I am designed to serve you.', 'Ok man.'],
         "START": ['I am ready to serve you, my Lord.', 'There is nothing i cannot do for you, my Lord.', 'I was made to help you, Sir.', 'Sir! Yes! Sir!']
     },
 

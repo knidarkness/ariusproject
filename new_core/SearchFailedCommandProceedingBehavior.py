@@ -1,7 +1,7 @@
 from DictBasedCommandRecognizer import DictBasedCommandRecognizer
-from DiffMatchFinder import DiffMatchFinder
+from DifflibMatchFinder import DifflibMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
-from SearchCommandProceedingBehaviorSingleton import SearchCommandProceedingBehaviorSingleton
+from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
 from singleton import singleton
@@ -20,7 +20,7 @@ class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavio
         super(SearchFailedCommandProceedingBehavior, self).__init__(recog)
         self.__behavior_type = 'search_failed'
         self.__commands_dict = config['core_commands_search_failed']
-        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DiffMatchFinder()))
+        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DifflibMatchFinder()))
         self._output_connection = CoreOutputSingleton.getInstance()
 
     def proceed(self, user_input, parent):
@@ -35,6 +35,6 @@ class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavio
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
 
-            parent.setProceedingBehavior(SearchCommandProceedingBehaviorSingleton.getInstance())
+            parent.setProceedingBehavior(SearchCommandProceedingBehavior)
             return None
         parent.user_input = None

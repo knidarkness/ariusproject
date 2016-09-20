@@ -1,9 +1,10 @@
 from DictBasedCommandRecognizer import DictBasedCommandRecognizer
-from DiffMatchFinder import DiffMatchFinder
+from DifflibMatchFinder import DifflibMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
-from SearchCommandProceedingBehaviorSingleton import SearchCommandProceedingBehaviorSingleton
+from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
+
 from singleton import singleton
 import random
 import sys
@@ -20,7 +21,7 @@ class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         super(IdleCommandProceedingBehavior, self).__init__(recog)
         self.__behavior_type = "idle"
         self.__commands_dict = config['core_commands_idle']
-        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DiffMatchFinder()))
+        self.setCommandRecognizer(DictBasedCommandRecognizer(CommandConfigLoader(self.__commands_dict), DifflibMatchFinder()))
         self._output_connection = CoreOutputSingleton.getInstance()
 
     def proceed(self, user_input, parent):
@@ -35,6 +36,6 @@ class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
 
-            parent.setProceedingBehavior(SearchCommandProceedingBehaviorSingleton.getInstance())
+            parent.setProceedingBehavior(SearchCommandProceedingBehavior)
             return None
         parent.user_input = None

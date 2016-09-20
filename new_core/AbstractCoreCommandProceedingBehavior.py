@@ -1,4 +1,5 @@
 from AbstractCommandRecognizer import AbstractCommandRecognizer
+from CoreOutputSingleton import CoreOutputSingleton
 
 
 class AbstractCoreCommandProceedingBehavior:
