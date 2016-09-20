@@ -2,7 +2,7 @@ from AbstractCommandRecognizer import AbstractCommandRecognizer
 from CoreOutputSingleton import CoreOutputSingleton
 
 
-class AbstractCoreCommandProceedingBehavior:
+class AbstractCoreCommandProceedingBehavior(object):
     """
     This is an interface for command recognizing behavior. Must implement
     functionality for a method: proceed(user_input), which will implement

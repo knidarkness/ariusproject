@@ -1,4 +1,4 @@
-class AbstractHTTPClient:
+class AbstractHTTPClient(object):
     """
     An interface for HTTPClient instance. Defines methods required to be implemented
     by class to implement.

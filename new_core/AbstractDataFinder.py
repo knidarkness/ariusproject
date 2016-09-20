@@ -1,4 +1,4 @@
-class AbstractDataFinder:
+class AbstractDataFinder(object):
     """
     This is an ABC for DataFinder. All that is required
     from a DataFinder instance is to inherit from this ABC
