@@ -58,6 +58,7 @@ config = {
         "UNMUTE": ['unmute', 'make it louder', 'turn sound on']
     },
     "core_update_interval": 0.1,
+    "core_tag_search_min_confidence": 90,
 
     "output_server_host": "127.0.0.1",
     "output_server_port": "5000",

@@ -1,7 +1,10 @@
 import os
 from AbstractDataFinder import AbstractDataFinder
+from DifflibMatchFinder import DifflibMatchFinder
 from tinydb import TinyDB, Query
 from Result import Result
+sys.path.append("../")
+from config import config
 
 
 class TaggedDataFinder(AbstractDataFinder):
@@ -39,11 +42,18 @@ class TaggedDataFinder(AbstractDataFinder):
         res = [(t[0].lower(), t[1]) for t in data_entry['tags']]
         return res
 
+    def __is_in(self, string1, string2):
+        if DifflibMatchFinder.getMatch(string1, string2) > config['core_tag_search_min_confidence']:
+            return True
+        return False
+
     def get_confidence(self, entry_tags, keywords):
         res = 0
         for keyword in keywords:
-            if keyword.lower() in [tag[0].lower() for tag in entry_tags]:
-                res += float(tag[1])
+            for tag in entry_tags:
+                if self.__is_in(tag[0], keyword):
+                    # if keyword.lower() in [tag[0].lower() for tag in entry_tags]:
+                    res += float(tag[1])
         return res
 
     def get_keys_by_synonyms(self, tags):
