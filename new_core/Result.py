@@ -1,4 +1,8 @@
 class Result:
+    """
+    A flexible class for storing data about search results
+    from DataFinders.
+    """
     def __init__(self, body, type=None):
         self.__body = body
         self.__type = type

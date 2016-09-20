@@ -8,6 +8,10 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 
 
 class QPyDataFinder(AbstractDataFinder):
+    """
+    This data finder gets the text info about the query
+    string from the DBPedia.
+    """
     def __init__(self, query_generator):
         super(QPyDataFinder, self).__init__(query_generator)
         self._sparql = SPARQLWrapper("http://dbpedia.org/sparql")

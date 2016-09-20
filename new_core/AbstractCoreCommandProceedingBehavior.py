@@ -3,7 +3,11 @@ from CoreOutputSingleton import CoreOutputSingleton
 
 
 class AbstractCoreCommandProceedingBehavior:
-
+    """
+    This is an interface for command recognizing behavior. Must implement
+    functionality for a method: proceed(user_input), which will implement
+    command proceeding, which goes from class` name.
+    """
     def __init__(self):
         self._out_link = CoreOutputSingleton.getInstance()
         self.__command_recognizer = None

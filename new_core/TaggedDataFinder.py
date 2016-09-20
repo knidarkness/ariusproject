@@ -3,7 +3,15 @@ from AbstractDataFinder import AbstractDataFinder
 from tinydb import TinyDB, Query
 from Result import Result
 
+
 class TaggedDataFinder(AbstractDataFinder):
+    """
+    This DataFinder is used to work with TinyDB database
+    and returns search results from pretagged data.
+
+    It returns a list of Result instances with
+    body equal to path, and type qualt to extension.    
+    """
     def __init__(self, query_generator, database):
         super(TaggedDataFinder, self).__init__(query_generator)
         self.__db = TinyDB(database)
