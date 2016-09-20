@@ -5,7 +5,7 @@ import threading
 import functools
 from FakePage import FakePage
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QUrl, QTimer
+from PyQt5.QtCore import QUrl, QTimer, QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QGridLayout, QWidget
 from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
@@ -15,8 +15,11 @@ sys.path.append("../")
 from config import config
 from client import RESTClient
 
-class BrowserClient:
 
+class BrowserClient(QObject):
+    zooming = pyqtSignal(float)
+    js_execution = pyqtSignal(str)
+    load_url = pyqtSignal(str)
     def __init__(self, fullscreen, sizes):
         """
         This constructor function initializes a layout of the Arius output
@@ -43,6 +46,7 @@ class BrowserClient:
         a timer instance which checks that stream for new commands
         from the server, and in case if there`s some update handles it.
         """
+        super(BrowserClient, self).__init__()
         if not fullscreen and not sizes:
             print 'You must initialize windows size'
             raise Exception
@@ -62,7 +66,6 @@ class BrowserClient:
         self._main_browser = QWebView()
         main_page = FakePage(self)
         self._main_browser.setPage(main_page)
-        self._zoom_factor = 1
 
         self._top_browser = QWebView()
         self._bottom_browser = QWebView()
@@ -104,11 +107,11 @@ class BrowserClient:
         self._layout.addWidget(self._main_browser, 2, 0)
         self._layout.addWidget(self._bottom_browser, 3, 0)
 
+        self.load_url.connect(self._load_url)
+        self.zooming.connect(self._zoom)
+        self.js_execution.connect(self._execute_js)
+
     def run(self):
-        """
-        This method is called to show the output module window
-        after initializing all views in __init__.
-        """
         self._main_window = QWidget()  # create a window as a QWidget
         self._main_window.setLayout(self._layout)  # assign a layout to it
         if self._fullscreen:
@@ -120,12 +123,6 @@ class BrowserClient:
         sys.exit(self._app.exec_())
 
     def _get_screen_height(self):
-        """
-        This method is used to get dimensions of user`s screen.
-        To do this is uses system utilite 'xrandr' via subprocess module,
-        which is not very nice way, however we didn`t find
-        anything better.
-        """
         if self._fullscreen:
             output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4',
                                       shell=True, stdout=subprocess.PIPE).communicate()[0]
@@ -136,43 +133,17 @@ class BrowserClient:
             output = [self._width, self._height]
         return output[0], output[1]
 
-    def reset_zoom(self):
-        """
-        This method sets zoom level of the main content view to the default level.
-        It should be called before loading a new page or in order to cancel any zoom
-        changes.
-        """
-        self._zoom_factor = 1
-        self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
-
-    def zoom(self, factor):
-        """
-        This methoud simply zooms main content view out. It works
-        well with all content types.
-        """
-        self._zoom_factor += factor
-        self._main_browser.page().mainFrame().setZoomFactor(self._zoom_factor)
-
+    def _zoom(self, factor):
+        self._main_browser.page().mainFrame().setZoomFactor(factor)
 
     def _top_browser_load_url(self, url):
-        """
-        This method just loads a given URL in the top content view.
-        URL must contain protocol and the address.
-        e.g. http://placehold.it/400x200
-        or
-        file://data/somepage.html
-        """
         self._top_browser.load(QUrl(url))
 
     def _bottom_browser_load_url(self, url):
-        """
-        This method just loads a given URL in the bottom content view.
-        URL must contain protocol and the address.
-        e.g. http://placehold.it/400x200
-        or
-        file:
-        """
         self._bottom_browser.load(QUrl(url))
 
-    def execute_js(self, string_js):
+    def _load_url(self, url):
+        self._main_browser.load(QUrl(url))
+
+    def _execute_js(self, string_js):
         self._main_browser.page().mainFrame().evaluateJavaScript(string_js)

@@ -1,11 +1,13 @@
 import threading
 from CommandReceiver import CommandReceiver
 from BrowserClient import BrowserClient
+from PyQt5.QtCore import pyqtSignal
 from AudioPlayer import AudioPlayer
 from TTSClient import TTSClient
 from Command import Command
 from config import config
 from logger import Logger
+from Thread import Thread
 from time import sleep
 
 
@@ -18,8 +20,13 @@ class OutputController(threading.Thread):
     command from command receiver.
     """
 
-    def __init__(self, fullscreen, size, flask_host=config["output_server_host"], flask_port=config["output_server_port"],
-                 flask_url=config["output_server_url"], voice_hash=config["default_voice"], mary_host=config["marytts_host"],
+    zooming = pyqtSignal(float)
+    js_execution = pyqtSignal(str)
+    load_url = pyqtSignal(str)
+
+    def __init__(self, flask_host=config["output_server_host"], flask_port=config["output_server_port"],
+                 flask_url=config["output_server_url"], voice_hash=config[
+                     "default_voice"], mary_host=config["marytts_host"],
                  mary_port=config["marytts_port"]):
         """
         Here we create objects of main components of Output,
@@ -28,17 +35,20 @@ class OutputController(threading.Thread):
         Also we create "_is_running" flag to be able to stop running
         and Rlock object to lock self and threads of controlled object when it is necessary
         """
-        self._lock = threading.Rlock()
+        super(OutputController, self).__init__()
+        self._lock = threading.RLock()
 
         self._receiver = CommandReceiver(flask_host, flask_port, flask_url, self._lock)
-        self._browser = BrowserClient(fullscreen, size)
         self._tts = TTSClient(voice_hash, mary_host, mary_port, self)
+        self._audioplayer = AudioPlayer(controller=self)
+
         # lists for controlling text to speech and its playing
         self.tts_phrases_queue = []
         self.text_to_say = []
 
         self._is_running = True
         self._current_filetype = None
+        self._zoom_factor = 1
         # it saves volume to set it after turning off mute
         # and to know how to increase/decrease it
         self._speech_volume = 0
@@ -50,19 +60,24 @@ class OutputController(threading.Thread):
         It uses command receiver to get new command and then handle it.
         Wait a little bit not to cause problem with server and not to load computer
         """
+        self._receiver.start()
+        self._tts.start()
+        self._audioplayer.start()
+        self._start_playing_music()
         while self._is_running:
             if self._receiver.is_state():
+                command_type, command_body = self._receiver.get_state()
 
-                command = Command(self._receiver.get_state())
+                command = Command(command_type, command_body)
                 self._handle_command(command)
 
-                # turn on music when video is stopped 
+                # turn on music when video is stopped
                 # (music is off while video is playing)
                 if not self._is_video_playing and not self._muted:
                     self._set_music_volume(self._music_volume)
 
             else:
-            	pass
+                pass
             sleep(.05)
 
     def _handle_command(self, command):
@@ -103,17 +118,17 @@ class OutputController(threading.Thread):
         elif command.type == 'PAUSE':
             self._video_pause()
         elif command.type == 'VOLUME_UP':
-        	if self._current_filetype == "video" and not self._output.video_stopped:
-        		self._video_volume_up(0.2)
-        	else:
+            if self._current_filetype == "video" and not self._output.video_stopped:
+                self._video_volume_up(0.2)
+            else:
                 self._music_volume += 1
                 self._speech_volume += 1
                 self._set_music_volume(self._music_volume)
                 self._set_voice_volume(self._speech_volume)
         elif command.type == 'VOLUME_DOWN':
-        	if self._current_filetype == "video" and not self._output.video_stopped:
-        		self._video_volume_up(-0.2)
-        	else:
+            if self._current_filetype == "video" and not self._output.video_stopped:
+                self._video_volume_up(-0.2)
+            else:
                 self._music_volume -= 1
                 self._speech_volume -= 1
                 self._set_music_volume(self._music_volume)
@@ -133,112 +148,135 @@ class OutputController(threading.Thread):
             self._set_music_volume(self._music_volume)
             self._set_voice_volume(self._speech_volume)
         else:
-        	logger.info("Command isn't recognized {}".format(Command))
+            logger.info("Command isn't recognized {}".format(Command))
 
     def _say_text(self, text):
-    	"""
-    	Here we make our speech lists empty and then prepare
-    	text to say list for TTSClient
-    	"""
-    	self._lock.acquire()
-    	self.text_to_say = []
-    	self.tts_phrases_queue = []
-    	# we split sentences for tts
-    	list_of_sentences = [tesx.split('. ')]
-    	# and then add '.' to each to improve quality of tts
-    	self.text_to_say = [sentence + "." for sentence in list_of_sentences]
-    	self._lock.release()
+        """
+        Here we make our speech lists empty and then prepare
+        text to say list for TTSClient
+        """
+        self._lock.acquire()
+        self.text_to_say = []
+        self.tts_phrases_queue = []
+        # we split sentences for tts
+        list_of_sentences = [tesx.split('. ')]
+        # and then add '.' to each to improve quality of tts
+        self.text_to_say = [sentence + "." for sentence in list_of_sentences]
+        self._lock.release()
 
     def _stop_speech(self):
-    	"""
-    	We just make speech list empty and it leads to silence
-    	"""
-    	self._lock.acquire()
-    	self.text_to_say = []
-    	self.tts_phrases_queue = []
-    	self._lock.release()
+        """
+        We just make speech list empty and it leads to silence
+        """
+        self._lock.acquire()
+        self.text_to_say = []
+        self.tts_phrases_queue = []
+        self._lock.release()
+
+    def _start_playing_music(self):
+        """
+        """
+        self._audioplayer.play_music(config["background_music"])
 
     def _pause_video(self):
-    	"""
-    	We generate js-command to pause video and send it to the browser for executing
-    	"""
+        """
+        We generate js-command to pause video and send it to the browser for executing
+        """
         if self._current_filetype == 'video':
             script_js = """video=document.getElementById("arius_videoplayer"); video.pause()"""
-            self._browser.execute_js(script_js)
+            self.js_execution.emit(script_js)
 
     def _play_video(self):
-    	"""
-    	We generate js-command to play video and send it to the browser for executing
-    	"""
+        """
+        We generate js-command to play video and send it to the browser for executing
+        """
         if self._current_filetype == 'video':
             script_js = """video=document.getElementById("arius_videoplayer"); video.play()"""
-            self._browser.execute_js(script_js)
+            self.js_execution.emit(script_js)
 
     def _is_video_playing(self):
-    	"""
-    	We generate js-command to get know if video is playing
-    	and send it to the browser for executing. Then return the result
-    	"""
-    	if self._current_filetype == 'video':
-    		pass
-    	else:
-    		return False
+        """
+        We generate js-command to get know if video is playing
+        and send it to the browser for executing. Then return the result
+        """
+        if self._current_filetype == 'video':
+            return True
+        else:
+            return False
 
     def _vertical_scroll(self, px_length, ms_time):
-    	"""
-    	We generate js-command to scroll and send it to the browser for executing
-    	"""
-    	scroll_js = open("scroll.js", "r").read()
+        """
+        We generate js-command to scroll and send it to the browser for executing
+        """
+        scroll_js = open("scroll.js", "r").read()
         self.browser.execute_js(scroll_js)
         if self._cur_filetype == "pdf":
             string_js = ','.join(['smooth_scroll_by(PDFViewerApplication.pdfViewer.container', str(px_length), str(ms_time) + ');'])
-            self.browser.execute_js(string_js)
+            self.js_execution.emit(script_js)
         elif self._cur_filetype == "webpage":
-            string_js = ','.join(['smooth_scroll_by(document.body', str(px_length), str(ms_time) + ');'])
-            self.browser.execute_js(string_js)
+            string_js = ','.join(
+                ['smooth_scroll_by(document.body', str(px_length), str(ms_time) + ');'])
+            self.js_execution.emit(script_js)
 
     def _center(self):
-    	"""
-    	We generate js-command to center the document page and send it to the browser
-    	"""
-    	if self._current_filetype == "pdf":
-    		pass
+        """
+        We generate js-command to center the document page and send it to the browser
+        """
+        if self._current_filetype == "pdf":
+            pass
 
     def _zoom(self, zoom_factor):
-    	"""
-    	We use the browser method for zooming
-    	"""
-    	if self._current_filetype in ["pdf", "webpage"]:
-    		self.browser.zoom(zoom_factor)
-   	def _reset_zoom(self):
-    	"""
-    	We use the browser method for reseting zoom
-    	"""
-    	self._browser.reset_zoom()
+        """
+        We use the browser method for zooming
+        """
+        logger.debug('Zooming main content view in')
+        if self._cur_filetype == "pdf":
+            string_js = """PDFViewerApplication.zoomIn();"""
+            self.js_execution.emit(script_js)
+        elif self._cur_filetype == "webpage":
+            self._zoom_factor += zoom_factor
+            self.zooming.emit(self._zoom_factor)
+        else:
+            pass
+
+    def _reset_zoom(self):
+        """
+        We use the browser method for reseting zoom
+        """
+        # self._browser.reset_zoom()
+        if self._cur_filetype == "pdf":
+            string_js = 'PDFViewerApplication.pdfViewer.currentScaleValue = "page-width"'
+            self.js_execution.emit(script_js)
+        elif self._cur_filetype == "webpage":
+            self._zoom_factor = 1
+            self.zooming.emit(self._zoom_factor)
+        else:
+            pass
+
 
     def _get_speech_volume(self):
-    	"""
-    	We use AudioPlayer object to get know speech volume increment/decrement
-    	"""
-		return self.audioplayer.get_speech_volume()
+        """
+        We use AudioPlayer object to get know speech volume increment/decrement
+        """
+        return self._audioplayer.get_speech_volume()
 
-   	def _get_music_volume(self):
-    	"""
-    	We use AudioPlayer object to get know music volume increment/decrement
-    	"""
-		return self.audioplayer.get_music_volume()
+    def _get_music_volume(self):
+        """
+        We use AudioPlayer object to get know music volume increment/decrement
+        """
+        return self._audioplayer.get_music_volume()
 
     def _set_speech_volume(self, volume):
-    	"""
-    	We use AudioPlayer object to get know speech volume increment/decrement
-    	"""
-    	self.audioplayer.set_speech_volume(volume)
+        """
+        We use AudioPlayer object to get know speech volume increment/decrement
+        """
+        self._audioplayer.set_speech_volume(volume)
 
-   	def _set_music_volume(self, volume):
-    	"""
-    	We use AudioPlayer object to get know music volume increment/decrement
-    	"""
-    	self.audioplayer.set_music_volume(volume)
+    def _set_music_volume(self, volume):
+        """
+        We use AudioPlayer object to get know music volume increment/decrement
+        """
+        self._audioplayer.set_music_volume(volume)
 
     def _load_content(self, content_type, content):
         """
@@ -253,7 +291,7 @@ class OutputController(threading.Thread):
         source = config['flask_server_home']
         self._reset_zoom()
         if content_type == 'local_url':
-            source += config['flask_server_local_page_client'] + content 
+            source += config['flask_server_local_page_client'] + content
             self._current_filetype = "webpage"
         elif content_type == 'external_url':
             self._current_filetype = "webpage"
@@ -265,12 +303,13 @@ class OutputController(threading.Thread):
             source = config['flask_server_video_addr_client'] + content
             self._currrent_filetype = "video"
         elif content_type == "screen":
-        	source += config["flask_screen_address"][content]
-       	else:
-       		source += config["flask_screen_address"]["ERROR"]
+            source += config["flask_screen_address"][content]
+        else:
+            source += config["flask_screen_address"]["ERROR"]
 
         # and finally load the result
-        self._browser.load_url(source)
+        # self._browser.load_url(source)
+        self.load_url.emit(source)
 
     def get_next_speech_phrase(self):
         """
@@ -280,6 +319,3 @@ class OutputController(threading.Thread):
             return self.tts_phrases_queue.pop(0)
         else:
             return False
-
-
-    

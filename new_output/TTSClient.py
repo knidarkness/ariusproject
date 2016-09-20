@@ -16,6 +16,7 @@ class TTSClient(threading.Thread):
         as we process not the whole text but parts of it to process text while player
         is playing audio of generated speech
         """
+        super(TTSClient, self).__init__()
         self._voice_config = voice_hash
         self._host = mary_host
         self._port = mary_port
@@ -34,8 +35,8 @@ class TTSClient(threading.Thread):
         """
         Get text to process from the output
         """
-        if self._output.text_for_tts:
-            return self._output.text_for_tts.pop(0)
+        if self._output.text_to_say:
+            return self._output.text_to_say.pop(0)
         else:
             return None
 

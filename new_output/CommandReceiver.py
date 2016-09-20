@@ -16,6 +16,7 @@ class CommandReceiver(threading.Thread):
         This constructor method makes connection with the server, gets Rlock object
         and use it like its own lock and creates a flag "running" which allows to kill thread
         """
+        super(CommandReceiver   , self).__init__()
         self._server_connection = RESTClient(
             server_host, server_port, commands_url)
         self._is_running = True

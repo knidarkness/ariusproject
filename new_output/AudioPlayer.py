@@ -17,12 +17,15 @@ class AudioPlayer(threading.Thread):
     Class is responsible for playing background music and speech.
     """
 
-    def __init__(self, speech_volume=0, music_volume=0, controller):
+    def __init__(self, controller, speech_volume=0, music_volume=0):
         """
         Volume argument show increasing(decreasing) of original audiofile by dB.
         """
+        super(AudioPlayer, self).__init__()
         self._speech_volume = speech_volume
         self._music_volume = music_volume
+        self._speaking_chunks = None
+        self._music_chunks = None
         self._controller = controller
         self._is_speaking = False
         self._is_music = False
@@ -38,9 +41,9 @@ class AudioPlayer(threading.Thread):
         It plays chunks of speech and/or music if needed.
         """
         while self._is_running:
-
+            play_chunk = None
             if not self._speaking_chunks:
-                next_phrase = self._output.get_next_speech_phrase():
+                next_phrase = self._controller.get_next_speech_phrase()
                 if not next_phrase:
                     self._is_speaking = False
                 else:
@@ -64,24 +67,26 @@ class AudioPlayer(threading.Thread):
                 # we play the first chunk of speech and then remove it
                 play(self._speaking_chunks.pop(0))
                 play_chunk = speech_chunk + self._speech_volume
-
-            play(play_chunk, self._stream)
+            if play_chunk:
+                play(play_chunk, self._stream)
 
     def play_music(self, music_file):
         """
         It open the audio and make the "queue" of chunks from it
         """
-        self._is_music = True
         self._music_chunks = make_chunks(
             AudioSegment.from_wav(music_file), 1000)
+        self._is_music = True
+
 
     def play_speech(self, speech_file):
         """
         It open the audio and make the "queue" of chunks from it
         """
-        self._is_speaking = True
         self._speaking_chunks = make_chunks(
             AudioSegment.from_wav(speech_file), 1000)
+        self._is_speaking = True
+
 
     def get_speech_volume(self):
         """
