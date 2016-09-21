@@ -3,6 +3,211 @@
 
    },
    "synonyms":{  
+      "1":{  
+         "equal":[  
+            "r&d director",
+            "mylko",
+            "vasyl mylko",
+            "rnd director"
+         ],
+         "key":"mylko"
+      },
+      "2":{  
+         "equal":[  
+            "rnd",
+            "research and development",
+            "r&d"
+         ],
+         "key":"rnd"
+      },
+      "3":{  
+         "equal":[  
+            "EBR",
+            "mEBR",
+            "mEBR system",
+            "Electronic Batch Record"
+         ],
+         "key":"EBR"
+      },
+      "4":{  
+         "equal":[  
+            "design",
+            "view",
+            "architecture",
+            "art"
+         ],
+         "key":"Design"
+      },
+      "5":{  
+         "equal":[  
+            "funny",
+            "humor",
+            "joke",
+            "joyfull",
+            "laugh",
+            "laughing"
+         ],
+         "key":"funny"
+      },
+      "6":{  
+         "equal":[  
+            "internet of things",
+            "iot",
+            "cloud devices"
+         ],
+         "key":"iot"
+      },
+      "7":{  
+         "equal":[  
+            "alcohol",
+            "beer",
+            "cider",
+            "drink",
+            " booze"
+         ],
+         "key":"beer"
+      },
+      "8":{  
+         "equal":[  
+            "computer vision",
+            "machine vision",
+            "pattern recognition",
+            "image processing"
+         ],
+         "key":"computer vision"
+      },
+      "9":{  
+         "equal":[  
+            "Tech Lead",
+            "Oleksandr Sukholeyster",
+            "RnD employee",
+            "Techlead"
+         ],
+         "key":"Oleksandr Sukholeyster"
+      },
+      "10":{  
+         "equal":[  
+            "security",
+            "information security",
+            "social engineering",
+            "viruses",
+            "malware",
+            "vulnerability"
+         ],
+         "key":"Security"
+      },
+      "11":{  
+         "equal":[  
+            "AWS",
+            "Amazon Web Services"
+         ],
+         "key":"AWS"
+      },
+      "12":{  
+         "equal":[  
+            "Project Management",
+            "Management",
+            "Teamwork",
+            "Team efficiency",
+            "Team productivity",
+            "planning"
+         ],
+         "key":"Project Management"
+      },
+      "13":{  
+         "equal":[  
+            "Mobile devices",
+            "Smart watch",
+            "Weareables",
+            "Weareable devices",
+            "Compact devices"
+         ],
+         "key":"Weareable devices"
+      },
+      "14":{  
+         "equal":[  
+            "machine learning",
+            "cognitive computing",
+            "deep learning",
+            "neural networks"
+         ],
+         "key":"machine learning"
+      },
+      "15":{  
+         "equal":[  
+            "problem",
+            "solved",
+            "result",
+            "solution"
+         ],
+         "key":"Solution"
+      },
+      "16":{  
+         "equal":[  
+            "research",
+            "publication",
+            "magazine",
+            "article",
+            "analisys"
+         ],
+         "key":"Research"
+      },
+      "17":{  
+         "equal":[  
+            "Context identification",
+            "context classification"
+         ],
+         "key":"Context Identification"
+      },
+      "18":{  
+         "equal":[  
+            "abilition",
+            "system board"
+         ],
+         "key":"Abilition Dashboard"
+      },
+      "19":{  
+         "equal":[  
+            "Bazaarvoice",
+            "Google",
+            "Spredfast",
+            "Henry Schein",
+            "Cloudera"
+         ],
+         "key":"Patners about SS"
+      },
+      "20":{  
+         "equal":[  
+            "emotions",
+            "feelings",
+            "mood"
+         ],
+         "key":"Emotions"
+      },
+      "21":{  
+         "equal":[  
+            "innovations",
+            "something new",
+            "creativity"
+         ],
+         "key":"Innovations"
+      },
+      "22":{  
+         "equal":[  
+            "coffe",
+            "Barista",
+            "coffe machine"
+         ],
+         "key":"Barista"
+      },
+      "23":{  
+         "equal":[  
+            "interface design",
+            "user experience",
+            "user interface"
+         ],
+         "key":"UX/UI"
+      },
       "24":{  
          "equal":[  
             "Austin",
@@ -39,38 +244,6 @@
          ],
          "key":"Elastic Map Reduce"
       },
-      "20":{  
-         "equal":[  
-            "emotions",
-            "feelings",
-            "mood"
-         ],
-         "key":"Emotions"
-      },
-      "21":{  
-         "equal":[  
-            "innovations",
-            "something new",
-            "creativity"
-         ],
-         "key":"Innovations"
-      },
-      "22":{  
-         "equal":[  
-            "coffe",
-            "Barista",
-            "coffe machine"
-         ],
-         "key":"Barista"
-      },
-      "23":{  
-         "equal":[  
-            "interface design",
-            "user experience",
-            "user interface"
-         ],
-         "key":"UX/UI"
-      },
       "28":{  
          "equal":[  
             "Affective Computing"
@@ -90,185 +263,6 @@
          ],
          "key":"trends"
       },
-      "1":{  
-         "equal":[  
-            "r&d director",
-            "mylko",
-            "vasyl mylko",
-            "rnd director"
-         ],
-         "key":"mylko"
-      },
-      "3":{  
-         "equal":[  
-            "EBR",
-            "mEBR",
-            "mEBR system",
-            "Electronic Batch Record"
-         ],
-         "key":"EBR"
-      },
-      "2":{  
-         "equal":[  
-            "rnd",
-            "research and development",
-            "r&d"
-         ],
-         "key":"rnd"
-      },
-      "5":{  
-         "equal":[  
-            "funny",
-            "humor",
-            "joke",
-            "joyfull",
-            "laugh",
-            "laughing"
-         ],
-         "key":"funny"
-      },
-      "4":{  
-         "equal":[  
-            "design",
-            "view",
-            "architecture",
-            "art"
-         ],
-         "key":"Design"
-      },
-      "7":{  
-         "equal":[  
-            "alcohol",
-            "beer",
-            "cider",
-            "drink",
-            " booze"
-         ],
-         "key":"beer"
-      },
-      "6":{  
-         "equal":[  
-            "internet of things",
-            "iot",
-            "cloud devices"
-         ],
-         "key":"iot"
-      },
-      "9":{  
-         "equal":[  
-            "Tech Lead",
-            "Oleksandr Sukholeyster",
-            "RnD employee",
-            "Techlead"
-         ],
-         "key":"Oleksandr Sukholeyster"
-      },
-      "8":{  
-         "equal":[  
-            "computer vision",
-            "machine vision",
-            "pattern recognition",
-            "image processing"
-         ],
-         "key":"computer vision"
-      },
-      "11":{  
-         "equal":[  
-            "AWS",
-            "Amazon Web Services"
-         ],
-         "key":"AWS"
-      },
-      "10":{  
-         "equal":[  
-            "security",
-            "information security",
-            "social engineering",
-            "viruses",
-            "malware",
-            "vulnerability"
-         ],
-         "key":"Security"
-      },
-      "13":{  
-         "equal":[  
-            "Mobile devices",
-            "Smart watch",
-            "Weareables",
-            "Weareable devices",
-            "Compact devices"
-         ],
-         "key":"Weareable devices"
-      },
-      "12":{  
-         "equal":[  
-            "Project Management",
-            "Management",
-            "Teamwork",
-            "Team efficiency",
-            "Team productivity",
-            "planning"
-         ],
-         "key":"Project Management"
-      },
-      "15":{  
-         "equal":[  
-            "problem",
-            "solved",
-            "result",
-            "solution"
-         ],
-         "key":"Solution"
-      },
-      "14":{  
-         "equal":[  
-            "machine learning",
-            "cognitive computing",
-            "deep learning",
-            "neural networks"
-         ],
-         "key":"machine learning"
-      },
-      "17":{  
-         "equal":[  
-            "Context identification",
-            "context classification"
-         ],
-         "key":"Context Identification"
-      },
-      "16":{  
-         "equal":[  
-            "research",
-            "publication",
-            "magazine",
-            "article",
-            "analisys"
-         ],
-         "key":"Research"
-      },
-      "19":{  
-         "equal":[  
-            "Bazaarvoice",
-            "Google",
-            "Spredfast",
-            "Henry Schein",
-            "Cloudera"
-         ],
-         "key":"Patners about SS"
-      },
-      "18":{  
-         "equal":[  
-            "abilition",
-            "system board"
-         ],
-         "key":"Abilition Dashboard"
-      },
-      "31":{  
-         "equal":[  
-            "Biolock Feasibility Study"
-         ],
-         "key":"Biolock Feasibility Study"
-      },
       "30":{  
          "equal":[  
             "Biolock",
@@ -277,18 +271,11 @@
          ],
          "key":"Biolock"
       },
-      "34":{  
+      "31":{  
          "equal":[  
-            "interesting articles",
-            "magazines"
+            "Biolock Feasibility Study"
          ],
-         "key":"RND_magazines"
-      },
-      "33":{  
-         "equal":[  
-            "Bio-processor SDK"
-         ],
-         "key":"Bio-processor SDK"
+         "key":"Biolock Feasibility Study"
       },
       "32":{  
          "equal":[  
@@ -297,9 +284,236 @@
             "sensors"
          ],
          "key":"biotechnologies"
+      },
+      "33":{  
+         "equal":[  
+            "Bio-processor SDK"
+         ],
+         "key":"Bio-processor SDK"
+      },
+      "34":{  
+         "equal":[  
+            "interesting articles",
+            "magazines"
+         ],
+         "key":"RND_magazines"
+      },
+      "35":{  
+         "equal":[  
+            "health",
+            "hospital",
+            "life",
+            "cure",
+            "doctor"
+         ],
+         "key":"Healthcare"
+      },
+      "36":{  
+         "equal":[  
+            "communication",
+            "writing",
+            "talking",
+            "sales",
+            "documentaion"
+         ],
+         "key":"Communication"
       }
    },
    "tag_data":{  
+      "24":{  
+         "priority":"0",
+         "path":"BioLock.webm",
+         "name":"BioLock.webm",
+         "tags":[  
+            [  
+               "Biolock",
+               "1"
+            ],
+            [  
+               "biotechnologies",
+               "1"
+            ],
+            [  
+               "Solution",
+               "1"
+            ],
+            [  
+               "Services",
+               "1"
+            ]
+         ]
+      },
+      "25":{  
+         "priority":"0",
+         "path":"AbilitonDashboardWearable.webm",
+         "name":"AbilitonDashboardWearable.webm",
+         "tags":[  
+            [  
+               "Abilition Dashboard",
+               "1"
+            ],
+            [  
+               "Project Management",
+               "0.8"
+            ],
+            [  
+               "Services",
+               "1"
+            ]
+         ]
+      },
+      "26":{  
+         "priority":"1",
+         "path":"Cross_Channel_Experience.webm",
+         "name":"Cross_Channel_Experience.webm",
+         "tags":[  
+            [  
+               "Abilition Dashboard",
+               "1"
+            ],
+            [  
+               "Weareable devices",
+               "1"
+            ],
+            [  
+               "Project Management",
+               "0.7"
+            ]
+         ]
+      },
+      "27":{  
+         "priority":"0",
+         "path":"human_accelerator_ss.webm",
+         "name":"human_accelerator_ss.webm",
+         "tags":[  
+            [  
+               "Healthcare",
+               "1"
+            ],
+            [  
+               "Services",
+               "1"
+            ]
+         ]
+      },
+      "20":{  
+         "priority":"2",
+         "path":"Conceptualization of mEBR System.pdf",
+         "name":"Conceptualization of mEBR System.pdf",
+         "tags":[  
+            [  
+               "EBR",
+               "1"
+            ],
+            [  
+               "Research",
+               "0.7"
+            ],
+            [  
+               "Services",
+               "0.6"
+            ]
+         ]
+      },
+      "21":{  
+         "priority":"1",
+         "path":"IoT SDK for BioSensors.pdf",
+         "name":"IoT SDK for BioSensors.pdf",
+         "tags":[  
+            [  
+               "iot",
+               "1"
+            ],
+            [  
+               "biotechnologies",
+               "1"
+            ],
+            [  
+               "Solution",
+               "1"
+            ],
+            [  
+               "Services",
+               "1"
+            ]
+         ]
+      },
+      "22":{  
+         "priority":"1",
+         "path":"Make your own device for the wild.pdf",
+         "name":"Make your own device for the wild.pdf",
+         "tags":[  
+            [  
+               "iot",
+               "0.8"
+            ],
+            [  
+               "Research",
+               "0.8"
+            ],
+            [  
+               "Services",
+               "0.8"
+            ]
+         ]
+      },
+      "23":{  
+         "priority":"1",
+         "path":"Beer_Recognition_v1_0.webm",
+         "name":"Beer_Recognition_v1_0.webm",
+         "tags":[  
+            [  
+               "Computer Vision",
+               "1"
+            ],
+            [  
+               "Beer",
+               "1"
+            ],
+            [  
+               "funny",
+               "1"
+            ]
+         ]
+      },
+      "28":{  
+         "priority":"1",
+         "path":"mylko_byod.webm",
+         "name":"mylko_byod.webm",
+         "tags":[  
+            [  
+               "iot",
+               "0.8"
+            ],
+            [  
+               "mylko",
+               "1"
+            ],
+            [  
+               "Research",
+               "0.7"
+            ]
+         ]
+      },
+      "29":{  
+         "priority":"0",
+         "path":"RPi_with_proximity_sensor.webm",
+         "name":"RPi_with_proximity_sensor.webm",
+         "tags":[  
+            [  
+               "iot",
+               "0.7"
+            ],
+            [  
+               "Innovations",
+               "0.7"
+            ],
+            [  
+               "Weareable devices",
+               "0.6"
+            ]
+         ]
+      },
       "1":{  
          "priority":"2",
          "path":"CVA_8.pdf",
@@ -323,6 +537,25 @@
             ]
          ]
       },
+      "3":{  
+         "priority":"3",
+         "path":"eBR solution Case Study.pdf",
+         "name":"eBR solution Case Study.pdf",
+         "tags":[  
+            [  
+               "EBR",
+               "0.9"
+            ],
+            [  
+               "Solution",
+               "0.7"
+            ],
+            [  
+               "Research",
+               "0.5"
+            ]
+         ]
+      },
       "2":{  
          "priority":"2",
          "path":"Context Identification research.pdf",
@@ -342,22 +575,14 @@
             ]
          ]
       },
-      "3":{  
-         "priority":"3",
-         "path":"eBR solution Case Study.pdf",
-         "name":"eBR solution Case Study.pdf",
+      "5":{  
+         "priority":"1",
+         "path":"1_st _april.mp4.webm",
+         "name":"1_st _april.mp4.webm",
          "tags":[  
             [  
-               "EBR",
-               "0.9"
-            ],
-            [  
-               "Solution",
-               "0.7"
-            ],
-            [  
-               "Research",
-               "0.5"
+               "funny",
+               "1"
             ]
          ]
       },
@@ -380,14 +605,18 @@
             ]
          ]
       },
-      "5":{  
+      "7":{  
          "priority":"1",
-         "path":"1_st _april.mp4.webm",
-         "name":"1_st _april.mp4.webm",
+         "path":"mylko_cool_thing.webm",
+         "name":"mylko_cool_thing.webm",
          "tags":[  
             [  
-               "funny",
+               "iot",
                "1"
+            ],
+            [  
+               "mylko",
+               "0.6"
             ]
          ]
       },
@@ -410,18 +639,18 @@
             ]
          ]
       },
-      "7":{  
+      "9":{  
          "priority":"1",
-         "path":"mylko_cool_thing.webm",
-         "name":"mylko_cool_thing.webm",
+         "path":"austin_ss_ux_ui.webm",
+         "name":"austin_ss_ux_ui.webm",
          "tags":[  
             [  
-               "iot",
-               "1"
+               "USA",
+               "0.6"
             ],
             [  
-               "mylko",
-               "0.6"
+               "UX/UI",
+               "0.4"
             ]
          ]
       },
@@ -440,25 +669,25 @@
             ]
          ]
       },
-      "9":{  
-         "priority":"1",
-         "path":"austin_ss_ux_ui.webm",
-         "name":"austin_ss_ux_ui.webm",
+      "11":{  
+         "priority":"0",
+         "path":"security_ss.webm",
+         "name":"security_ss.webm",
          "tags":[  
             [  
-               "USA",
-               "0.6"
+               "Security",
+               "1"
             ],
             [  
-               "UX/UI",
-               "0.4"
+               "Services",
+               "0.7"
             ]
          ]
       },
       "10":{  
          "priority":"0",
-         "path":"beer_recognizer.mp4.webm",
-         "name":"beer_recognizer.mp4.webm",
+         "path":"Beer_Recognition_v2_0.webm",
+         "name":"Beer_Recognition_v2_0.webm",
          "tags":[  
             [  
                "Computer Vision",
@@ -474,25 +703,29 @@
             ]
          ]
       },
-      "11":{  
-         "priority":"0",
-         "path":"small_security_ss.mp4.webm",
-         "name":"small_security_ss.mp4.webm",
+      "13":{  
+         "priority":"2",
+         "path":"AB - Usability Test Report.pdf",
+         "name":"AB - Usability Test Report.pdf",
          "tags":[  
             [  
-               "Security",
-               "1"
+               "Abiliton Dashboard",
+               "0.8"
             ],
             [  
-               "Services",
+               "Testing",
+               "0.8"
+            ],
+            [  
+               "Resarch",
                "0.7"
             ]
          ]
       },
       "12":{  
          "priority":"1",
-         "path":"AbilitonDashboardWearable.mp4.webm",
-         "name":"AbilitonDashboardWearable.mp4.webm",
+         "path":"AbilitonDashboardWearable.webm",
+         "name":"AbilitonDashboardWearable.webm",
          "tags":[  
             [  
                "Project Managament",
@@ -505,6 +738,189 @@
             [  
                "Abilition Dashboard",
                "0.7"
+            ]
+         ]
+      },
+      "15":{  
+         "priority":"2",
+         "path":"Affective Computing.pdf",
+         "name":"Affective Computing.pdf",
+         "tags":[  
+            [  
+               "Affective Computing",
+               "1"
+            ],
+            [  
+               "trends",
+               "1"
+            ],
+            [  
+               "Research",
+               "1"
+            ]
+         ]
+      },
+      "14":{  
+         "priority":"2",
+         "path":"AWS Machine Learning Analysis.pdf",
+         "name":"AWS Machine Learning Analysis.pdf",
+         "tags":[  
+            [  
+               "AWS",
+               "0.7"
+            ],
+            [  
+               "Machine Learning",
+               "0.7"
+            ],
+            [  
+               "Elastic Map Reduce",
+               "1"
+            ],
+            [  
+               "Research",
+               "0.8"
+            ]
+         ]
+      },
+      "17":{  
+         "priority":"2",
+         "path":"AWS Readines Case Studies.pdf",
+         "name":"AWS Readines Case Studies.pdf",
+         "tags":[  
+            [  
+               "AWS",
+               "1"
+            ],
+            [  
+               "Services",
+               "0.7"
+            ],
+            [  
+               "Solution",
+               "0.7"
+            ],
+            [  
+               "Research",
+               "0.7"
+            ]
+         ]
+      },
+      "16":{  
+         "priority":"1",
+         "path":"Barista_design.pdf",
+         "name":"Barista_design.pdf",
+         "tags":[  
+            [  
+               "Design",
+               "0.7"
+            ],
+            [  
+               "Barista",
+               "1"
+            ]
+         ]
+      },
+      "19":{  
+         "priority":"1",
+         "path":"Bio-processor SDK.pdf",
+         "name":"Bio-processor SDK.pdf",
+         "tags":[  
+            [  
+               "Research",
+               "0.7"
+            ],
+            [  
+               "biotechnologies",
+               "1"
+            ],
+            [  
+               "Oleksandr Sukholyester",
+               "0.8"
+            ],
+            [  
+               "Bio-processor SDK",
+               "1"
+            ]
+         ]
+      },
+      "18":{  
+         "priority":"1",
+         "path":"Biolock Feasibility Study.pdf",
+         "name":"Biolock Feasibility Study.pdf",
+         "tags":[  
+            [  
+               "Biolock",
+               "1"
+            ],
+            [  
+               "Security",
+               "0.6"
+            ],
+            [  
+               "Biolock Feasibility Study",
+               "1"
+            ]
+         ]
+      },
+      "31":{  
+         "priority":"1",
+         "path":"Sentinel.webm",
+         "name":"Sentinel.webm",
+         "tags":[  
+            [  
+               "funny",
+               "0.6"
+            ],
+            [  
+               "Innovation",
+               "0.9"
+            ],
+            [  
+               "Solution",
+               "0.7"
+            ]
+         ]
+      },
+      "30":{  
+         "priority":"2",
+         "path":"RPi_with_sensors_usecase.webm",
+         "name":"RPi_with_sensors_usecase.webm",
+         "tags":[  
+            [  
+               "iot",
+               "0.7"
+            ],
+            [  
+               "Innovations",
+               "0.7"
+            ],
+            [  
+               "Weareable devices",
+               "0.6"
+            ],
+            [  
+               "Research",
+               "0.8"
+            ]
+         ]
+      },
+      "32":{  
+         "priority":"0",
+         "path":"tc_ss.webm",
+         "name":"tc_ss.webm",
+         "tags":[  
+            [  
+               "Communication",
+               "1"
+            ],
+            [  
+               "Project Management",
+               "0.7"
+            ],
+            [  
+               "Services",
+               "0.4"
             ]
          ]
       }
