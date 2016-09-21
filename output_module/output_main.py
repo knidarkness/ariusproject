@@ -287,13 +287,15 @@ class OutputInterface:
             # calling of _load_content method with specified content type.
 
             # start music play if it was stopped
-            self._player.play()
 
             if command[0] == 'OPEN_PDF':
+                self._player.play()
                 self._load_content('local_pdf', command[1])
             elif command[0] == 'OPEN_URL':
+                self._player.play()
                 self._load_content('external_url', command[1])
             elif command[0] == 'OPEN_LOCAL_PAGE':
+                self._player.play()
                 self._load_content('local_url', command[1])
             elif command[0] == 'OPEN_VIDEO':
                 self._player.stop()
@@ -304,6 +306,7 @@ class OutputInterface:
             # work.
 
             elif command[0] == 'OPEN_SCREEN':
+                self._player.play()
                 self._load_screen(command[1])
 
             # Zoom commands are handled each with its own method.
@@ -318,9 +321,14 @@ class OutputInterface:
             # as well as scroll.
 
             elif command[0] == 'SCROLL_DOWN':
-                self._main_browser_scroll(300, 1000)
+                self._main_browser_scroll_down()
             elif command[0] == 'SCROLL_UP':
-                self._main_browser_scroll(-300, 1000)
+                self._main_browser_scroll_up()
+
+            elif command[0] == 'SCROLL_LEFT':
+                self._main_browser_scroll_left()
+            elif command[0] == 'SCROLL_RIGHT':
+                self._main_browser_scroll_right()
             elif command[0] == 'CONTINIOUS_SCROLL_UP':
                 pass
             elif command[0] == 'CONTINIOUS_SCROLL_DOWN':
@@ -478,22 +486,61 @@ class OutputInterface:
         logger.info('Loading {} to the bottom content view.'.format(url))
         self._bottom_browser.load(QUrl(url))
 
-    def _main_browser_scroll(self, px_length, ms_time):
+    def _main_browser_scroll_down(self):
         """
-        This method is called to smoothly scroll the page.
-        It scrolls on px_length in the ms_time.
-        In dependence of the current content type if provides different
+        This method is called to smoothly scroll the page down. In
+        dependence of the current content type if provides different
         implementations of scroll, but generally it gives the same result.
         """
         logger.debug('Scrolling main content view down')
         scroll_js = open("scroll.js", "r").read()
         self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
         if self._cur_filetype == "pdf":
-            string_js = ','.join(['smooth_scroll_by(PDFViewerApplication.pdfViewer.container', str(px_length), str(ms_time) + ');'])
-            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_vscroll_by(PDFViewerApplication.pdfViewer.container, 300, 1000);")
         elif self._cur_filetype == "webpage":
-            string_js = ','.join(['smooth_scroll_by(document.body', str(px_length), str(ms_time) + ');'])
-            self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_vscroll_by(document.body, 300, 1000);")
+
+    def _main_browser_scroll_up(self):
+        """
+        This method is called to smoothly scroll the page up. In
+        dependence of the current content type if provides different
+        implementations of scroll, but generally it gives the same result.
+        """
+        logger.debug('Scrolling main content view down')
+        scroll_js = open("scroll.js", "r").read()
+        self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
+        if self._cur_filetype == "pdf":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_vscroll_by(PDFViewerApplication.pdfViewer.container, -300, 1000);")
+        elif self._cur_filetype == "webpage":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_vscroll_by(document.body, -300, 1000);")
+
+    def _main_browser_scroll_left(self):
+        """
+        This method is called to smoothly scroll the page left. In
+        dependence of the current content type if provides different
+        implementations of scroll, but generally it gives the same result.
+        """
+        logger.debug('Scrolling main content view left')
+        scroll_js = open("scroll.js", "r").read()
+        self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
+        if self._cur_filetype == "pdf":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_hscroll_by(PDFViewerApplication.pdfViewer.container, -100, 1000);")
+        elif self._cur_filetype == "webpage":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_hscroll_by(document.body, -100, 1000);")
+
+    def _main_browser_scroll_right(self):
+        """
+        This method is called to smoothly scroll the page right. In
+        dependence of the current content type if provides different
+        implementations of scroll, but generally it gives the same result.
+        """
+        logger.debug('Scrolling main content view right')
+        scroll_js = open("scroll.js", "r").read()
+        self._main_browser.page().mainFrame().evaluateJavaScript(scroll_js)
+        if self._cur_filetype == "pdf":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_hscroll_by(PDFViewerApplication.pdfViewer.container, 100, 1000);")
+        elif self._cur_filetype == "webpage":
+            self._main_browser.page().mainFrame().evaluateJavaScript("smooth_hscroll_by(document.body, 100, 1000);")
 
     def _main_browser_zoom_in(self):
         """

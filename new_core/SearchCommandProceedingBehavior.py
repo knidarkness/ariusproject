@@ -61,6 +61,7 @@ class SearchCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
                                               'command': random.choice(config['voice_command_output']['CANCEL'])})
             from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
             parent.setProceedingBehavior(IdleCommandProceedingBehavior.getInstance())
+            parent.user_input = None
             return None
         elif recognized_command == "MUTE":
             self._output_connection.sendPOST({'type': 'MUTE', 'command': ''})

@@ -1,5 +1,8 @@
-from config import config
 from PyQt5.QtWebKitWidgets import QWebPage
+import sys
+sys.path.append("../")
+from config import config
+
 
 class FakePage(QWebPage):
     """
