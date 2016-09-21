@@ -14,7 +14,7 @@ from time import sleep
 logger = Logger("OutputController")
 
 
-class OutputController(threading.Thread):
+class OutputController(Thread):
     """
     It is class which control audioplayer, tts_client and browser depends on
     command from command receiver.
@@ -66,9 +66,8 @@ class OutputController(threading.Thread):
         self._start_playing_music()
         while self._is_running:
             if self._receiver.is_state():
-                command_type, command_body = self._receiver.get_state()
-
-                command = Command(command_type, command_body)
+                received_command = self._receiver.get_state()
+                command = Command(received_command[0], received_command[1])
                 self._handle_command(command)
 
                 # turn on music when video is stopped
@@ -159,7 +158,7 @@ class OutputController(threading.Thread):
         self.text_to_say = []
         self.tts_phrases_queue = []
         # we split sentences for tts
-        list_of_sentences = [tesx.split('. ')]
+        list_of_sentences = text.split('. ')
         # and then add '.' to each to improve quality of tts
         self.text_to_say = [sentence + "." for sentence in list_of_sentences]
         self._lock.release()
@@ -210,10 +209,10 @@ class OutputController(threading.Thread):
         """
         scroll_js = open("scroll.js", "r").read()
         self.browser.execute_js(scroll_js)
-        if self._cur_filetype == "pdf":
+        if self._current_filetype == "pdf":
             string_js = ','.join(['smooth_scroll_by(PDFViewerApplication.pdfViewer.container', str(px_length), str(ms_time) + ');'])
             self.js_execution.emit(script_js)
-        elif self._cur_filetype == "webpage":
+        elif self._current_filetype == "webpage":
             string_js = ','.join(
                 ['smooth_scroll_by(document.body', str(px_length), str(ms_time) + ');'])
             self.js_execution.emit(script_js)
@@ -230,10 +229,10 @@ class OutputController(threading.Thread):
         We use the browser method for zooming
         """
         logger.debug('Zooming main content view in')
-        if self._cur_filetype == "pdf":
+        if self._current_filetype == "pdf":
             string_js = """PDFViewerApplication.zoomIn();"""
             self.js_execution.emit(script_js)
-        elif self._cur_filetype == "webpage":
+        elif self._current_filetype == "webpage":
             self._zoom_factor += zoom_factor
             self.zooming.emit(self._zoom_factor)
         else:
@@ -244,10 +243,10 @@ class OutputController(threading.Thread):
         We use the browser method for reseting zoom
         """
         # self._browser.reset_zoom()
-        if self._cur_filetype == "pdf":
+        if self._current_filetype == "pdf":
             string_js = 'PDFViewerApplication.pdfViewer.currentScaleValue = "page-width"'
             self.js_execution.emit(script_js)
-        elif self._cur_filetype == "webpage":
+        elif self._current_filetype == "webpage":
             self._zoom_factor = 1
             self.zooming.emit(self._zoom_factor)
         else:
@@ -290,6 +289,7 @@ class OutputController(threading.Thread):
         """
         source = config['flask_server_home']
         self._reset_zoom()
+        print content_type, content
         if content_type == 'local_url':
             source += config['flask_server_local_page_client'] + content
             self._current_filetype = "webpage"
@@ -303,9 +303,9 @@ class OutputController(threading.Thread):
             source = config['flask_server_video_addr_client'] + content
             self._currrent_filetype = "video"
         elif content_type == "screen":
-            source += config["flask_screen_address"][content]
+            source += config["flask_server_screen_address"]["IDLE"]
         else:
-            source += config["flask_screen_address"]["ERROR"]
+            source += config["flask_server_screen_address"]["ERROR"]
 
         # and finally load the result
         # self._browser.load_url(source)

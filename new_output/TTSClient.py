@@ -12,7 +12,7 @@ class TTSClient(threading.Thread):
         """
         Voice hash has format described at "mary_host:mary_port/documentation.html"
 
-        This class need to have access to output class to update tts_phrases_queue,
+        This class need to have access to output class to update tts_tts_phrases_queue,
         as we process not the whole text but parts of it to process text while player
         is playing audio of generated speech
         """
@@ -50,18 +50,19 @@ class TTSClient(threading.Thread):
         else:
             query = self._voice_config
             query["INPUT_TEXT"] = text
+            query = urlencode(query)
             resp, content = self._mary_server.request(
-                "http://%s:%s/process?" % (self.host, self.port), "POST", query)
+                "http://%s:%s/process?" % (self._host, self._port), "POST", query)
 
             if (resp["content-type"] == "audio/x-wav"):
                 filepath = "/tmp/speech_track" + \
-                    len(self._output.phrases_queue)
+                    str(len(self._output.tts_phrases_queue)) + '.wav'
                 # Write the wav file
-                f = open(filepath + ".wav", "wb")
+                f = open(filepath, "wb")
                 f.write(content)
                 f.close()
-                if type(self._output.phrases_queue) == list:
-                    self._output.phrases_queue.append(filepath)
+                if type(self._output.tts_phrases_queue) == list:
+                    self._output.tts_phrases_queue.append(filepath)
                 else:
                     # it means that output received command to stop speaking
                     # current text

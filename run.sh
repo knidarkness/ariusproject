@@ -72,7 +72,7 @@ tmux send-keys -t 3 "cd required_packages/marytts-5.1.1/bin/; ./marytts-server" 
 tmux send-keys -t 4 "cd required_packages/elasticsearch-2.3.5/bin; ./elasticsearch" C-m
 sleep 8
 tmux send-keys -t 5 "cd new_core; python core_main.py ${MODE} ; cd ../" C-m
-tmux send-keys -t 1 "cd output_module; python output_main.py ${MODE} ${SIZE} ; cd ../" C-m
+tmux send-keys -t 1 "cd new_output; python main.py; cd ../" C-m
 
 if [ "$SLIENT" = false ] ;
 then

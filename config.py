@@ -21,6 +21,14 @@ config = {
     "flask_server_local_page": "/page/<path:page_path>",
     "flask_server_local_page_client": "/page/",
 
+    "flask_server_screen_address":
+    {
+    "IDLE": "/screens/idle",
+    "ERROR": "/screens/error",
+    "SEARCH": "/screens/search",
+    "SPEAKING": "/screens/speaking"
+    },
+
     "arius_screen_idle_background": "#000",
     "arius_screen_search_background": "#000",
     "arius_screen_error_background": "#000",

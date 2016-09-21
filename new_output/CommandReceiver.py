@@ -57,9 +57,9 @@ class CommandReceiver(threading.Thread):
         It return the first command from the queue if it exist
         """
         if not self._command_queue:
-            return None, None
+            return [None, None]
         command = self._command_queue.pop(0)
-        return command.type, command.type
+        return [command.type, command.type]
 
     def is_state(self):
         """
