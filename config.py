@@ -23,10 +23,10 @@ config = {
 
     "flask_server_screen_address":
     {
-    "IDLE": "/screens/idle",
-    "ERROR": "/screens/error",
-    "SEARCH": "/screens/search",
-    "SPEAKING": "/screens/speaking"
+        "IDLE": "/screens/idle",
+        "ERROR": "/screens/error",
+        "SEARCH": "/screens/search",
+        "SPEAKING": "/screens/speaking"
     },
 
     "arius_screen_idle_background": "#000",
@@ -48,13 +48,16 @@ config = {
     "core_commands_search_failed": ["CANCEL", "START", "MUTE", "UNMUTE"],
     "core_commands_displaying_data": ["CANCEL", "START", "MUTE", "UNMUTE", "ZOOM_IN", "ZOOM_OUT",
                                       "NO_ZOOM", "SCROLL_DOWN", "SCROLL_UP", "PAUSE", "PLAY",
-                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA", "NEXT_PAGE", "PREV_PAGE"],
+                                      "VOLUME_UP", "VOLUME_DOWN", "DETAILED_DATA",
+                                      "NEXT_PAGE", "PREV_PAGE", "SCROLL_LEFT", "SCROLL_RIGHT"],
     "core_commands": {
         "ZOOM_IN": ['zoom in', 'increase', 'enlarge', 'zoom more', 'make it closer'],
         "ZOOM_OUT": ['shrink', 'decrease', 'zoom less', 'zoom out'],
         "NO_ZOOM": ['normal size', 'zero zoom', 'no zoom', 'zoom reset', 'reset zoom', 'default zoom', 'default size'],
         "SCROLL_DOWN": ['page down', 'scroll down', 'down'],
         "SCROLL_UP": ['page up', 'scroll up', 'up'],
+        "SCROLL_LEFT": ['page left', 'scroll left', 'left'],
+        "SCROLL_RIGHT": ['page right', 'scroll right', 'right'],
         "CANCEL": ['cancel', 'bye', 'thanks'],
         "PAUSE": ['pause', 'stop'],
         "PLAY": ['play'],
@@ -87,6 +90,8 @@ config = {
         "ZOOM_IN": ["Enlarging.", "Will be done"],
         "ZOOM_OUT": ["Zooming out.", "Will be done."],
         "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok my friend."],
+        "SCROLL_LEFT": ["Left.", "Ok, my lord.", "Ok my friend."],
+        "SCROLL_RIGHT": ["Right.", "Ok, my lord.", "Ok my friend."],
         "NO_ZOOM": ["Reset zoom.", "Will be done."],
         "SCROLL_UP": ["Up.", "Moving up.", "Yes sir.", "Ok man."],
         "SEARCH_BEGAN": ["Search request accepted. My lord.", "Request accepted.", "Looking for relevant information.", "Yes sir.", "Searching"],
