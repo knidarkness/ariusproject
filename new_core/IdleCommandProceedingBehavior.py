@@ -28,9 +28,19 @@ class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
         self._output_connection = CoreOutputSingleton.getInstance()
 
     def proceed(self, user_input, parent):
+
+        from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
         recognized_command = self._command_recognizer.recognize_command(user_input)
 
-        if recognized_command == "MUTE":
+        if recognized_command == "CANCEL":
+            SearchCommandProceedingBehavior.getInstance()._history = []
+            self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
+            self._output_connection.sendPOST({'type': 'SPEAK',
+                                              'command': random.choice(config['voice_command_output']['CANCEL'])})
+            parent.setProceedingBehavior(IdleCommandProceedingBehavior.getInstance())
+            parent.user_input = None
+            return None
+        elif recognized_command == "MUTE":
             self._output_connection.sendPOST({'type': 'MUTE', 'command': ''})
         elif recognized_command == "UNMUTE":
             self._output_connection.sendPOST({'type': 'UNMUTE', 'command': ''})
@@ -39,7 +49,6 @@ class IdleCommandProceedingBehavior(AbstractCoreCommandProceedingBehavior):
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['SEARCH_BEGAN'])})
 
-            from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
             parent.setProceedingBehavior(SearchCommandProceedingBehavior.getInstance())
             return None
 

@@ -1,9 +1,12 @@
 import threading
 from client import RESTClient
-from logger import Logger
 from Command import Command
 from time import sleep
-logger = Logger("CommandReceiver")
+
+import sys
+sys.path.append("../")
+from logger import Logger
+logger = Logger("Output[CommandReceiver]")
 
 
 class CommandReceiver(threading.Thread):
@@ -16,7 +19,7 @@ class CommandReceiver(threading.Thread):
         This constructor method makes connection with the server, gets Rlock object
         and use it like its own lock and creates a flag "running" which allows to kill thread
         """
-        super(CommandReceiver   , self).__init__()
+        super(CommandReceiver, self).__init__()
         self._server_connection = RESTClient(
             server_host, server_port, commands_url)
         self._is_running = True
@@ -40,26 +43,22 @@ class CommandReceiver(threading.Thread):
         If data is in command format then we add it to command queue
         """
         data = self._server_connection.GET_request(True, 0)
-        if data['type'] != None:
-            logger.debug('Received data {}'.format(data))
+        if data['type'] != 'none':
             self._lock.acquire()
             try:
                 self._command_queue.append(Command(data['type'], data['command']))
-                logger.info('Command received: {} : {}'.format(
-                    data['type'], data['command']))
+                logger.info('Command received: {} : {}'.format(data['type'], data['command']))
             finally:
-                self._lock.release()    
-        else:
-            pass    
+                self._lock.release()
 
     def get_state(self):
         """
         It return the first command from the queue if it exist
         """
         if not self._command_queue:
-            return [None, None]
+            return None
         command = self._command_queue.pop(0)
-        return [command.type, command.type]
+        return command
 
     def is_state(self):
         """
@@ -69,4 +68,3 @@ class CommandReceiver(threading.Thread):
             return False
         else:
             return True
-

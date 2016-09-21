@@ -12,14 +12,14 @@ class Player:
         Load the needed audiofile, starts playing in an infinity loop and pause it,
         """
         pygame.mixer.init(48000, -16, 1, 1024)
-        muted_channel=pygame.mixer.Channel(3)
-        self.channel=pygame.mixer.Channel(2)
+        muted_channel = pygame.mixer.Channel(3)
+        self.channel = pygame.mixer.Channel(2)
         music = pygame.mixer.Sound(config["background_music"])
-        muted_channel=pygame.mixer.Channel(3)
+        muted_channel = pygame.mixer.Channel(3)
         muted_channel.play(music, loops=-1)
         muted_channel.set_volume(0)
         self.channel.play(music, loops=-1, fade_ms=300)
-        self.channel.set_volume(0)
+        self.channel.set_volume(config["background_music_volume"])
         self.channel.pause()
 
     def play(self):
@@ -41,6 +41,7 @@ class Player:
         self.channel.stop()
 
     def mute(self):
+        print 'BLA'
         self.channel.set_volume(0)
 
     def unmute(self):

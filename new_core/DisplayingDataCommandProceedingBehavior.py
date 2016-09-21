@@ -31,12 +31,13 @@ class DisplayingDataCommandProceedingBehavior(AbstractCoreCommandProceedingBehav
         from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
         recognized_command = self._command_recognizer.recognize_command(user_input)
         if recognized_command == "CANCEL":
-            self._history = []
+            SearchCommandProceedingBehavior.getInstance()._history = []
             self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['CANCEL'])})
             from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
             parent.setProceedingBehavior(IdleCommandProceedingBehavior.getInstance())
+            parent.user_input = None
             return None
         elif recognized_command in self.__commands_dict and recognized_command != 'START' and recognized_command != "DETAILED_DATA":
             self._output_connection.sendPOST({'type': recognized_command, 'command': ''})

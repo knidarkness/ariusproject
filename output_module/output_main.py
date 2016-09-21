@@ -287,13 +287,15 @@ class OutputInterface:
             # calling of _load_content method with specified content type.
 
             # start music play if it was stopped
-            self._player.play()
 
             if command[0] == 'OPEN_PDF':
+                self._player.play()
                 self._load_content('local_pdf', command[1])
             elif command[0] == 'OPEN_URL':
+                self._player.play()
                 self._load_content('external_url', command[1])
             elif command[0] == 'OPEN_LOCAL_PAGE':
+                self._player.play()
                 self._load_content('local_url', command[1])
             elif command[0] == 'OPEN_VIDEO':
                 self._player.stop()
@@ -304,6 +306,7 @@ class OutputInterface:
             # work.
 
             elif command[0] == 'OPEN_SCREEN':
+                self._player.play()
                 self._load_screen(command[1])
 
             # Zoom commands are handled each with its own method.

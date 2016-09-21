@@ -2,6 +2,7 @@ from DictBasedCommandRecognizer import DictBasedCommandRecognizer
 from DifflibMatchFinder import DifflibMatchFinder
 from CoreOutputSingleton import CoreOutputSingleton
 from AbstractCoreCommandProceedingBehavior import AbstractCoreCommandProceedingBehavior
+from SearchCommandProceedingBehavior import SearchCommandProceedingBehavior
 from CommandConfigLoader import CommandConfigLoader
 import random
 import sys
@@ -39,11 +40,13 @@ class SearchFailedCommandProceedingBehavior(AbstractCoreCommandProceedingBehavio
         elif recognized_command == "UNMUTE":
             self._output_connection.sendPOST({'type': 'UNMUTE', 'command': ''})
         elif recognized_command == "CANCEL":
+            SearchCommandProceedingBehavior.getInstance()._history = []
             self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'IDLE'})
             self._output_connection.sendPOST({'type': 'SPEAK',
                                               'command': random.choice(config['voice_command_output']['CANCEL'])})
             from IdleCommandProceedingBehavior import IdleCommandProceedingBehavior
             parent.setProceedingBehavior(IdleCommandProceedingBehavior.getInstance())
+            parent.user_input = None
             return None
         elif recognized_command == "START":
             self._output_connection.sendPOST({'type': 'OPEN_SCREEN', 'command': 'SEARCH'})

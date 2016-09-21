@@ -1,26 +1,20 @@
-import time
 import sys
 import subprocess
-import threading
-import functools
 from FakePage import FakePage
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QUrl, QTimer, QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QGridLayout, QWidget
 from PyQt5.QtWebKitWidgets import QWebView
 from PyQt5.QtWebKit import QWebSettings
-from PyQt5 import QtWebKitWidgets
-from PyQt5.QtNetwork import QNetworkRequest
 sys.path.append("../")
 from config import config
-from client import RESTClient
+from logger import Logger
+logger = Logger("Output[BrowserClient]")
 
 
-class BrowserClient(QObject):
-    zooming = pyqtSignal(float)
-    js_execution = pyqtSignal(str)
-    load_url = pyqtSignal(str)
-    def __init__(self, fullscreen, sizes):
+class BrowserController(QObject):
+
+    def __init__(self, parent, fullscreen, sizes):
         """
         This constructor function initializes a layout of the Arius output
         module but doesn`t displays it on the screen.
@@ -46,7 +40,7 @@ class BrowserClient(QObject):
         a timer instance which checks that stream for new commands
         from the server, and in case if there`s some update handles it.
         """
-        super(BrowserClient, self).__init__()
+        super(BrowserController, self).__init__()
         if not fullscreen and not sizes:
             print 'You must initialize windows size'
             raise Exception
@@ -70,10 +64,8 @@ class BrowserClient(QObject):
         self._top_browser = QWebView()
         self._bottom_browser = QWebView()
 
-        self._top_browser_height = config[
-            'output_header_height'] * self._screen_height
-        self._bottom_browser_height = config[
-            'output_footer_height'] * self._screen_height
+        self._top_browser_height = config['output_header_height'] * self._screen_height
+        self._bottom_browser_height = config['output_footer_height'] * self._screen_height
 
         self._top_browser.setMaximumHeight(self._top_browser_height)
         self._top_browser.setMinimumHeight(self._top_browser_height)
@@ -106,10 +98,10 @@ class BrowserClient(QObject):
         self._layout.addWidget(self._top_browser, 1, 0)
         self._layout.addWidget(self._main_browser, 2, 0)
         self._layout.addWidget(self._bottom_browser, 3, 0)
-
-        self.load_url.connect(self._load_url)
-        self.zooming.connect(self._zoom)
-        self.js_execution.connect(self._execute_js)
+        self._parent = parent
+        self._parent.load_url.connect(self._load_url)
+        self._parent.js_execution.connect(self._execute_js)
+        self._parent.zooming.connect(self._zoom)
 
     def run(self):
         self._main_window = QWidget()  # create a window as a QWidget
@@ -143,7 +135,9 @@ class BrowserClient(QObject):
         self._bottom_browser.load(QUrl(url))
 
     def _load_url(self, url):
+        logger.debug('OPENING URL %s', url)
         self._main_browser.load(QUrl(url))
 
     def _execute_js(self, string_js):
+        logger.debug(string_js)
         self._main_browser.page().mainFrame().evaluateJavaScript(string_js)
