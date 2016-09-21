@@ -6,7 +6,6 @@ sudo apt install python-pip
 pip install virtualenv
 virtualenv --system-site-packages env
 source env/bin/activate
-pip install -r requirements.txt
 mkdir required_packages
 cd required_packages
 wget "https://sourceforge.net/projects/pyqt/files/sip/sip-4.18.1/sip-4.18.1.tar.gz/download" -O sip.tar.gz
@@ -17,7 +16,7 @@ cd sip-4.18.1
 python configure.py
 cd ../
 wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
-wget hhttps://github.com/marytts/marytts/releases/download/v5.1.1/marytts-5.1.1.zip
+wget https://github.com/marytts/marytts/releases/download/v5.1.1/marytts-5.1.1.zip
 unzip marytts-5.1.1.zip
 cd marytts-5.1.1/bin
 ./marytts-component-installer
@@ -52,5 +51,6 @@ chmod 555 core.sh
 chmod 555 input.sh
 chmod 555 server.sh
 chmod 555 output.sh
+pip install -r requirements.txt
 
 
