@@ -1,7 +1,7 @@
 sudo apt-get update
-sudo apt-get install default-jre
-sudo apt-get install default-jdk
-sudo apt-get install tmux
+sudo apt-get install default-jre -y
+sudo apt-get install default-jdk -y 
+sudo apt-get install tmux -y
 sudo apt install python-pip
 pip install virtualenv
 virtualenv --system-site-packages env
@@ -24,8 +24,8 @@ chmod 555 marytts-server
 cd ../../
 chmod +x qt-opensource-linux-x64-5.7.0.run
 ./qt-opensource-linux-x64-5.7.0.run
-sudo apt-get install build-essential
-sudo apt-get install libfontconfig1
+sudo apt-get install build-essential -y
+sudo apt-get install libfontconfig1 -y
 cd PyQt5_gpl-5.7
 python configure.py
 make -j4
@@ -37,11 +37,11 @@ cd elasticsearch-2.3.5
 sudo bin/plugin install mapper-attachments
 chmod 555 bin/elasticsearch
 cd ../../
-sudo apt-get install libqt5webkit5-dev
-sudo apt-get install python-pyqt5.qtsvg
-sudo apt-get install python-pyqt5.qtwebkit
-sudo apt-get install ffmpeg
-sudo apt-get install portaudio19-dev python-all-dev
+sudo apt-get install libqt5webkit5-dev -y
+sudo apt-get install python-pyqt5.qtsvg -y
+sudo apt-get install python-pyqt5.qtwebkit -y
+sudo apt-get install ffmpeg -y
+sudo apt-get install portaudio19-dev python-all-dev -y
 cd env/lib/python2.7/site-packages
 echo ../../../../ >> config.pth
 cd ../../../../

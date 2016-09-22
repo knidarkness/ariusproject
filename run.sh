@@ -76,7 +76,7 @@ tmux send-keys -t 1 "cd output_module; python output_main.py ${MODE} ${SIZE}; cd
 
 if [ "$SLIENT" = false ] ;
 then
-	tmux send-keys -t 2 "cd server;  python input_sim.py; cd ../" C-m
+	tmux send-keys -t 2 "cd services;  python input_sim.py; cd ../" C-m
 	tmux attach-session 
 else
 	cd server

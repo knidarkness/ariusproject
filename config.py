@@ -41,7 +41,7 @@ config = {
     "core_server_output_port": "5000",
     "core_server_output_url": "/core/output",
 
-    "core_command_recog_confidence": 70,
+    "core_command_recog_confidence": 90,
 
     "core_commands_idle": ["CANCEL", "START", "MUTE", "UNMUTE"],
     "core_commands_search": ["CANCEL", "START", "MUTE", "UNMUTE"],
@@ -87,7 +87,7 @@ config = {
 
     "voice_command_output": {
         "CANCEL": ["Thanks for using me.", "See you.", "Have a nice day.", "See you soon."],
-        "ZOOM_IN": ["Enlarging.", "Will be done"],
+        "ZOOM_IN": ["Enlarging.", "Will be done."],
         "ZOOM_OUT": ["Zooming out.", "Will be done."],
         "SCROLL_DOWN": ["Down.", "Ok, my lord.", "Ok my friend."],
         "SCROLL_LEFT": ["Left.", "Ok, my lord.", "Ok my friend."],
